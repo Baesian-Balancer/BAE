@@ -1,4 +1,4 @@
-from MBRL.MBRL_utils import look_ahead
+from MBRL_utils import look_ahead
 import torch
 import gym
 import numpy as np
@@ -7,14 +7,12 @@ import os
 import time
 import functools
 from gym_ignition.utils import logger
-from igBIBLE import randomizers
+from BB_gym_Envs import randomizers
 
 from PolicyNet import PolicyNetwork
 from StateTransitionNet import StateTransitionNet
 
 from sklearn.metrics import mean_squared_error
-
-
 
 # Set verbosity
 logger.set_level(gym.logger.ERROR)
@@ -28,7 +26,7 @@ env_id = "Monopod-Gazebo-v2"
 
 def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
     import gym
-    import igBIBLE
+    import BB_gym_Envs
     return gym.make(env_id, **kwargs)
 
 # Create a partial function passing the environment id
@@ -64,10 +62,11 @@ policy_net.to(device)
 transition_net.to(device)
 
 # Training params
-NUM_EPISODES = 1000
+NUM_EPISODES = 100
 MAX_STEPS = 3000
 ROLLOUT_EVERY = 10
 UPDATE_EVERY = 100
+
 # How often to print the average of last LOG_EVERY episodes
 LOG_EVERY = 20
 
@@ -161,12 +160,12 @@ def main():
                 # if step > 400:
                 #     rewards = [rew + step for rew in rewards]
                 policy_net.update_policy(policy_net, rewards, log_probs)
-                transition_net.update_net(transition_net, pred_states, new_states)
+                # transition_net.update_net(transition_net, pred_states, new_states)
                 episode_rewards.append(episode_reward)
                 episode_losses.append(episode_loss)
             elif step % UPDATE_EVERY == 0:
                 policy_net.update_policy(policy_net, rewards, log_probs)
-                transition_net.update_net(transition_net, pred_states, new_states)
+                # transition_net.update_net(transition_net, pred_states, new_states)
                 rewards = []
                 log_probs = []
             obs = new_obs

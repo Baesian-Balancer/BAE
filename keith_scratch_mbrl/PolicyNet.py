@@ -51,10 +51,10 @@ class PolicyNetwork(nn.Module):
             nn.Tanh()
         )
         self.logstd = nn.Parameter(torch.ones(2, ), requires_grad=True)
-        self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
-        self.scheduler=torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, 200)
 
-        # self.optimizer = optim.SGD(self.parameters(), lr=learning_rate, momentum=0.9)
+        # self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
+        # self.scheduler=torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, 200)
+        self.optimizer = optim.SGD(self.parameters(), lr=learning_rate, momentum=0.9)
         self.device = device
     
     def forward(self, state):

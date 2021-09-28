@@ -13,9 +13,11 @@ def normalize_inputs(env, observations, OBS_SIZE):
         observation_normed[i] = obs_normed
     return observation_normed
 
-# Perform simple trajectory rollouts, ie, run episodes in our imagination;  use the
-# state-transition and policy net to generate data, calculate reward, update policy net
 def generate_rollouts(env, policy_net, transition_net, steps, episodes, MAX_STEPS):
+    """
+    Perform simple trajectory rollouts, ie, run episodes in our imagination;  use the
+    state-transition and policy net to generate data, calculate reward, update policy net
+    """
     print("Starting rollouts...")
     # Create imaginary copy of env
     imaginary_env = copy.copy(env)    
@@ -36,12 +38,12 @@ def generate_rollouts(env, policy_net, transition_net, steps, episodes, MAX_STEP
 
         step = 0
         while not done and step < steps:
-            # Get action and probability.
+            # Get predicted action and probability.
             obs = np.squeeze(obs)
-
             actions, log_prob = policy_net.get_action(obs)
             state_action = np.concatenate((obs,actions))
             
+            # Get predicted state and calculate reward and done
             imaginary_env = imaginary_env.unwrapped
             new_obs = imaginary_env.state = transition_net.get_state(state_action).detach().cpu().numpy()
             reward = imaginary_env.task.get_reward()
@@ -55,7 +57,6 @@ def generate_rollouts(env, policy_net, transition_net, steps, episodes, MAX_STEP
 
             if not done:
                 done = True if step == MAX_STEPS else False
-            
             if done:
                 policy_net.update_policy(policy_net, rewards, log_probs)
                 episode_rewards.append(episode_reward)
@@ -82,7 +83,7 @@ def look_ahead(env, obs, policy_net, transition_net, num_actions, steps):
             # Unwrap environment to access hidden class variables.
             # Then get state from transition_net, add reward to total
             imaginary_env.unwrapped
-            print(imaginary_env.__dict__)
+            # print(imaginary_env.__dict__)
             new_state = imaginary_env.state = transition_net.get_state(state_action).detach().cpu().numpy()
             reward = imaginary_env.task.get_reward()
             total_reward += reward
