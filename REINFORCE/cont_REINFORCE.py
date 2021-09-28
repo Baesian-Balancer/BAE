@@ -6,8 +6,8 @@ import copy, random, math
 import time
 import functools
 from gym_ignition.utils import logger
-from igBIBLE.MBRL.PolicyNet import PolicyNetwork
-from igBIBLE.igBIBLE import randomizers
+from PolicyNet import PolicyNetwork
+from BB_gym_Envs import randomizers
 import timeit
 # Set verbosity
 logger.set_level(gym.logger.ERROR)
@@ -18,7 +18,7 @@ env_id = "Monopod-Gazebo-v2"
 
 def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
     import gym
-    import igBIBLE
+    import BB_gym_Envs
     return gym.make(env_id, **kwargs)
 
 # Create a partial function passing the environment id
