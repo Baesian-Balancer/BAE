@@ -1,1 +1,1 @@
-# BaesianAlgorithmExploration
+# Baesian Algorithm Exploration
