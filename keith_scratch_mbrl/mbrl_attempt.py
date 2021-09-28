@@ -7,7 +7,7 @@ import os
 import time
 import functools
 from gym_ignition.utils import logger
-from BB_gym_Envs import randomizers
+from gym_bb import randomizers
 
 from PolicyNet import PolicyNetwork
 from StateTransitionNet import StateTransitionNet
@@ -26,7 +26,7 @@ env_id = "Monopod-Gazebo-v2"
 
 def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
     import gym
-    import BB_gym_Envs
+    import gym_bb
     return gym.make(env_id, **kwargs)
 
 # Create a partial function passing the environment id
