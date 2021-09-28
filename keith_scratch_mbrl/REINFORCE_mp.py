@@ -32,6 +32,8 @@ def normalize_envs_inputs(envs, observation_arr):
 	return observation_arr
 
 def main_loop(envs):
+	start = time.time()  
+
 	# Enable the rendering
 	# env.render('human')
 	current_cumulative_rewards = np.zeros(NUM_ENVS)
@@ -56,7 +58,8 @@ def main_loop(envs):
 		log_probs.append(log_probs_arr)
 		current_cumulative_rewards += reward_arr
 
-		# TODO: Optimize/streamline this? Maybe an envs.update method to do it for all envs that are done?
+		# TODO: Optimize/streamline this? Maybe an envs.update method to do it for all envs that are done? Or
+		# class to handle data and parse and filter to pass to models.
 		if any(done_arr):
 			for i, done in enumerate(done_arr):
 				if done:
@@ -67,6 +70,8 @@ def main_loop(envs):
 			# print('rollout info: ', envs.do_rollout(observation_arr))
 			current_cumulative_rewards[done_arr] = 0
 		obs_arr = new_obs_arr
+	
+	print(f"Total time elapsed is {time.time() - start}")
 	envs.close()
 	time.sleep(5)
 
@@ -116,13 +121,16 @@ if __name__ == '__main__':
 	# Available tasks
 	env_id = "Monopod-Gazebo-fh-fby-v1"
 	NUM_ENVS = multiprocessing.cpu_count()
-	NUM_ENVS = 3
-	NUMBER_TIME_STEPS = 100000
+	NUM_ENVS = 2
+	NUMBER_TIME_STEPS = 50_000
 	seed = 69
 
 	fenvs = make_mp_envs(env_id, NUM_ENVS, seed,
 							randomizers.monopod.MonopodEnvRandomizer)
 	# envs = VecMonitor(envs)
+
+
+	# Set episodes_for_refresh and save_every_num_episodes.
 	envs = VecMonitorPlot(
 		fenvs, plot_path=os.path.expanduser('~')+'/Desktop/plot')
 	
@@ -130,12 +138,14 @@ if __name__ == '__main__':
 	PN_HIDDENSIZE = 2048
 	OBS_SIZE = envs.observation_space.shape[0]
 	ACTION_SIZE = envs.action_space.shape[0]
-	PN_LR = 1e-4
+	PN_LR = 1e-5
 	GAMMA = 0.95
 	policy_net = PolicyNetwork(OBS_SIZE, PN_HIDDENSIZE, ACTION_SIZE, PN_LR, GAMMA, device)
 	policy_net.to(device)
 
+	start = time.time()  
 	main_loop(envs)
+	print(time.time() - start)
 
 	# except Exception as e:
 	# 	print(e)
