@@ -16,7 +16,7 @@ from gym_bb import randomizers
 import functools
 
 def make_env(cfg):
-    env_id = "Monopod-Gazebo-v1"
+    env_id = "Monopod-balance-v1"
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         import gym
@@ -34,27 +34,6 @@ def make_env(cfg):
     env.seed(cfg.seed)
     print(env)
     return env
-
-
-# def make_env(cfg):
-#     """Helper function to create dm_control environment"""
-#     if cfg.env == 'ball_in_cup_catch':
-#         domain_name = 'ball_in_cup'
-#         task_name = 'catch'
-#     else:
-#         domain_name = cfg.env.split('_')[0]
-#         task_name = '_'.join(cfg.env.split('_')[1:])
-
-#     env = dmc2gym.make(domain_name=domain_name,
-#                        task_name=task_name,
-#                        seed=cfg.seed,
-#                        visualize_reward=True)
-#     env.seed(cfg.seed)
-#     assert env.action_space.low.min() >= -1
-#     assert env.action_space.high.max() <= 1
-
-#     return env
-
 
 class eval_mode(object):
     def __init__(self, *models):
