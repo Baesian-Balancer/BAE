@@ -24,6 +24,9 @@ class Workspace(object):
         self.work_dir = os.getcwd()
         print(f'workspace: {self.work_dir}')
 
+        if not os.path.isdir(cfg.cp_dir) and cfg.save_cp:
+            os.mkdir(cfg.cp_dir)
+
         self.cfg = cfg
 
         utils.set_seed_everywhere(cfg.seed)
@@ -47,6 +50,8 @@ class Workspace(object):
                                           self.device)
         self.step = 0
 
+        self.best_avg_reward = 0
+
     def evaluate(self):
         average_episode_reward = 0
         for episode in range(self.cfg.num_eval_episodes):
@@ -54,14 +59,23 @@ class Workspace(object):
             self.agent.reset()
             done = False
             episode_reward = 0
+            step = 0
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
+                step+=1
 
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
+        if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
+            PATH = self.cfg.cp_dir + "best_model.pt"
+            torch.save({
+            'actor_state_dict': self.agent.actor.state_dict(),
+            'critic_state_dict': self.agent.critic.state_dict(),
+            }, PATH)
+            self.best_avg_reward = average_episode_reward
 
     def run(self):
         episode, episode_reward, done = 0, 0, True
@@ -151,6 +165,12 @@ if __name__ == '__main__':
         '--save_cp',
         default = False,
         type = bool   
+    )
+
+    parser.add_argument(
+        '--cp_dir',
+        default = 'exp/',
+        type = str    
     )
 
     parser.add_argument(
