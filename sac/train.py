@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import wandb
 import gym
 import numpy as np
 import torch
@@ -11,15 +12,15 @@ import sys
 import pickle as pkl
 # from BB_gym_Envs import randomizers
 import functools
-
-from video import VideoRecorder
 from replay_buffer import ReplayBuffer
 import utils
+from argparse import ArgumentParser
+from omegaconf import OmegaConf
 
 import hydra
 
 class Workspace(object):
-    def __init__(self, cfg):
+    def __init__(self, cfg,agent_cfg):
         self.work_dir = os.getcwd()
         print(f'workspace: {self.work_dir}')
 
@@ -32,21 +33,18 @@ class Workspace(object):
         print(self.env.action_space.shape[0])
 
 
-        cfg.agent.params.obs_dim = self.env.observation_space.shape[0]
-        cfg.agent.params.action_dim = self.env.action_space.shape[0]
-        cfg.agent.params.action_range = [
+        agent_cfg.agent.params.obs_dim = self.env.observation_space.shape[0]
+        agent_cfg.agent.params.action_dim = self.env.action_space.shape[0]
+        agent_cfg.agent.params.action_range = [
             float(self.env.action_space.low.min()),
             float(self.env.action_space.high.max())
         ]
-        self.agent = hydra.utils.instantiate(cfg.agent)
+        self.agent = hydra.utils.instantiate(agent_cfg.agent)
 
         self.replay_buffer = ReplayBuffer(self.env.observation_space.shape,
                                           self.env.action_space.shape,
                                           int(cfg.replay_buffer_capacity),
                                           self.device)
-
-        self.video_recorder = VideoRecorder(
-            self.work_dir if cfg.save_video else None)
         self.step = 0
 
     def evaluate(self):
@@ -54,18 +52,15 @@ class Workspace(object):
         for episode in range(self.cfg.num_eval_episodes):
             obs = self.env.reset()
             self.agent.reset()
-            self.video_recorder.init(enabled=(episode == 0))
             done = False
             episode_reward = 0
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
-                self.video_recorder.record(self.env)
                 episode_reward += reward
 
             average_episode_reward += episode_reward
-            self.video_recorder.save(f'{self.step}.mp4')
         average_episode_reward /= self.cfg.num_eval_episodes
 
     def run(self):
@@ -84,14 +79,14 @@ class Workspace(object):
                 episode += 1
 
             # sample action for data collection
-            if self.step < self.cfg.num_seed_steps:
+            if self.step < self.cfg.exploration_steps:
                 action = self.env.action_space.sample()
             else:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=True)
 
             # run training update
-            if self.step >= self.cfg.num_seed_steps:
+            if self.step >= self.cfg.exploration_steps:
                 self.agent.update(self.replay_buffer, self.step)
 
             next_obs, reward, done, _ = self.env.step(action)
@@ -101,20 +96,105 @@ class Workspace(object):
             # done_no_max = 0 if episode_step + 1 == self.env._max_episode_steps else done
             done_no_max = 0 if episode_step + 1 == 1000 else done
             episode_reward += reward
-
             self.replay_buffer.add(obs, action, reward, next_obs, done,
                                    done_no_max)
-
+            
             obs = next_obs
             episode_step += 1
             self.step += 1
 
-
-@hydra.main(config_path='config/train.yaml', strict=True)
 def main(cfg):
-    workspace = Workspace(cfg)
+
+    wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
+
+    agent_cfg = OmegaConf.load('config/agent/sac.yaml')
+    agent_cfg.agent.params.device = cfg.device
+    agent_cfg.agent.params.batch_size = cfg.batch_size
+    workspace = Workspace(cfg,agent_cfg)
     workspace.run()
 
 
 if __name__ == '__main__':
-    main()
+
+    parser = ArgumentParser(add_help=False)
+
+    parser.add_argument(
+        '--wandb_project',
+        default = 'capstone',
+        type = str    
+    )
+    parser.add_argument(
+        '--wandb_user',
+        default = 'nickioan',
+        type = str    
+    )
+
+    parser.add_argument(
+        '--device',
+        default = 'cuda',
+        type = str    
+    )
+
+    parser.add_argument(
+        '--seed',
+        default = 42,
+        type = int    
+    )
+
+    parser.add_argument(
+        '--env_id',
+        default = 'Monopod-balance-v1',
+        type = str   
+    )
+
+    parser.add_argument(
+        '--save_cp',
+        default = False,
+        type = bool   
+    )
+
+    parser.add_argument(
+        '--log_frequency',
+        default = 10,
+        type = int  
+    )
+
+    parser.add_argument(
+        '--eval_frequency',
+        default = 10000,
+        type = int  
+    )
+
+    parser.add_argument(
+        '--num_eval_episodes',
+        default= 10,
+        type = int  
+    )
+
+    parser.add_argument(
+        '--replay_buffer_capacity',
+        default = 1e6,
+        type = int
+    )
+
+    parser.add_argument(
+        '--batch_size',
+        default = 256,
+        type = int
+    )
+
+    parser.add_argument(
+        '--exploration_steps',
+        default = 5000,
+        type = int
+    )
+
+    parser.add_argument(
+        '--num_train_steps',
+        default = 1e6,
+        type = int
+    )
+
+    args = parser.parse_args()
+
+    main(args)

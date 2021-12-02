@@ -5,7 +5,7 @@ agent:
     obs_dim: ??? # to be specified later
     action_dim: ??? # to be specified later
     action_range: ??? # to be specified later
-    device: ${device}
+    device: ???
     critic_cfg: ${double_q_critic}
     actor_cfg: ${diag_gaussian_actor}
     discount: 0.99
@@ -19,7 +19,7 @@ agent:
     critic_betas: [0.9, 0.999]
     critic_tau: 0.005
     critic_target_update_frequency: 2
-    batch_size: 32
+    batch_size: ???
     learnable_temperature: true
     
 double_q_critic:
