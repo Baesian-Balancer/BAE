@@ -118,9 +118,9 @@ class Workspace(object):
             self.step += 1
 
 def main(cfg):
-
-    wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
-
+    if cfg.wandb_on:
+        wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
+        
     agent_cfg = OmegaConf.load('config/agent/sac.yaml')
     agent_cfg.agent.params.device = cfg.device
     agent_cfg.agent.params.batch_size = cfg.batch_size
@@ -132,6 +132,11 @@ if __name__ == '__main__':
 
     parser = ArgumentParser(add_help=False)
 
+    parser.add_argument(
+        '--wandb_on',
+        default = False,
+        action = 'store_true'  
+    )
     parser.add_argument(
         '--wandb_project',
         default = 'capstone',
@@ -164,7 +169,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--save_cp',
         default = False,
-        type = bool   
+        action = 'store_true'   
     )
 
     parser.add_argument(
