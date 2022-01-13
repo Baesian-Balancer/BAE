@@ -12,7 +12,7 @@ import math
 import sys
 # sys.path.insert(0,'/home/nickioan/capstone/igBIBLE/')
 
-from gym_bb import randomizers
+from gym_os2r import randomizers
 import functools
 
 def make_env(cfg):
@@ -20,7 +20,7 @@ def make_env(cfg):
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         import gym
-        import gym_bb
+        import gym_os2r
         return gym.make(env_id, **kwargs)
 
     # Create a partial function passing the environment id
