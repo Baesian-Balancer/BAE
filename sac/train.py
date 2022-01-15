@@ -2,6 +2,7 @@
 import wandb
 import gym
 import numpy as np
+from tqdm.auto import tqdm
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -60,16 +61,20 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
+            progress_bar = tqdm(range(1000),desc='Evaluation')
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
                 step+=1
+                progress_bar.update(1)
 
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
-        wandb.log({"average reward":average_episode_reward})
+        
+        if self.cfg.wandb_on:
+            wandb.log({"average reward":average_episode_reward})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model.pt"
             torch.save({
@@ -80,6 +85,7 @@ class Workspace(object):
 
     def run(self):
         episode, episode_reward, done = 0, 0, True
+        progress_bar = tqdm(range(int(self.cfg.num_train_steps)),desc='Train')
         while self.step < self.cfg.num_train_steps:
             if done:
                 # evaluate agent periodically
@@ -105,7 +111,6 @@ class Workspace(object):
                 self.agent.update(self.replay_buffer, self.step)
 
             next_obs, reward, done, _ = self.env.step(action)
-
             # allow infinite bootstrap
             done = float(done)
             # done_no_max = 0 if episode_step + 1 == self.env._max_episode_steps else done
@@ -117,6 +122,7 @@ class Workspace(object):
             obs = next_obs
             episode_step += 1
             self.step += 1
+            progress_bar.update(1)
 
 def main(cfg):
     if cfg.wandb_on:
@@ -187,7 +193,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--eval_frequency',
-        default = 10000,
+        default = 5000,
         type = int  
     )
 
