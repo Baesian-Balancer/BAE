@@ -89,7 +89,7 @@ class Workspace(object):
         while self.step < self.cfg.num_train_steps:
             if done:
                 # evaluate agent periodically
-                if self.step > 0 and self.step % self.cfg.eval_frequency == 0:
+                if self.step > 0 and episode % self.cfg.episode_eval_frequency == 0:
                     self.evaluate()
 
                 obs = self.env.reset()
@@ -194,6 +194,12 @@ if __name__ == '__main__':
     parser.add_argument(
         '--eval_frequency',
         default = 5000,
+        type = int  
+    )
+
+    parser.add_argument(
+        '--episode_eval_frequency',
+        default = 5,
         type = int  
     )
 
