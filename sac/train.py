@@ -69,6 +69,7 @@ class Workspace(object):
 
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
+        wandb.log({"average reward":average_episode_reward})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model.pt"
             torch.save({
