@@ -69,13 +69,15 @@ class Workspace(object):
                 step+=1
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
+        print(average_episode_reward)
 
     def run(self):
         self.evaluate()
 
 def main(cfg):
 
-    wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
+    if cfg.wandb_on:
+        wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
 
     agent_cfg = OmegaConf.load('config/agent/sac.yaml')
     agent_cfg.agent.params.device = cfg.device
@@ -87,6 +89,12 @@ def main(cfg):
 if __name__ == '__main__':
 
     parser = ArgumentParser(add_help=False)
+
+    parser.add_argument(
+        '--wandb_on',
+        default = False,
+        action = 'store_true'  
+    )
 
     parser.add_argument(
         '--wandb_project',
