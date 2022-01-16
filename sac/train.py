@@ -2,6 +2,7 @@
 import wandb
 import gym
 import numpy as np
+from tqdm.auto import tqdm
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -60,15 +61,20 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
+            progress_bar = tqdm(range(1000),desc='Evaluation')
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
                 step+=1
+                progress_bar.update(1)
 
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
+        
+        if self.cfg.wandb_on:
+            wandb.log({"average reward":average_episode_reward})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model.pt"
             torch.save({
@@ -79,10 +85,11 @@ class Workspace(object):
 
     def run(self):
         episode, episode_reward, done = 0, 0, True
+        progress_bar = tqdm(range(int(self.cfg.num_train_steps)),desc='Train')
         while self.step < self.cfg.num_train_steps:
             if done:
                 # evaluate agent periodically
-                if self.step > 0 and self.step % self.cfg.eval_frequency == 0:
+                if self.step > 0 and episode % self.cfg.episode_eval_frequency == 0:
                     self.evaluate()
 
                 obs = self.env.reset()
@@ -104,7 +111,6 @@ class Workspace(object):
                 self.agent.update(self.replay_buffer, self.step)
 
             next_obs, reward, done, _ = self.env.step(action)
-
             # allow infinite bootstrap
             done = float(done)
             # done_no_max = 0 if episode_step + 1 == self.env._max_episode_steps else done
@@ -116,11 +122,12 @@ class Workspace(object):
             obs = next_obs
             episode_step += 1
             self.step += 1
+            progress_bar.update(1)
 
 def main(cfg):
-
-    wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
-
+    if cfg.wandb_on:
+        wandb.init(project=cfg.wandb_project,entity=cfg.wandb_user)
+        
     agent_cfg = OmegaConf.load('config/agent/sac.yaml')
     agent_cfg.agent.params.device = cfg.device
     agent_cfg.agent.params.batch_size = cfg.batch_size
@@ -132,6 +139,11 @@ if __name__ == '__main__':
 
     parser = ArgumentParser(add_help=False)
 
+    parser.add_argument(
+        '--wandb_on',
+        default = False,
+        action = 'store_true'  
+    )
     parser.add_argument(
         '--wandb_project',
         default = 'capstone',
@@ -164,7 +176,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--save_cp',
         default = False,
-        type = bool   
+        action = 'store_true'   
     )
 
     parser.add_argument(
@@ -181,7 +193,13 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--eval_frequency',
-        default = 10000,
+        default = 5000,
+        type = int  
+    )
+
+    parser.add_argument(
+        '--episode_eval_frequency',
+        default = 5,
         type = int  
     )
 
