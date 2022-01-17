@@ -22,8 +22,6 @@ import hydra
 
 class Workspace(object):
     def __init__(self, cfg,agent_cfg):
-        self.work_dir = os.getcwd()
-        print(f'workspace: {self.work_dir}')
 
         if not os.path.isdir(cfg.cp_dir) and cfg.save_cp:
             os.mkdir(cfg.cp_dir)
