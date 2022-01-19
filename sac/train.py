@@ -74,7 +74,7 @@ class Workspace(object):
         if self.cfg.wandb_on:
             wandb.log({"average reward":average_episode_reward})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
-            PATH = self.cfg.cp_dir + "best_model.pt"
+            PATH = self.cfg.cp_dir + "best_model_" + str(self.step) + ".pt"
             torch.save({
             'actor_state_dict': self.agent.actor.state_dict(),
             'critic_state_dict': self.agent.critic.state_dict(),
@@ -107,7 +107,6 @@ class Workspace(object):
             # run training update
             if self.step >= self.cfg.exploration_steps:
                 self.agent.update(self.replay_buffer, self.step)
-
             next_obs, reward, done, _ = self.env.step(action)
             # allow infinite bootstrap
             done = float(done)
