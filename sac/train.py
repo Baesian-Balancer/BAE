@@ -31,8 +31,8 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
-        print(self.env.observation_space.shape[0])
-        print(self.env.action_space.shape[0])
+        # print(self.env.observation_space.shape[0])
+        # print(self.env.action_space.shape[0])
 
 
         agent_cfg.agent.params.obs_dim = self.env.observation_space.shape[0]
@@ -59,7 +59,7 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
-            progress_bar = tqdm(range(1000),desc='Evaluation')
+            progress_bar = tqdm(range(10000),desc='Evaluation')
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
@@ -116,7 +116,6 @@ class Workspace(object):
             episode_reward += reward
             self.replay_buffer.add(obs, action, reward, next_obs, done,
                                    done_no_max)
-            
             obs = next_obs
             episode_step += 1
             self.step += 1
