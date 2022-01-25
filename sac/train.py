@@ -33,6 +33,7 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
+        self.env.render('human')
         print(self.env.observation_space.shape[0])
         print(self.env.action_space.shape[0])
 

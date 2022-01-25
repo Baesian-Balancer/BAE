@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Using two fully-connected linear layers for NN to output mean, std describing normal
 # distribution over actions.
 class PolicyNetwork(nn.Module):
-    def __init__(self, num_inputs, hidden_size, num_outputs, learning_rate, gamma):
+    def __init__(self, num_inputs, hidden_size, num_outputs, learning_rate, gamma, device):
         super(PolicyNetwork, self).__init__()
         self.num_outputs = num_outputs
         self.gamma = gamma

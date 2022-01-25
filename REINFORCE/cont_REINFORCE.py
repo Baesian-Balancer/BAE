@@ -7,26 +7,26 @@ import time
 import functools
 from gym_ignition.utils import logger
 from PolicyNet import PolicyNetwork
-from gym_bb import randomizers
+from gym_os2r import randomizers
 import timeit
 # Set verbosity
 logger.set_level(gym.logger.ERROR)
 # logger.set_level(gym.logger.DEBUG)
 
-# Available tasks
-env_id = "Monopod-Gazebo-v2"
+
+env_id = "Monopod-balance-v1"
 
 def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
     import gym
-    import gym_bb
+    import gym_os2r
     return gym.make(env_id, **kwargs)
 
 # Create a partial function passing the environment id
-make_env = functools.partial(make_env_from_id, env_id=env_id)
+kwargs = {'task_mode': 'fixed_hip'}
+make_env = functools.partial(make_env_from_id, env_id=env_id, **kwargs)
+# env = randomizers.monopod.MonopodEnvRandomizer(env=make_env)
+env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=make_env)
 
-# Wrap the environment with the randomizer.
-# This is a simple example no randomization are applied.
-env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)
 
 # Enable the rendering
 # env.render('human')
@@ -34,7 +34,7 @@ env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)
 env.seed(69)
 
 # Initialize policy network
-HIDDEN_SIZE = 2048
+HIDDEN_SIZE = 256
 OBS_SHAPE = env.observation_space.shape
 OBS_SIZE = OBS_SHAPE[0]
 ACTION_SIZE = 2
@@ -54,10 +54,12 @@ def normalize_inputs(observations):
         # Get obs boundaries
         max_obs = env.observation_space.high[i]
         min_obs = env.observation_space.low[i]
-
-        # Maxmin normalize observations
-        obs_normed = (obs - min_obs) / (max_obs - min_obs)
-        observation_normed[i] = obs_normed
+        if np.any(np.isinf(max_obs)) or np.any(np.isinf(min_obs)):
+            obs_normed = (1 + obs / (1 + abs(obs))) * 0.5
+        else:    
+            # Maxmin normalize observations
+            obs_normed = (obs - min_obs) / (max_obs - min_obs)
+            observation_normed[i] = obs_normed
     return observation_normed
 
     

@@ -7,43 +7,43 @@ import os
 import time
 import functools
 from gym_ignition.utils import logger
-from gym_bb import randomizers
+from gym_os2r import randomizers
 
 from PolicyNet import PolicyNetwork
 from StateTransitionNet import StateTransitionNet
 
 from sklearn.metrics import mean_squared_error
-
+import cProfile, pstats
 # Set verbosity
 logger.set_level(gym.logger.ERROR)
 # logger.set_level(gym.logger.DEBUG)
 
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-# device = torch.device("cpu")
+# device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cpu")
 print(device)
 # Available tasks
-env_id = "Monopod-Gazebo-v2"
+env_id = "Monopod-balance-v1"
 
 def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
     import gym
-    import gym_bb
+    import gym_os2r
     return gym.make(env_id, **kwargs)
 
 # Create a partial function passing the environment id
-make_env = functools.partial(make_env_from_id, env_id=env_id)
-
-# Wrap the environment with the randomizer.
-# This is a simple example no randomization are applied.
-env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)
+kwargs = {'task_mode': 'fixed_hip'}
+make_env = functools.partial(make_env_from_id, env_id=env_id, **kwargs)
+# env = randomizers.monopod.MonopodEnvRandomizer(env=make_env)
+env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=make_env)
 
 # Initialize the seed
 env.seed(69)
 # env.render('human')
 
 # Initialize networks
-PN_HIDDENSIZE = 2048
+PN_HIDDENSIZE = 256
 ST_HIDDENSIZE = 256
 OBS_SIZE = env.observation_space.shape[0]
+print(OBS_SIZE)
 ACTION_SIZE = env.action_space.shape[0]
 STATE_INPUT_SIZE = OBS_SIZE + ACTION_SIZE
 PN_LR = 1e-4
@@ -62,7 +62,7 @@ policy_net.to(device)
 transition_net.to(device)
 
 # Training params
-NUM_EPISODES = 100
+NUM_EPISODES = 50
 MAX_STEPS = 3000
 ROLLOUT_EVERY = 10
 UPDATE_EVERY = 100
@@ -80,10 +80,12 @@ def normalize_inputs(observations):
         # Get obs boundaries
         max_obs = env.observation_space.high[i]
         min_obs = env.observation_space.low[i]
-
-        # Maxmin normalize observations
-        obs_normed = (obs - min_obs) / (max_obs - min_obs)
-        observation_normed[i] = obs_normed
+        if np.any(np.isinf(max_obs)) or np.any(np.isinf(min_obs)):
+            obs_normed = (1 + obs / (1 + abs(obs))) * 0.5
+        else:    
+            # Maxmin normalize observations
+            obs_normed = (obs - min_obs) / (max_obs - min_obs)
+            observation_normed[i] = obs_normed
     return observation_normed
 
 
@@ -109,6 +111,7 @@ def main():
         done = False
         obs = env.reset()
         obs = normalize_inputs(obs)
+        # print(obs)
 
         # # Perform rollouts. 
         # if episode >= 100 and episode % ROLLOUT_EVERY == 0:
@@ -154,30 +157,25 @@ def main():
             episode_loss += loss
             
             step += 1
-            if done is not True:
-                done = True if step == MAX_STEPS else False
+
             if done:
-                # if step > 400:
-                #     rewards = [rew + step for rew in rewards]
                 policy_net.update_policy(policy_net, rewards, log_probs)
                 # transition_net.update_net(transition_net, pred_states, new_states)
                 episode_rewards.append(episode_reward)
                 episode_losses.append(episode_loss)
-            elif step % UPDATE_EVERY == 0:
-                policy_net.update_policy(policy_net, rewards, log_probs)
-                # transition_net.update_net(transition_net, pred_states, new_states)
-                rewards = []
-                log_probs = []
+            # elif step % UPDATE_EVERY == 0:
+            #     policy_net.update_policy(policy_net, rewards, log_probs)
+            #     # transition_net.update_net(transition_net, pred_states, new_states)
+            #     rewards = []
+            #     log_probs = []
             obs = new_obs
-            if step == 2999:
-                print('ALL DONE')
         if episode % LOG_EVERY == 0 and episode != 0:
             # print(f"Last Episode took: {time.time() - start} Steps: {step}")
             print(f"Episode {episode} - Last-{LOG_EVERY} Average: {np.mean(episode_rewards[episode-LOG_EVERY:episode])}")
             print(f"Episode {episode} - Last-{LOG_EVERY} Average: {np.mean(losses[episode-LOG_EVERY:episode])}")
     
     # # Save stuffs
-    torch.save(transition_net, "transition_net.pt")
+    torch.save(policy_net.state_dict(), "policy_net.pt")
 
     # Plotting stuffs
     mean_rewards = np.zeros(NUM_EPISODES)
@@ -209,5 +207,10 @@ def main():
     # plt.show()
 
 if __name__ == "__main__":
+    # profiler = cProfile.Profile()
+    # profiler.enable()
     main()
+    # profiler.disable()
+    # stats = pstats.Stats(profiler).sort_stats('cumtime')
+    # stats.print_stats()
     # test_rollouts()

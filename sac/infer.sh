@@ -1,4 +1,4 @@
 #!/bin/sh
-python infer.py \
+python3 infer.py \
 --device cpu \
---cp_path best_model.pt \
+--cp_path best_model_1414723.pt \

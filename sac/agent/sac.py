@@ -1,18 +1,23 @@
+from logging.config import dictConfig
+import math
+import copy
+import hydra
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
-
-from agent import Agent
 import utils
+import typing
+from typing import Dict, Optional, Any
+from omegaconf import OmegaConf
+from agent import Agent
+from agent.actor import DiagGaussianActor
+from agent.critic import DoubleQCritic
 
-import hydra
 
-
-class SACAgent(Agent):
+class SACAgent(Agent, nn.Module):
     """SAC algorithm."""
-    def __init__(self, obs_dim, action_dim, action_range, device, critic_cfg,
+    def __init__(self, obs_dim, action_dim, action_range, device, critic_cfg: Dict[str, Any],
                  actor_cfg, discount, init_temperature, alpha_lr, alpha_betas,
                  actor_lr, actor_betas, actor_update_frequency, critic_lr,
                  critic_betas, critic_tau, critic_target_update_frequency,
@@ -20,7 +25,7 @@ class SACAgent(Agent):
         super().__init__()
 
         self.action_range = action_range
-        self.device = torch.device(device)
+        self.device = torch.device(str(device))
         self.discount = discount
         self.critic_tau = critic_tau
         self.actor_update_frequency = actor_update_frequency
@@ -34,6 +39,28 @@ class SACAgent(Agent):
         self.critic_target.load_state_dict(self.critic.state_dict())
 
         self.actor = hydra.utils.instantiate(actor_cfg).to(self.device)
+
+
+        # DoubleQCritic takes parameters: obs_dim, action_dim, hidden_dim,
+        # hidden_depth
+        # hidden_dim = critic_cfg['hidden_dim']
+        # hidden_depth = critic_cfg['hidden_depth']
+        
+        # self.critic = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
+        # self.critic_target = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
+        # self.critic_target.load_state_dict(self.critic.state_dict())
+
+        # DiagGaussianActor takes parameters: obs_dim, action_dim, hidden_dim,
+        # hidden_depth, log_std_bounds
+        # self.actor = DiagGaussianActor(obs_dim, action_dim, hidden_dim,
+        #                 hidden_depth, actor_cfg["params"]['log_std_bounds']).to(self.device)
+
+        # self.critic = critic_cfg["critic"]
+        # self.actor = critic_cfg["actor"]
+        # self.critic_target = copy.deepcopy(critic_cfg["critic"])
+        # self.critic_target.load_state_dict(self.critic.state_dict())
+
+
 
         self.log_alpha = torch.tensor(np.log(init_temperature)).to(self.device)
         self.log_alpha.requires_grad = True
@@ -65,8 +92,10 @@ class SACAgent(Agent):
     def alpha(self):
         return self.log_alpha.exp()
 
+    @torch.jit.export
     def act(self, obs, sample=False):
-        obs = torch.FloatTensor(obs).to(self.device)
+        # obs = torch.FloatTensor(obs).to(self.device)
+        obs = torch.tensor(obs).float().to(self.device)
         obs = obs.unsqueeze(0)
         dist = self.actor(obs)
         action = dist.sample() if sample else dist.mean

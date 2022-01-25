@@ -20,7 +20,7 @@ from omegaconf import OmegaConf
 import hydra
 
 class Workspace(object):
-    def __init__(self, cfg,agent_cfg):
+    def __init__(self, cfg, agent_cfg):
         self.work_dir = os.getcwd()
         print(f'workspace: {self.work_dir}')
 
@@ -32,9 +32,11 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
+        self.env.render('human')
         print(self.env.observation_space.shape[0])
         print(self.env.action_space.shape[0])
-
+        print(self.env.action_space.low.min())
+        print(self.env.action_space.high.max()),
 
         agent_cfg.agent.params.obs_dim = self.env.observation_space.shape[0]
         agent_cfg.agent.params.action_dim = self.env.action_space.shape[0]
@@ -42,10 +44,11 @@ class Workspace(object):
             float(self.env.action_space.low.min()),
             float(self.env.action_space.high.max())
         ]
+        # print(agent_cfg.agent)
         self.agent = hydra.utils.instantiate(agent_cfg.agent)
-
+        print(self.agent)
         checkpoint = torch.load(cfg.cp_path)
-
+        
         self.agent.critic.load_state_dict(checkpoint['critic_state_dict'])
         self.agent.actor.load_state_dict(checkpoint['actor_state_dict'])
         
@@ -61,7 +64,8 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
-            while not done:
+            # while not done:
+            for i in range(1_000):
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
