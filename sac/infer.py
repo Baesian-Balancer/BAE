@@ -20,10 +20,8 @@ from omegaconf import OmegaConf
 import hydra
 
 class Workspace(object):
-    def __init__(self, cfg, agent_cfg):
-        self.work_dir = os.getcwd()
-        print(f'workspace: {self.work_dir}')
-
+    def __init__(self, cfg,agent_cfg):
+        
         if not os.path.isfile(cfg.cp_path):
             raise FileExistsError("Model checkpoint path does not exist")
 

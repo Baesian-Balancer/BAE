@@ -22,8 +22,6 @@ import hydra
 
 class Workspace(object):
     def __init__(self, cfg,agent_cfg):
-        self.work_dir = os.getcwd()
-        print(f'workspace: {self.work_dir}')
 
         if not os.path.isdir(cfg.cp_dir) and cfg.save_cp:
             os.mkdir(cfg.cp_dir)
@@ -62,7 +60,7 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
-            progress_bar = tqdm(range(1000),desc='Evaluation')
+            progress_bar = tqdm(range(10000),desc='Evaluation')
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
@@ -77,7 +75,7 @@ class Workspace(object):
         if self.cfg.wandb_on:
             wandb.log({"average reward":average_episode_reward})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
-            PATH = self.cfg.cp_dir + "best_model.pt"
+            PATH = self.cfg.cp_dir + "best_model_" + str(self.step) + ".pt"
             torch.save({
             'actor_state_dict': self.agent.actor.state_dict(),
             'critic_state_dict': self.agent.critic.state_dict(),
@@ -110,7 +108,6 @@ class Workspace(object):
             # run training update
             if self.step >= self.cfg.exploration_steps:
                 self.agent.update(self.replay_buffer, self.step)
-
             next_obs, reward, done, _ = self.env.step(action)
             # allow infinite bootstrap
             done = float(done)
@@ -119,7 +116,6 @@ class Workspace(object):
             episode_reward += reward
             self.replay_buffer.add(obs, action, reward, next_obs, done,
                                    done_no_max)
-            
             obs = next_obs
             episode_step += 1
             self.step += 1
