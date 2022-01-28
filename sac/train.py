@@ -119,6 +119,14 @@ class Workspace(object):
             episode_step += 1
             self.step += 1
             progress_bar.update(1)
+        if self.cfg.save_cp:
+            PATH = self.cfg.cp_dir + "last_step_model"  + ".pt"
+            torch.save({
+            'actor_state_dict': self.agent.actor.state_dict(),
+            'critic_state_dict': self.agent.critic.state_dict(),
+            }, PATH)
+
+
 
 def main(cfg):
     if cfg.wandb_on:
