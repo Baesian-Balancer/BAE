@@ -74,7 +74,7 @@ class SACAgent(Agent):
         assert action.ndim == 2 and action.shape[0] == 1
         return utils.to_np(action[0])
 
-    def update_critic(self, obs, action, reward, next_obs, not_done, step):
+    def update_critic(self, obs, action, reward, next_obs, not_done, step,idxes,weights,replay_buffer):
         dist = self.actor(next_obs)
         next_action = dist.rsample()
         log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
@@ -86,11 +86,15 @@ class SACAgent(Agent):
 
         # get current Q estimates
         current_Q1, current_Q2 = self.critic(obs, action)
-        critic_loss = F.mse_loss(current_Q1, target_Q) + F.mse_loss(
-            current_Q2, target_Q)
+        critic_loss = F.mse_loss(current_Q1, target_Q,reduction='none') + F.mse_loss(
+            current_Q2, target_Q,reduction='none')
+
+        if replay_buffer.name == 'per':
+            td_error  = F.l1_loss(current_Q1, target_Q,reduction='none').detach() + F.l1_loss(current_Q2, target_Q,reduction='none').detach()
+            replay_buffer.update_priorities(idxes,td_error.detach().squeeze().cpu().numpy())    
         # Optimize the critic
         self.critic_optimizer.zero_grad()
-        critic_loss.backward()
+        (weights*critic_loss).mean().backward()
         self.critic_optimizer.step()
 
     def update_actor_and_alpha(self, obs, step):
@@ -115,10 +119,10 @@ class SACAgent(Agent):
             self.log_alpha_optimizer.step()
 
     def update(self, replay_buffer, step):
-        obs, action, reward, next_obs, not_done, not_done_no_max = replay_buffer.sample(
+        idxes,obs, action, reward, next_obs, not_done, not_done_no_max,weights = replay_buffer.sample(
             self.batch_size)
 
-        self.update_critic(obs, action, reward, next_obs, not_done_no_max, step)
+        self.update_critic(obs, action, reward, next_obs, not_done_no_max, step,idxes,weights,replay_buffer)
 
         if step % self.actor_update_frequency == 0:
             self.update_actor_and_alpha(obs, step)

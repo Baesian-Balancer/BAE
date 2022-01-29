@@ -13,7 +13,7 @@ import sys
 import pickle as pkl
 # from BB_gym_Envs import randomizers
 import functools
-from replay_buffer import ReplayBuffer
+from replay_buffer import ReplayBuffer,ReplayBufferPER
 import utils
 from argparse import ArgumentParser
 from omegaconf import OmegaConf
@@ -43,10 +43,16 @@ class Workspace(object):
         ]
         self.agent = hydra.utils.instantiate(agent_cfg.agent)
 
-        self.replay_buffer = ReplayBuffer(self.env.observation_space.shape,
-                                          self.env.action_space.shape,
-                                          int(cfg.replay_buffer_capacity),
-                                          self.device)
+        if cfg.replay_buffer == 'uniform':
+            self.replay_buffer = ReplayBuffer(self.env.observation_space.shape,
+                                              self.env.action_space.shape,
+                                              cfg,
+                                              self.device)
+        elif cfg.replay_buffer == 'per':
+            self.replay_buffer = ReplayBufferPER(self.env.observation_space.shape,
+                                            self.env.action_space.shape,
+                                            cfg,
+                                            self.device)
         self.step = 0
 
         self.best_avg_reward = 0
@@ -82,13 +88,16 @@ class Workspace(object):
             self.best_avg_reward = average_episode_reward
 
     def run(self):
+        priority_weight_increase = (1 - 0.4) / (self.cfg.num_train_steps - self.cfg.exploration_steps)
         episode, episode_reward, done = 0, 0, True
         progress_bar = tqdm(range(int(self.cfg.num_train_steps)),desc='Train')
+        steps_to_eval = 0
         while self.step < self.cfg.num_train_steps:
             if done:
                 # evaluate agent periodically
-                if self.step > 0 and episode % self.cfg.episode_eval_frequency == 0:
+                if self.step > 0 and steps_to_eval >= self.cfg.eval_frequency:
                     self.evaluate()
+                    steps_to_eval = 0
 
                 obs = self.env.reset()
                 self.agent.reset()
@@ -107,6 +116,8 @@ class Workspace(object):
             # run training update
             if self.step >= self.cfg.exploration_steps:
                 self.agent.update(self.replay_buffer, self.step)
+                if self.replay_buffer.name == 'per':
+                    self.replay_buffer.priority_weight = min(self.replay_buffer.priority_weight + priority_weight_increase, 1)
             next_obs, reward, done, _ = self.env.step(action)
             # allow infinite bootstrap
             done = float(done)
@@ -118,6 +129,7 @@ class Workspace(object):
             obs = next_obs
             episode_step += 1
             self.step += 1
+            steps_to_eval +=1
             progress_bar.update(1)
         if self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "last_step_model"  + ".pt"
@@ -217,6 +229,12 @@ if __name__ == '__main__':
         '--replay_buffer_capacity',
         default = 1e6,
         type = int
+    )
+
+    parser.add_argument(
+        '--replay_buffer',
+        default = 'uniform',
+        type = str  
     )
 
     parser.add_argument(
