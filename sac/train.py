@@ -31,7 +31,7 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
-        self.env.render('human')
+        # self.env.render('human')
         print(self.env.observation_space.shape[0])
         print(self.env.action_space.shape[0])
 
@@ -92,6 +92,7 @@ class Workspace(object):
                     self.evaluate()
 
                 obs = self.env.reset()
+                # print(obs)
                 self.agent.reset()
                 done = False
                 episode_reward = 0
@@ -202,7 +203,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--num_eval_episodes',
-        default= 10,
+        default= 1,
         type = int  
     )
 
@@ -220,7 +221,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--exploration_steps',
-        default = 5000,
+        default = 10000,
         type = int
     )
 

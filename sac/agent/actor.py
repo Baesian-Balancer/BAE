@@ -3,6 +3,7 @@ import torch
 import math
 from torch import nn
 import torch.nn.functional as F
+from torch.distributions import constraints
 from torch import distributions as pyd
 
 import utils
@@ -71,7 +72,6 @@ class DiagGaussianActor(nn.Module):
     @torch.jit.ignore
     def forward(self, obs):
         mu, log_std = self.trunk(obs).chunk(2, dim=-1)
-
         # constrain log_std inside [log_std_min, log_std_max]
         log_std = torch.tanh(log_std)
         log_std_min, log_std_max = self.log_std_bounds
@@ -86,7 +86,8 @@ class DiagGaussianActor(nn.Module):
         dist = SquashedNormal(mu, std)
         return dist
     
-    def act(self, obs):
+    # NOTE: Used for torchscript tracing. Returns the mean and std.
+    def forward_trace(self, obs):
         mu, log_std = self.trunk(obs).chunk(2, dim=-1)
 
         # constrain log_std inside [log_std_min, log_std_max]
@@ -94,11 +95,30 @@ class DiagGaussianActor(nn.Module):
         log_std_min, log_std_max = self.log_std_bounds
         log_std = log_std_min + 0.5 * (log_std_max - log_std_min) * (log_std +
                                                                      1)
-
         std = log_std.exp()
+        return mu, std
 
-        # self.outputs['mu'] = mu
-        # self.outputs['std'] = std
+class BetaActor(nn.Module):
+    """torch.distributions implementation of an diagonal Gaussian policy."""
+    def __init__(self, obs_dim: int, action_dim: int, hidden_dim: int, hidden_depth: int):
+        super().__init__()
 
-        # dist = SquashedNormal(mu, std)
-        return (mu, std)
+        self.trunk = utils.mlp(obs_dim, hidden_dim, 2 * action_dim,
+                               hidden_depth)
+
+        self.outputs = dict()
+        self.apply(utils.weight_init)
+
+    def forward(self, obs):
+        alpha, beta = self.trunk(obs).chunk(2, dim=-1)
+
+        # Keep alpha, beta >= 1
+        alpha = torch.max(alpha, torch.tensor([1]))
+        beta = torch.max(beta, torch.tensor([1]))
+
+        self.outputs['alpha'] = alpha
+        self.outputs['beta'] = beta
+
+        # Create beta-distribution
+        dist = pyd.Beta(alpha, beta)
+        return dist

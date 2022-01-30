@@ -16,8 +16,8 @@ from gym_os2r import randomizers
 import functools
 
 def make_env(cfg):
-    # env_id = cfg.env_id # "Monopod-balance-v1"
-    env_id = "Monopod-stand-v1"
+    env_id = cfg.env_id # "Monopod-balance-v1"
+    # env_id = "Monopod-stand-v1"
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         import gym

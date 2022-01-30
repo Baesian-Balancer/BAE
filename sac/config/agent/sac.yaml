@@ -38,3 +38,11 @@ diag_gaussian_actor:
     hidden_depth: 2
     hidden_dim: 256
     log_std_bounds: [-5, 2]
+
+beta_actor:
+  class: agent.actor.BetaActor
+  params:
+    obs_dim: ${agent.params.obs_dim}
+    action_dim: ${agent.params.action_dim}
+    hidden_depth: 2
+    hidden_dim: 256

@@ -20,17 +20,6 @@ def main():
     export_type = "tracing" # tracing/scripting
     ######### End Options
 
-    # # # Load Model
-    # # OBS_SIZE = 8
-    # # ACTION_SIZE = 2
-    # # PN_LR = 1e-4
-    # # ST_LR = 1e-3
-    # # GAMMA = 0.95
-    # # PN_HIDDENSIZE = 256
-    # # device = "cpu"
-    # # network = PolicyNetwork(OBS_SIZE, PN_HIDDENSIZE, ACTION_SIZE, PN_LR, GAMMA, device)
-    # # network.load_state_dict(torch.load(model_file))
-    # # # network.eval()
     
     # # # Load SAC Model
     OBS_SIZE = 10 # Free hip
@@ -49,26 +38,26 @@ def main():
     ]
     agent = hydra.utils.instantiate(agent_cfg.agent)
     actor = agent.actor
-    # # agent_cfg.agent.params.critic_cfg = c_cfg
-    # agent_cfg = OmegaConf.to_container(agent_cfg, resolve=True)
+    # # # agent_cfg.agent.params.critic_cfg = c_cfg
+    # # agent_cfg = OmegaConf.to_container(agent_cfg, resolve=True)
     
-    # hidden_dim = agent_cfg["agent"]["params"]["critic_cfg"]["params"]["hidden_dim"]
-    # hidden_depth = agent_cfg["agent"]["params"]["critic_cfg"]["params"]["hidden_depth"]
-    # log_std_bounds = agent_cfg["agent"]["params"]["actor_cfg"]["params"]["log_std_bounds"]
+    # # hidden_dim = agent_cfg["agent"]["params"]["critic_cfg"]["params"]["hidden_dim"]
+    # # hidden_depth = agent_cfg["agent"]["params"]["critic_cfg"]["params"]["hidden_depth"]
+    # # log_std_bounds = agent_cfg["agent"]["params"]["actor_cfg"]["params"]["log_std_bounds"]
 
-    # critic = DoubleQCritic(OBS_SIZE, ACTION_SIZE, hidden_dim, hidden_depth)
-    # actor = DiagGaussianActor(OBS_SIZE, ACTION_SIZE, hidden_dim, hidden_depth, log_std_bounds)
+    # # critic = DoubleQCritic(OBS_SIZE, ACTION_SIZE, hidden_dim, hidden_depth)
+    # # actor = DiagGaussianActor(OBS_SIZE, ACTION_SIZE, hidden_dim, hidden_depth, log_std_bounds)
     
-    # c_cfg = {"critic": critic, "actor": actor}
-    # agent_cfg["agent"]["params"]["critic_cfg"] = c_cfg
+    # # c_cfg = {"critic": critic, "actor": actor}
+    # # agent_cfg["agent"]["params"]["critic_cfg"] = c_cfg
 
-    # agent = SACAgent(**agent_cfg["agent"]["params"])
+    # # agent = SACAgent(**agent_cfg["agent"]["params"])
 
     checkpoint = torch.load(model_file)
     
-    # agent.critic = critic
-    # agent.actor = actor
-    # agent.critic.load_state_dict(checkpoint['critic_state_dict'])
+    # # agent.critic = critic
+    # # agent.actor = actor
+    # # agent.critic.load_state_dict(checkpoint['critic_state_dict'])
 
     actor.load_state_dict(checkpoint['actor_state_dict'])
 
