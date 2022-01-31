@@ -98,6 +98,24 @@ class DiagGaussianActor(nn.Module):
         std = log_std.exp()
         return mu, std
 
+
+class SquashedBeta(pyd.transformed_distribution.TransformedDistribution):
+    def __init__(self, alpha, beta):
+        self.alpha = alpha
+        self.beta = beta
+
+        self.base_dist = pyd.Beta(alpha, beta)
+        transforms = [TanhTransform()]
+        super().__init__(self.base_dist, transforms)
+
+    @property
+    def mean(self):
+        mu = 1 / (1 + self.beta / self.alpha)
+        for tr in self.transforms:
+            mu = tr(mu)
+        return mu
+
+
 class BetaActor(nn.Module):
     """torch.distributions implementation of an diagonal Gaussian policy."""
     def __init__(self, obs_dim: int, action_dim: int, hidden_dim: int, hidden_depth: int):
@@ -120,5 +138,6 @@ class BetaActor(nn.Module):
         self.outputs['beta'] = beta
 
         # Create beta-distribution
-        dist = pyd.Beta(alpha, beta)
+        # dist = pyd.Beta(alpha, beta)
+        dist = SquashedBeta(alpha, beta)
         return dist

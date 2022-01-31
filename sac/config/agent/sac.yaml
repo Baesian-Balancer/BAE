@@ -7,7 +7,7 @@ agent:
     action_range: ??? # to be specified later
     device: ???
     critic_cfg: ${double_q_critic}
-    actor_cfg: ${diag_gaussian_actor}
+    actor_cfg: ${beta_actor}
     discount: 0.99
     init_temperature: 0.1
     alpha_lr: 3e-4
