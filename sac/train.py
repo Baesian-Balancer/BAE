@@ -73,7 +73,7 @@ class Workspace(object):
         average_episode_reward /= self.cfg.num_eval_episodes
         
         if self.cfg.wandb_on:
-            wandb.log({"average reward":average_episode_reward})
+            wandb.log({"average reward": average_episode_reward, "train_step": step.train})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model_" + str(self.step) + ".pt"
             torch.save({
@@ -99,12 +99,19 @@ class Workspace(object):
                 episode_step = 0
                 episode += 1
 
-            # sample action for data collection
+            # sample action randomly for data collection.
+            # Actions persist for multiple time steps if using
+            # multi_step.
             if self.step < self.cfg.exploration_steps:
-                action = self.env.action_space.sample()
+                if self.step % self.multi_step == 0:
+                    action = self.env.action_space.sample()
             else:
                 with utils.eval_mode(self.agent):
-                    action = self.agent.act(obs, sample=True)
+                    if self.step < self.cfg.multi_exploration_steps:
+                        if self.step % self.multi_step == 0:
+                            action = self.agent.act(obs, sample=True)
+                    else:
+                        action = self.agent.act(obs, sample=True)
 
             # run training update
             if self.step >= self.cfg.exploration_steps:
@@ -142,14 +149,22 @@ if __name__ == '__main__':
         default = False,
         action = 'store_true'  
     )
+
     parser.add_argument(
         '--wandb_project',
         default = 'capstone',
         type = str    
     )
+
+    parser.add_argument(
+        '--entity',
+        default = 'open_sim2real',
+        type = str
+    )
+    
     parser.add_argument(
         '--wandb_user',
-        default = 'nickioan',
+        default = 'KeithG33',
         type = str    
     )
 
@@ -231,6 +246,18 @@ if __name__ == '__main__':
         type = int
     )
 
+    parser.add_argument(
+        '--multi_step',
+        default = 1,
+        type = int
+    )
+
+    parser.add_argument(
+        '--multi_exploration_steps',
+        default = 0,
+        type = int
+    )
+    
     args = parser.parse_args()
 
     main(args)
