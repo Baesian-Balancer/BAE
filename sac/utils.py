@@ -12,28 +12,28 @@ import math
 import sys
 # sys.path.insert(0,'/home/nickioan/capstone/igBIBLE/')
 
-from gym_os2r import randomizers
-import functools
-
-def make_env(cfg):
-    env_id = cfg.env_id #"Monopod-balance-v1"
-
-    def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
-        import gym
-        import gym_os2r
-        return gym.make(env_id, **kwargs)
-
-    # Create a partial function passing the environment id
-    create_env = functools.partial(make_env_from_id, env_id=env_id)
-    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-
-    # Enable the rendering
-    # env.render('human')
-
-    # Initialize the seed
-    env.seed(cfg.seed)
-    print(env)
-    return env
+# from gym_os2r import randomizers
+# import functools
+#
+# def make_env(cfg):
+#     env_id = cfg.env_id #"Monopod-balance-v1"
+#
+#     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
+#         import gym
+#         import gym_os2r
+#         return gym.make(env_id, **kwargs)
+#
+#     # Create a partial function passing the environment id
+#     create_env = functools.partial(make_env_from_id, env_id=env_id)
+#     env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+#
+#     # Enable the rendering
+#     # env.render('human')
+#
+#     # Initialize the seed
+#     env.seed(cfg.seed)
+#     print(env)
+#     return env
 
 class eval_mode(object):
     def __init__(self, *models):

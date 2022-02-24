@@ -25,7 +25,7 @@ import hydra
 
 class Workspace(object):
     def __init__(self, cfg,agent_cfg):
-        
+
         if not os.path.isfile(cfg.cp_path):
             raise FileExistsError("Model checkpoint path does not exist")
 
@@ -49,7 +49,7 @@ class Workspace(object):
 
         self.agent.critic.load_state_dict(checkpoint['critic_state_dict'])
         self.agent.actor.load_state_dict(checkpoint['actor_state_dict'])
-        
+
         self.step = 0
 
         self.best_avg_reward = 0
@@ -65,11 +65,11 @@ class Workspace(object):
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
-                obs, reward, done, _ = self.env.step(action)
+                obs, reward, done, _ = self.env.step(action * 0.01)
                 episode_reward += reward
                 step+=1
             # average_episode_reward += episode_reward
-        self.env.close()
+        # self.env.close()
         # average_episode_reward /= self.cfg.num_eval_episodes
         # print(average_episode_reward)
 
@@ -95,48 +95,48 @@ if __name__ == '__main__':
     parser.add_argument(
         '--wandb_on',
         default = False,
-        action = 'store_true'  
+        action = 'store_true'
     )
 
     parser.add_argument(
         '--wandb_project',
         default = 'capstone',
-        type = str    
+        type = str
     )
     parser.add_argument(
         '--wandb_user',
         default = 'nickioan',
-        type = str    
+        type = str
     )
 
     parser.add_argument(
         '--device',
         default = 'cuda',
-        type = str    
+        type = str
     )
 
     parser.add_argument(
         '--seed',
         default = 42,
-        type = int    
+        type = int
     )
 
     parser.add_argument(
         '--env_id',
         default = 'Monopod-stand-v1',
-        type = str   
+        type = str
     )
 
     parser.add_argument(
         '--cp_path',
         default = 'exp/best_model.pt',
-        type = str    
+        type = str
     )
 
     parser.add_argument(
         '--num_eval_episodes',
         default= 10,
-        type = int  
+        type = int
     )
 
     args = parser.parse_args()
