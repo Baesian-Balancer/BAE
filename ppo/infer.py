@@ -5,18 +5,30 @@ import torch
 from tqdm.auto import tqdm
 from torch.optim import Adam
 import gym
-import gym_os2r_real
+import gym_os2r
 import time
 import core
 import functools
 import os
+from gym_os2r import randomizers
 # from spinup.utils.logx import EpochLogger
 # from spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
 # from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
 
 
 def make_env(env_id):
-    env = gym.make(env_id)
+    def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
+        return gym.make(env_id, **kwargs)
+
+    # Create a partial function passing the environment id
+    create_env = functools.partial(make_env_from_id, env_id=env_id)
+    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+
+    # Enable the rendering
+    env.render('human')
+
+    # Initialize the seed
+    print(env)
     return env
 
 class PPOBuffer:
@@ -38,9 +50,6 @@ class PPOBuffer:
         self.ptr, self.path_start_idx, self.max_size = 0, 0, size
 
     def store(self, obs, act, rew, val, logp):
-        """
-        Append one timestep of agent-environment interaction to the buffer.
-        """
         assert self.ptr < self.max_size     # buffer has to have room so you can store
         self.obs_buf[self.ptr] = obs
         self.act_buf[self.ptr] = act
@@ -50,20 +59,6 @@ class PPOBuffer:
         self.ptr += 1
 
     def finish_path(self, last_val=0):
-        """
-        Call this at the end of a trajectory, or when one gets cut off
-        by an epoch ending. This looks back in the buffer to where the
-        trajectory started, and uses rewards and value estimates from
-        the whole trajectory to compute advantage estimates with GAE-Lambda,
-        as well as compute the rewards-to-go for each state, to use as
-        the targets for the value function.
-
-        The "last_val" argument should be 0 if the trajectory ended
-        because the agent reached a terminal state (died), and otherwise
-        should be V(s_T), the value function estimated for the last state.
-        This allows us to bootstrap the reward-to-go calculation to account
-        for timesteps beyond the arbitrary episode horizon (or epoch cutoff).
-        """
 
         path_slice = slice(self.path_start_idx, self.ptr)
         rews = np.append(self.rew_buf[path_slice], last_val)
@@ -79,11 +74,6 @@ class PPOBuffer:
         self.path_start_idx = self.ptr
 
     def get(self):
-        """
-        Call this at the end of an epoch to get all of the data from
-        the buffer, with advantages appropriately normalized (shifted to have
-        mean zero and std one). Also, resets some pointers in the buffer.
-        """
         assert self.ptr == self.max_size    # buffer has to be full before you can get
         self.ptr, self.path_start_idx = 0, 0
         # the next two lines implement the advantage normalization trick
@@ -104,8 +94,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
             os.mkdir("exp")
 
 
-    # Random seed
-    seed += 10000 #* proc_id()
+    # Random seed 
     torch.manual_seed(seed)
     np.random.seed(seed)
 
@@ -117,7 +106,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     act_dim = env.action_space.shape
 
     # Create actor-critic module
-    ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs,eval=True)
+    ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
     checkpoint = torch.load('./exp/best_model_49.pt')
     ac.load_state_dict(checkpoint['actor_state_dict'])
@@ -140,9 +129,6 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 
     # Set up optimizers for policy and value function
 
-    # Set up model saving
-    # logger.setup_pytorch_saver(ac)
-
     # Prepare for interaction with environment
     start_time = time.time()
     o, ep_ret, ep_len = env.reset(), 0, 0
@@ -151,7 +137,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     progress_bar = tqdm(range(epochs),desc='Epoch')
     for epoch in range(epochs):
         for t in range(local_steps_per_epoch):
-            a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
+            a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
 
             next_o, r, d, _ = env.step(a)
             ep_ret += r
@@ -186,18 +172,16 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Real-monopod-balance-v1')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v1')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--seed', '-s', type=int, default=0)
+    parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--cpu', type=int, default=4)
     parser.add_argument('--steps', type=int, default=5000)
     parser.add_argument('--epochs', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
     args = parser.parse_args()
-
-    # mpi_fork(args.cpu)  # run parallel code with mpi
 
     # from spinup.utils.run_utils import setup_logger_kwargs
     # logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
