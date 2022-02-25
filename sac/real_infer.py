@@ -65,7 +65,7 @@ class Workspace(object):
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
-                obs, reward, done, _ = self.env.step(action * 0.01)
+                obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
                 step+=1
             # average_episode_reward += episode_reward
