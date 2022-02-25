@@ -89,6 +89,9 @@ class MLPGaussianActor(Actor):
         mu = self.mu_net(obs)
         std = torch.exp(self.log_std)
         return Normal(mu, std)
+    def _mean(self,obs):
+        mu = self.mu_net(obs)
+        return mu
 
     def _log_prob_from_distribution(self, pi, act):
         return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
@@ -123,11 +126,15 @@ class MLPActorCritic(nn.Module):
         # build value function
         self.v  = MLPCritic(obs_dim, hidden_sizes, activation)
 
-    def step(self, obs):
+    def step(self, obs,eval=False):
         with torch.no_grad():
-            pi = self.pi._distribution(obs)
-            a = pi.sample()
-            a = torch.clip(a,-1,1)
+            if eval:
+                pi = self.pi._distribution(obs)
+                a = self.pi._mean(obs)
+            else:
+                pi = self.pi._distribution(obs)
+                a = pi.sample()
+                a = torch.clip(a,-1,1)
             logp_a = self.pi._log_prob_from_distribution(pi, a)
             v = self.v(obs)
         return a.numpy(), v.numpy(), logp_a.numpy()
