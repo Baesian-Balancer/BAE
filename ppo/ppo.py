@@ -82,14 +82,14 @@ class PPOBuffer:
         path_slice = slice(self.path_start_idx, self.ptr)
         rews = np.append(self.rew_buf[path_slice], last_val)
         vals = np.append(self.val_buf[path_slice], last_val)
-        
+
         # the next two lines implement GAE-Lambda advantage calculation
         deltas = rews[:-1] + self.gamma * vals[1:] - vals[:-1]
         self.adv_buf[path_slice] = core.discount_cumsum(deltas, self.gamma * self.lam)
-        
+
         # the next line computes rewards-to-go, to be targets for the value function
         self.ret_buf[path_slice] = core.discount_cumsum(rews, self.gamma)[:-1]
-        
+
         self.path_start_idx = self.ptr
 
     def get(self):
@@ -117,11 +117,11 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
 
             with torch.no_grad():
                 a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
-
+            a = numpy.clip(a, -1, 1)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
-                
+
                 # Update obs (critical!)
             o = next_o
 
@@ -223,14 +223,14 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     for epoch in range(args.epochs):
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
-
+            a = numpy.clip(a, -1, 1)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
 
             # save and log
             buf.store(o, a, r, v, logp)
-            
+
             # Update obs (critical!)
             o = next_o
 
@@ -265,7 +265,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v1')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
@@ -277,16 +277,16 @@ if __name__ == '__main__':
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=10000)
-    parser.add_argument('--steps_per_epoch', type=int, default=4000)
-    parser.add_argument('--max_ep_len', type=int, default=1000)
+    parser.add_argument('--steps_per_epoch', type=int, default=10000)
+    parser.add_argument('--max_ep_len', type=int, default=10000)
     parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--eval_epochs', type=int, default=1)
     parser.add_argument('--save_freq', type=int, default=10)
     parser.add_argument('--exp_name', type=str, default='ppo')
     parser.add_argument('--save_dir', type=str, default='exp/')
-    
+
     args = parser.parse_args()
-    wandb.init(project='capstone',entity='nickioan')
+    wandb.init(project="openSim2Real", entity="dawon-horvath")
 
     ppo(lambda : make_env(args.env), args, actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l),)
