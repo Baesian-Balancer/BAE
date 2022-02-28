@@ -88,7 +88,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000000,
         target_kl=0.01, save_freq=10):
 
-    # Random seed 
+    # Random seed
     torch.manual_seed(seed)
     np.random.seed(seed)
 
@@ -102,9 +102,10 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    checkpoint = torch.load('./exp/best_model_49.pt')
+    checkpoint = torch.load('./exp/best_model_330.pt')
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
+    plotting = PlotUtils('best_model_330', './exp/plots/')
     # Sync params across processes
     # sync_params(ac)
 
@@ -133,6 +134,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             plotting.add_action(a)
+            a = np.clip(a, -1, 1)
 
             next_o, r, d, _ = env.step(a)
             ep_ret += r
@@ -156,10 +158,13 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
 
+    plotting.plot_temporal_action_change()
+    plotting.plot_action_histogram()
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v1')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
