@@ -117,7 +117,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
 
             with torch.no_grad():
                 a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
-            a = numpy.clip(a, -1, 1)
+            a = np.clip(a, -1, 1)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
@@ -223,7 +223,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     for epoch in range(args.epochs):
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
-            a = numpy.clip(a, -1, 1)
+            a = np.clip(a, -1, 1)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=10000)
-    parser.add_argument('--epochs', type=int, default=50)
+    parser.add_argument('--epochs', type=int, default=500)
     parser.add_argument('--eval_epochs', type=int, default=1)
     parser.add_argument('--save_freq', type=int, default=10)
     parser.add_argument('--exp_name', type=str, default='ppo')
