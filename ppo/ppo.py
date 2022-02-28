@@ -276,7 +276,7 @@ if __name__ == '__main__':
     parser.add_argument('--vf_lr',type=float, default=1e-3)
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
-    parser.add_argument('--seed', '-s', type=int, default=42)
+    parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=10000)
     parser.add_argument('--epochs', type=int, default=1000)
