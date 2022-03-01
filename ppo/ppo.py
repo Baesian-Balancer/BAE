@@ -107,14 +107,17 @@ class PPOBuffer:
                     adv=self.adv_buf, logp=self.logp_buf)
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
-def evaluate(o,ac,env,args,local_steps_per_epoch):
+def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(args.eval_epochs),desc='Evaluation Epochs')
     ep_ret = 0
     ep_len = 0
+    num_ep = 0
+    ep_ret_tot = 0
+    ep_ret_norm_tot = 0
     for epoch in range(args.eval_epochs):
         for t in range(local_steps_per_epoch):
-
+            num_ep = num_ep + 1
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
@@ -131,10 +134,11 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
             if terminal or epoch_ended:
                 if epoch_ended and not(terminal):
                     print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
-
-                wandb.log({"evaluation episode reward":ep_ret})
+                ep_ret_norm_tot = ep_ret_tot + ep_ret/ep_len
+                ep_ret_tot = ep_ret_tot + ep_ret
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
+        wandb.log({"evaluation episode normalized reward":ep_ret_norm_tot/num_ep, "evaluation episode reward":ep_ret_tot/num_ep}, step=cur_step + 1)
     return o,ep_ret,ep_len
 
 def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
@@ -241,7 +245,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                 else:
                     v = 0
                 buf.finish_path(v)
-                wandb.log({"training episode reward":ep_ret})
+                wandb.log({"training episode normalized reward":ep_ret/ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
         # Save model
@@ -254,7 +258,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         # Perform PPO update!
         update()
 
-        o,ep_ret,ep_len = evaluate(o,ac,env,args,local_steps_per_epoch)
+        o,ep_ret,ep_len = evaluate(o,ac,env,args,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
 
 if __name__ == '__main__':
     import argparse
@@ -270,7 +274,7 @@ if __name__ == '__main__':
     parser.add_argument('--vf_lr',type=float, default=1e-3)
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
-    parser.add_argument('--seed', '-s', type=int, default=10000)
+    parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=8000)
     parser.add_argument('--epochs', type=int, default=100)
