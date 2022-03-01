@@ -117,7 +117,6 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
     ep_ret_norm_tot = 0
     for epoch in range(args.eval_epochs):
         for t in range(local_steps_per_epoch):
-            num_ep = num_ep + 1
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
@@ -134,6 +133,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
             if terminal or epoch_ended:
                 if epoch_ended and not(terminal):
                     print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
+                num_ep = num_ep + 1
                 ep_ret_norm_tot = ep_ret_tot + ep_ret/ep_len
                 ep_ret_tot = ep_ret_tot + ep_ret
                 o, ep_ret, ep_len = env.reset(), 0, 0
