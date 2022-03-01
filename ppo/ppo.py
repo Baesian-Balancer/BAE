@@ -134,7 +134,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
                 if epoch_ended and not(terminal):
                     print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
                 num_ep = num_ep + 1
-                ep_ret_norm_tot = ep_ret_tot + ep_ret/ep_len
+                ep_ret_norm_tot = ep_ret_norm_tot + ep_ret/ep_len
                 ep_ret_tot = ep_ret_tot + ep_ret
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
