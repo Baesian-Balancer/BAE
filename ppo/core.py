@@ -159,9 +159,9 @@ class MLPActorCritic(nn.Module):
                 return a.numpy()
             else:
                 a = pi.sample()
+                a = torch.clamp(a, min=-1, max=1)
                 logp_a = self.pi._log_prob_from_distribution(pi, a)
                 v = self.v(obs)
-                a = torch.clamp(a, min=-1, max=1)
                 return a.numpy(), v.numpy(), logp_a.numpy()
 
     def act(self, obs):

@@ -198,6 +198,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         pi_l_old = pi_l_old.item()
         v_l_old = compute_loss_v(data).item()
 
+
         # Train policy with multiple steps of gradient descent
         for i in range(args.train_pi_iters):
             pi_optimizer.zero_grad()
