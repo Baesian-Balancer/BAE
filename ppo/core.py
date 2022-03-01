@@ -131,6 +131,7 @@ class MLPActorCritic(nn.Module):
             if eval:
                 pi = self.pi._distribution(obs)
                 a = self.pi._mean(obs)
+                a = torch.clip(a,-1,1)
             else:
                 pi = self.pi._distribution(obs)
                 a = pi.sample()
