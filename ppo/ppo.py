@@ -131,7 +131,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
             if terminal or epoch_ended:
                 if epoch_ended and not(terminal):
                     print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
-                    
+
                 wandb.log({"evaluation episode reward":ep_ret})
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
@@ -272,10 +272,10 @@ if __name__ == '__main__':
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
-    parser.add_argument('--max_ep_len', type=int, default=10000)
-    parser.add_argument('--epochs', type=int, default=500)
+    parser.add_argument('--max_ep_len', type=int, default=8000)
+    parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--eval_epochs', type=int, default=1)
-    parser.add_argument('--save_freq', type=int, default=10)
+    parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
     parser.add_argument('--save_dir', type=str, default='exp/')
 
