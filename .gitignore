@@ -56,3 +56,5 @@ coverage.xml
 docs/_build/
 
 .ccls-cache
+**/wandb/
+**/*.pt
