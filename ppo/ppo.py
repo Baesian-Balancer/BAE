@@ -116,8 +116,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
         for t in range(local_steps_per_epoch):
 
             with torch.no_grad():
-                a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
-            a = np.clip(a, -1, 1)
+                a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
@@ -131,12 +130,8 @@ def evaluate(o,ac,env,args,local_steps_per_epoch):
 
             if terminal or epoch_ended:
                 if epoch_ended and not(terminal):
-                    print('Warning: trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
-                # if trajectory didn't reach terminal state, bootstrap value target
-                if timeout or epoch_ended:
-                    _, v, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
-                else:
-                    v = 0
+                    print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
+                    
                 wandb.log({"evaluation episode reward":ep_ret})
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
@@ -223,7 +218,6 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     for epoch in range(args.epochs):
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
-            a = np.clip(a, -1, 1)
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
