@@ -107,7 +107,7 @@ class PPOBuffer:
                     adv=self.adv_buf, logp=self.logp_buf)
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
-def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
+def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["eval_epochs"]),desc='Evaluation Epochs')
     ep_ret = 0
@@ -116,7 +116,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
     ep_ret_tot = 0
     ep_ret_norm_tot = 0
     for epoch in range(config["eval_epochs"]):
-        for t in range(local_steps_per_epoch):
+        for t in range(config["max_ep_len"]):
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
@@ -128,11 +128,8 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
 
             timeout = ep_len == config["max_ep_len"]
             terminal = d or timeout
-            epoch_ended = t==local_steps_per_epoch-1
 
-            if terminal or epoch_ended:
-                if epoch_ended and not(terminal):
-                    print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
+            if terminal:
                 num_ep = num_ep + 1
                 ep_ret_norm_tot = ep_ret_norm_tot + ep_ret/ep_len
                 ep_ret_tot = ep_ret_tot + ep_ret
@@ -259,7 +256,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Perform PPO update!
         update()
-        o,ep_ret,ep_len = evaluate(o,ac,env,args,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
+        o,ep_ret,ep_len = evaluate(o,ac,env,config,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
 
         if bst_eval_ret < ep_ret:
             bst_eval_ret = ep_ret
@@ -287,7 +284,7 @@ if __name__ == '__main__':
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=4000)
     parser.add_argument('--epochs', type=int, default=100)
-    parser.add_argument('--eval_epochs', type=int, default=1)
+    parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
     parser.add_argument('--save_dir', type=str, default='exp/')
