@@ -25,6 +25,7 @@ def make_env(env_id):
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
     env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     # env.render('human')
@@ -239,12 +240,15 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                 if epoch_ended and not(terminal):
                     print('Warning: trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
                 # if trajectory didn't reach terminal state, bootstrap value target
+                else:
+                    wandb.log({"training episode normalized reward":ep_ret/ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
+
                 if timeout or epoch_ended:
                     _, v, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
                 else:
                     v = 0
                 buf.finish_path(v)
-                wandb.log({"training episode normalized reward":ep_ret/ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
+
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
         # Save model
@@ -283,7 +287,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=4000)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
