@@ -109,13 +109,13 @@ class PPOBuffer:
 
 def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
     # Main loop: collect experience in env and update/log each epoch
-    progress_bar = tqdm(range(args.eval_epochs),desc='Evaluation Epochs')
+    progress_bar = tqdm(range(config["eval_epochs"]),desc='Evaluation Epochs')
     ep_ret = 0
     ep_len = 0
     num_ep = 0
     ep_ret_tot = 0
     ep_ret_norm_tot = 0
-    for epoch in range(args.eval_epochs):
+    for epoch in range(config["eval_epochs"]):
         for t in range(local_steps_per_epoch):
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
@@ -126,7 +126,7 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
                 # Update obs (critical!)
             o = next_o
 
-            timeout = ep_len == args.max_ep_len
+            timeout = ep_len == config["max_ep_len"]
             terminal = d or timeout
             epoch_ended = t==local_steps_per_epoch-1
 
@@ -141,14 +141,14 @@ def evaluate(o,ac,env,args,local_steps_per_epoch, cur_step):
         wandb.log({"evaluation episode normalized reward":ep_ret_norm_tot/num_ep, "evaluation episode reward":ep_ret_tot/num_ep}, step=cur_step + 1)
     return o,ep_ret,ep_len
 
-def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
+def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
-    if not os.path.isdir(args.save_dir):
-            os.mkdir(args.save_dir)
+    if not os.path.isdir(config["save_dir"]):
+            os.mkdir(config["save_dir"])
 
     # Random seed
-    torch.manual_seed(args.seed)
-    np.random.seed(args.seed)
+    torch.manual_seed(config["seed"])
+    np.random.seed(config["seed"])
 
     # Instantiate environment
     env = env_fn()
@@ -159,8 +159,8 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
     # Set up experience buffer
-    local_steps_per_epoch = int(args.steps_per_epoch)
-    buf = PPOBuffer(obs_dim, act_dim, local_steps_per_epoch, args.gamma, args.lam)
+    local_steps_per_epoch = int(config["steps_per_epoch"])
+    buf = PPOBuffer(obs_dim, act_dim, local_steps_per_epoch, config["gamma"], config["lam"])
 
     # Set up function for computing PPO policy loss
     def compute_loss_pi(data):
@@ -169,13 +169,13 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         # Policy loss
         pi, logp = ac.pi(obs, act)
         ratio = torch.exp(logp - logp_old)
-        clip_adv = torch.clamp(ratio, 1-args.clip_ratio, 1+args.clip_ratio) * adv
+        clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         loss_pi = -(torch.min(ratio * adv, clip_adv)).mean()
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
         ent = pi.entropy().mean().item()
-        clipped = ratio.gt(1+args.clip_ratio) | ratio.lt(1-args.clip_ratio)
+        clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
         pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac)
 
@@ -187,8 +187,8 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         return ((ac.v(obs) - ret)**2).mean()
 
     # Set up optimizers for policy and value function
-    pi_optimizer = Adam(ac.pi.parameters(), lr=args.pi_lr)
-    vf_optimizer = Adam(ac.v.parameters(), lr=args.vf_lr)
+    pi_optimizer = Adam(ac.pi.parameters(), lr=config["pi_lr"])
+    vf_optimizer = Adam(ac.v.parameters(), lr=config["vf_lr"])
 
 
     def update():
@@ -200,7 +200,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
 
         # Train policy with multiple steps of gradient descent
-        for i in range(args.train_pi_iters):
+        for i in range(config["train_pi_iters"]):
             pi_optimizer.zero_grad()
             loss_pi, pi_info = compute_loss_pi(data)
             loss_pi.backward()
@@ -209,7 +209,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         # logger.store(StopIter=i)
 
         # Value function learning
-        for i in range(args.train_v_iters):
+        for i in range(config["train_v_iters"]):
             vf_optimizer.zero_grad()
             loss_v = compute_loss_v(data)
             loss_v.backward()
@@ -219,8 +219,8 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     o, ep_ret, ep_len = env.reset(), 0, 0
 
     # Main loop: collect experience in env and update/log each epoch
-    progress_bar = tqdm(range(args.epochs),desc='Training Epoch')
-    for epoch in range(args.epochs):
+    progress_bar = tqdm(range(config["epochs"]),desc='Training Epoch')
+    for epoch in range(config["epochs"]):
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32))
             next_o, r, d, _ = env.step(a)
@@ -233,7 +233,7 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             # Update obs (critical!)
             o = next_o
 
-            timeout = ep_len == args.max_ep_len
+            timeout = ep_len == config["max_ep_len"]
             terminal = d or timeout
             epoch_ended = t==local_steps_per_epoch-1
 
@@ -250,8 +250,8 @@ def ppo(env_fn, args ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
         # Save model
-        if epoch %args.save_freq == 0:
-            PATH = args.save_dir + "best_model_" + str(epoch) + ".pt"
+        if epoch %config["save_freq"] == 0:
+            PATH = config["save_dir"] + "best_model_" + str(epoch) + ".pt"
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
@@ -285,7 +285,9 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default='exp/')
 
     args = parser.parse_args()
-    wandb.init(project="openSim2Real", entity="dawon-horvath")
+    wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
 
-    ppo(lambda : make_env(args.env), args, actor_critic=core.MLPActorCritic,
-        ac_kwargs=dict(hidden_sizes=[args.hid]*args.l),)
+    config = wandb.config
+
+    ppo(lambda : make_env(config["env"]), config, actor_critic=core.MLPActorCritic,
+        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
