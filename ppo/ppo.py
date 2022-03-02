@@ -218,6 +218,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
 
+    bst_eval_ret = 0;
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["epochs"]),desc='Training Epoch')
     for epoch in range(config["epochs"]):
@@ -251,15 +252,22 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         progress_bar.update(1)
         # Save model
         if epoch %config["save_freq"] == 0:
-            PATH = config["save_dir"] + "best_model_" + str(epoch) + ".pt"
+            PATH = config["save_dir"] + "checkpoint_model_" + str(epoch) + ".pt"
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
 
         # Perform PPO update!
         update()
-
         o,ep_ret,ep_len = evaluate(o,ac,env,args,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
+
+        if bst_eval_ret < ep_ret:
+            bst_eval_ret = ep_ret
+            PATH = config["save_dir"] + "best_model_" + str(epoch) + ".pt"
+            torch.save({
+                'actor_state_dict': ac.state_dict(),
+            }, PATH)
+
 
 if __name__ == '__main__':
     import argparse
