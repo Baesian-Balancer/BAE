@@ -286,7 +286,7 @@ if __name__ == '__main__':
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
-    parser.add_argument('--max_ep_len', type=int, default=4000)
+    parser.add_argument('--max_ep_len', type=int, default=2000)
     parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
