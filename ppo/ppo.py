@@ -255,7 +255,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         progress_bar.update(1)
         # Save model
         if epoch %config["save_freq"] == 0:
-            PATH = config["save_dir"] + "checkpoint_model_" + str(epoch) + ".pt"
+            PATH = config["save_dir"] + "checkpoint_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
@@ -266,7 +266,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         if bst_eval_ret < ep_ret:
             bst_eval_ret = ep_ret
-            PATH = config["save_dir"] + "best_model_" + str(epoch) + ".pt"
+            PATH = config["save_dir"] + "best_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
@@ -275,7 +275,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v5')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v6')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
