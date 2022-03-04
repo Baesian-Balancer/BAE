@@ -11,6 +11,8 @@ from gym_os2r import randomizers
 import time
 import core
 import functools
+
+import datetime
 import os
 # from spinup.utils.logx import EpochLogger
 # from spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
@@ -287,11 +289,11 @@ if __name__ == '__main__':
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
     parser.add_argument('--max_ep_len', type=int, default=4000)
-    parser.add_argument('--epochs', type=int, default=300)
+    parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
-    parser.add_argument('--save_dir', type=str, default='exp/')
+    parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now()}/')
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)

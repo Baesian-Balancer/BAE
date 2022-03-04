@@ -27,6 +27,7 @@ def make_env(env_id):
 
     # Initialize the seed
     print(env)
+    time.sleep(2)
     return env
 
 class PPOBuffer:
@@ -102,10 +103,12 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    checkpoint = torch.load('./exp/best_model_330.pt')
+    path = "./exp_data/1/"
+    name = "best_model_150"
+    checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
-    plotting = PlotUtils('best_model_330', './exp/plots/')
+    plotting = PlotUtils(name, path + 'plots/')
     # Sync params across processes
     # sync_params(ac)
 
@@ -166,8 +169,8 @@ if __name__ == '__main__':
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--cpu', type=int, default=4)
-    parser.add_argument('--steps', type=int, default=1000)
-    parser.add_argument('--epochs', type=int, default=1)
+    parser.add_argument('--steps', type=int, default=3000)
+    parser.add_argument('--epochs', type=int, default=20)
     parser.add_argument('--exp_name', type=str, default='ppo')
     args = parser.parse_args()
 
