@@ -280,7 +280,7 @@ if __name__ == '__main__':
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--lam', type=float, default=0.97)
-    parser.add_argument('--clip_ratio', type=float, default=0.15)
+    parser.add_argument('--clip_ratio', type=float, default=0.2)
     parser.add_argument('--target_kl', type=float, default=0.01)
     parser.add_argument('--pi_lr', type=float, default=3e-4)
     parser.add_argument('--vf_lr',type=float, default=1e-3)

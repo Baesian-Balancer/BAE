@@ -88,6 +88,8 @@ class MLPGaussianActor(Actor):
         self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation)
 
     def _distribution(self, obs):
+        if torch.sum(torch.isnan(obs)):
+            print(f'got Nan in Obs: {obs}.')
         mu = self.mu_net(obs)
         std = torch.exp(self.log_std)
         return Normal(mu, std)

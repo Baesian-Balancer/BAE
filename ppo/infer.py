@@ -103,12 +103,12 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    path = "./exp_data/1/"
-    name = "best_model_150"
+    name = "best_model_57"
+    path = "./exp_data/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
-    plotting = PlotUtils(name, path + 'plots/')
+    plotting = PlotUtils(name, f'{path}plots/{name}/' )
     # Sync params across processes
     # sync_params(ac)
 
@@ -163,7 +163,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v6')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
