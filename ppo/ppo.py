@@ -14,10 +14,6 @@ import functools
 
 import datetime
 import os
-# from spinup.utils.logx import EpochLogger
-# from spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
-# from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
-
 
 def make_env(env_id):
 
@@ -163,6 +159,10 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
+    if config['load_model_path'] is not None:
+        checkpoint = torch.load(config['load_model_path'])
+        ac.load_state_dict(checkpoint['actor_state_dict'])
+
     # Set up experience buffer
     local_steps_per_epoch = int(config["steps_per_epoch"])
     buf = PPOBuffer(obs_dim, act_dim, local_steps_per_epoch, config["gamma"], config["lam"])
@@ -282,7 +282,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str, default='Monopod-balance-v6')
-    parser.add_argument('--hid', type=int, default=128)
+    parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--lam', type=float, default=0.97)
@@ -294,12 +294,13 @@ if __name__ == '__main__':
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=10000)
-    parser.add_argument('--max_ep_len', type=int, default=4000)
+    parser.add_argument('--max_ep_len', type=int, default=2000)
     parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
+    parser.add_argument('--load_model_path', type=str, default=None)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
