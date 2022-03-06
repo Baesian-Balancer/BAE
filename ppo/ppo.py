@@ -135,13 +135,14 @@ def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
             terminal = d or timeout
 
             if terminal:
+                eval_ret_norm += ep_ret/ep_len
                 eval_ret += ep_ret
-                eval_ret_norm += ep_ret/t
                 eval_len += 1
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
     eval_ret /= eval_len
     eval_ret_norm /= eval_len
+
     wandb.log({"evaluation normalized reward":eval_ret_norm, "evaluation reward":eval_ret}, step=cur_step)
     return o,eval_ret,eval_len
 
