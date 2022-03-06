@@ -131,7 +131,7 @@ def evaluate(o,ac,env,config, max_steps_per_ep, cur_step):
             terminal = d or timeout
 
             if terminal:
-                eval_ret_norm += ep_ret/ep_len
+                eval_ret_norm += ep_ret/max_steps_per_ep
                 eval_ret += ep_ret
                 eval_len += 1
                 o, ep_ret, ep_len = env.reset(), 0, 0
@@ -243,7 +243,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             # Update obs (critical!)
             o = next_o
 
-            timeout = ep_len == min(current_max_ep_len, config["max_ep_len"])
+            timeout = ep_len == current_max_ep_len
             terminal = d or timeout
             epoch_ended = t==local_steps_per_epoch-1
 
@@ -252,7 +252,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                     print('Warning: trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
                 # if trajectory didn't reach terminal state, bootstrap value target
                 else:
-                    wandb.log({"training episode normalized reward":ep_ret/ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
+                    wandb.log({"training episode normalized reward":ep_ret/current_max_ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
 
                 if timeout or epoch_ended:
                     _, v, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
@@ -282,19 +282,20 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         current_max_ep_len += update_ep_len
         current_max_ep_len = min(current_max_ep_len, config["max_ep_len"])
+        wandb.log({"max ep length": current_max_ep_len}, step=epoch*local_steps_per_epoch + t)
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str, default='Monopod-balance-v6')
-    parser.add_argument('--hid', type=int, default=128)
+    parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
-    parser.add_argument('--gamma', type=float, default=0.995)
-    parser.add_argument('--lam', type=float, default=0.95)
+    parser.add_argument('--gamma', type=float, default=0.99)
+    parser.add_argument('--lam', type=float, default=0.97)
     parser.add_argument('--clip_ratio', type=float, default=0.2)
     parser.add_argument('--target_kl', type=float, default=0.01)
     parser.add_argument('--pi_lr', type=float, default=3e-4)
-    parser.add_argument('--vf_lr',type=float, default=2e-3)
+    parser.add_argument('--vf_lr',type=float, default=1e-3)
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
