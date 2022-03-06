@@ -196,13 +196,14 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     vf_optimizer = Adam(ac.v.parameters(), lr=config["vf_lr"])
 
 
-    def update():
+    def update(step):
         data = buf.get()
 
         pi_l_old, pi_info_old = compute_loss_pi(data)
         pi_l_old = pi_l_old.item()
         v_l_old = compute_loss_v(data).item()
 
+        wandb.log(pi_info_old, step=step)
 
         # Train policy with multiple steps of gradient descent
         for i in range(config["train_pi_iters"]):
@@ -266,7 +267,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             }, PATH)
 
         # Perform PPO update!
-        update()
+        update(step=epoch*local_steps_per_epoch + t)
         o,ep_ret,ep_len = evaluate(o,ac,env,config,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
 
         if bst_eval_ret < ep_ret:
