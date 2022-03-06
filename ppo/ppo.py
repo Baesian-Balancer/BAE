@@ -268,10 +268,10 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Perform PPO update!
         update(step=epoch*local_steps_per_epoch + t)
-        o,ep_ret,ep_len = evaluate(o,ac,env,config,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
+        o,eval_ret,_ = evaluate(o,ac,env,config,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
 
-        if bst_eval_ret < ep_ret:
-            bst_eval_ret = ep_ret
+        if bst_eval_ret < eval_ret:
+            bst_eval_ret = eval_ret
             PATH = config["save_dir"] + "best_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
             torch.save({
                 'actor_state_dict': ac.state_dict(),
