@@ -145,7 +145,7 @@ def evaluate(o,ac,env,config, max_steps_per_ep, cur_step):
 def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     if not os.path.isdir(config["save_dir"]):
-            os.mkdir(config["save_dir"])
+        os.makedirs(config["save_dir"])
 
     # Random seed
     torch.manual_seed(config["seed"])
