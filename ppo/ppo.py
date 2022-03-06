@@ -106,7 +106,7 @@ class PPOBuffer:
                     adv=self.adv_buf, logp=self.logp_buf)
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
-def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
+def evaluate(o,ac,env,config, max_steps_per_ep, cur_step):
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["eval_epochs"]),desc='Evaluation Epochs')
     eval_ret = 0
@@ -116,7 +116,7 @@ def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
     for epoch in range(config["eval_epochs"]):
         ep_ret = 0
         ep_len = 0
-        for t in range(config["max_ep_len"]):
+        for t in range(max_steps_per_ep):
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
@@ -127,7 +127,7 @@ def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
             # Update obs (critical!)
             o = next_o
 
-            timeout = ep_len == config["max_ep_len"]
+            timeout = ep_len == max_steps_per_ep
             terminal = d or timeout
 
             if terminal:
@@ -224,6 +224,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
 
+    current_max_ep_len = config["start_ep_len"]
+    update_ep_len = (config["max_ep_len"]-config["start_ep_len"])//config["epochs"]
+
     bst_eval_ret = 0;
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["epochs"]),desc='Training Epoch')
@@ -240,7 +243,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             # Update obs (critical!)
             o = next_o
 
-            timeout = ep_len == config["max_ep_len"]
+            timeout = ep_len == min(current_max_ep_len, config["max_ep_len"])
             terminal = d or timeout
             epoch_ended = t==local_steps_per_epoch-1
 
@@ -268,7 +271,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Perform PPO update!
         update(step=epoch*local_steps_per_epoch + t)
-        o,eval_ret,_ = evaluate(o,ac,env,config,local_steps_per_epoch, (epoch + 1)*local_steps_per_epoch)
+        o,eval_ret,_ = evaluate(o,ac,env,config, current_max_ep_len, (epoch + 1)*local_steps_per_epoch)
 
         if bst_eval_ret < eval_ret:
             bst_eval_ret = eval_ret
@@ -277,11 +280,13 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
 
+        current_max_ep_len += update_ep_len
+        current_max_ep_len = min(current_max_ep_len, config["max_ep_len"])
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v7')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v6')
     parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.995)
@@ -293,9 +298,10 @@ if __name__ == '__main__':
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
-    parser.add_argument('--steps_per_epoch', type=int, default=10000)
-    parser.add_argument('--max_ep_len', type=int, default=4000)
-    parser.add_argument('--epochs', type=int, default=300)
+    parser.add_argument('--steps_per_epoch', type=int, default=50000)
+    parser.add_argument('--max_ep_len', type=int, default=8000)
+    parser.add_argument('--start_ep_len', type=int, default=250)
+    parser.add_argument('--epochs', type=int, default=20)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
