@@ -113,33 +113,37 @@ class PPOBuffer:
 def evaluate(o,ac,env,config,local_steps_per_epoch, cur_step):
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["eval_epochs"]),desc='Evaluation Epochs')
-    ep_ret = 0
-    ep_len = 0
-    num_ep = 0
-    ep_ret_tot = 0
-    ep_ret_norm_tot = 0
+    eval_ret = 0
+    eval_ret_norm = 0
+    eval_len = 0
+
     for epoch in range(config["eval_epochs"]):
+        ep_ret = 0
+        ep_len = 0
         for t in range(config["max_ep_len"]):
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             next_o, r, d, _ = env.step(a)
+
             ep_ret += r
             ep_len += 1
 
-                # Update obs (critical!)
+            # Update obs (critical!)
             o = next_o
 
             timeout = ep_len == config["max_ep_len"]
             terminal = d or timeout
 
             if terminal:
-                num_ep = num_ep + 1
-                ep_ret_norm_tot = ep_ret_norm_tot + ep_ret/ep_len
-                ep_ret_tot = ep_ret_tot + ep_ret
+                eval_ret += ep_ret
+                eval_ret_norm += ep_ret/t
+                eval_len += 1
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
-        wandb.log({"evaluation episode normalized reward":ep_ret_norm_tot/num_ep, "evaluation episode reward":ep_ret_tot/num_ep}, step=cur_step + 1)
-    return o,ep_ret,ep_len
+    eval_ret /= eval_len
+    eval_ret_norm /= eval_len
+    wandb.log({"evaluation normalized reward":eval_ret_norm, "evaluation reward":eval_ret}, step=cur_step)
+    return o,eval_ret,eval_len
 
 def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
