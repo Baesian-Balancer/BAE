@@ -322,7 +322,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
     parser.add_argument('--max_ep_len', type=int, default=4000)
-    parser.add_argument('--start_ep_len', type=int, default=250)
+    parser.add_argument('--start_ep_len', type=int, default=3000)
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
