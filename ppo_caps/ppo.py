@@ -49,11 +49,12 @@ class PPOBuffer:
         self.val_buf = np.zeros(size, dtype=np.float32)
         self.logp_buf = np.zeros(size, dtype=np.float32)
         self.mu_buf = np.zeros(core.combined_shape(size, act_dim), dtype=np.float32)
+        self.mu_bar_buf = np.zeros(core.combined_shape(size, act_dim), dtype=np.float32)
         self.mu_delta_buf = np.zeros(core.combined_shape(size, act_dim), dtype=np.float32)
         self.gamma, self.lam = gamma, lam
         self.ptr, self.path_start_idx, self.max_size = 0, 0, size
 
-    def store(self, obs, obs_next, act, rew, val, logp, mu):
+    def store(self, obs, obs_next, act, rew, val, logp, mu, mu_bar):
         """
         Append one timestep of agent-environment interaction to the buffer.
         """
@@ -65,6 +66,7 @@ class PPOBuffer:
         self.val_buf[self.ptr] = val
         self.logp_buf[self.ptr] = logp
         self.mu_buf[self.ptr] = mu
+        self.mu_bar_buf[self.ptr] = mu_bar
         self.ptr += 1
 
     def finish_path(self, last_val=0):
@@ -114,7 +116,7 @@ class PPOBuffer:
         # self.adv_buf = (self.adv_buf - adv_mean) / adv_std
         data = dict(obs=self.obs_buf, obs_next=self.obs_next_buf, act=self.act_buf,
                     ret=self.ret_buf, adv=self.adv_buf, logp=self.logp_buf,
-                    mu=self.mu_buf, mu_delta=self.mu_delta_buf)
+                    mu=self.mu_buf, mu_delta=self.mu_delta_buf, mu_bar=self.mu_bar_buf)
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
 def evaluate(ac,env,config, max_steps_per_ep, cur_step):
@@ -178,7 +180,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     # Set up function for computing PPO policy loss
     def compute_loss_pi(data):
-        obs, obs_next, act, adv, logp_old, mu, mu_delta = data['obs'], data['obs_next'], data['act'], data['adv'], data['logp'], data['mu'], data['mu_delta']
+        obs, obs_next, act, adv, logp_old, mu, mu_bar, mu_delta = data['obs'], data['obs_next'], data['act'], data['adv'], data['logp'], data['mu'], data['mu_bar'], data['mu_delta']
 
         # Policy loss
         pi, logp = ac.pi(obs, act)
@@ -186,9 +188,12 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         ratio_adv = ratio * adv
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         temporal_smoothness = torch.norm(mu_delta)
+        spatial_smoothness = torch.norm(mu - mu_bar)
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
         if config['lam_a'] > 0:
             loss_pi += config['lam_a'] * temporal_smoothness
+        if config['lam_s'] > 0:
+            loss_pi += config['lam_s'] * spatial_smoothness
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
@@ -251,7 +256,10 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             ep_len += 1
 
             # save and log
-            buf.store(o, next_o, a, r, v, logp, mu)
+            mu_bar = mu
+            if config['eps_s'] > 0:
+                mu_bar = ac.step(torch.as_tensor(np.random.normal(o, config['eps_s']), dtype=torch.float32), eval=True)
+            buf.store(o, next_o, a, r, v, logp, mu, mu_bar)
 
             # Update obs (critical!)
             o = next_o
@@ -315,7 +323,7 @@ if __name__ == '__main__':
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
     parser.add_argument('--max_ep_len', type=int, default=4000)
     parser.add_argument('--start_ep_len', type=int, default=250)
-    parser.add_argument('--epochs', type=int, default=20)
+    parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo')
@@ -323,8 +331,8 @@ if __name__ == '__main__':
     parser.add_argument('--load_model_path', type=str, default=None)
 
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=1)
-    # parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-1.)
-    # parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=1.)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-1.)
+    parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
