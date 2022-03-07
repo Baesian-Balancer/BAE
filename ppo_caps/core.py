@@ -144,7 +144,7 @@ class MLPActorCritic(nn.Module):
                 v = self.v(obs)
                 mu_bar = mu
                 if std_mu > 0:
-                    mu_bar = torch.normal(obs, std_mu)
+                    mu_bar = self.pi._mean(torch.normal(obs, std_mu))
                 return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
 
     def act(self, obs):
