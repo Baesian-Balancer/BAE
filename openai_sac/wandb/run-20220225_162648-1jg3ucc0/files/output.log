@@ -1,0 +1,28 @@
+<MonopodEnvNoRandomizer<TimeLimit<GazeboRuntime<Monopod-balance-v1>>>>
+total steps: 200000
+[1m[Wrn] [ServerConfig.cc:861] IGN_GAZEBO_SERVER_CONFIG_PATH set but no file found, no plugins loaded
+[33mWARN: Box bound precision lowered by casting to float64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Training Epoch:   2%|██▋                                                                                                                                  | 3993/200000 [00:43<34:13, 95.43it/s]
+Epoch done
+

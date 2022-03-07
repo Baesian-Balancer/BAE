@@ -1,0 +1,21 @@
+2022-02-25 16:31:26,303 INFO    MainThread:10588 [wandb_setup.py:_flush():71] setting env: {}
+2022-02-25 16:31:26,303 INFO    MainThread:10588 [wandb_setup.py:_flush():71] setting login settings: {}
+2022-02-25 16:31:26,304 INFO    MainThread:10588 [wandb_init.py:_log_setup():371] Logging user logs to /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/logs/debug.log
+2022-02-25 16:31:26,304 INFO    MainThread:10588 [wandb_init.py:_log_setup():372] Logging internal logs to /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/logs/debug-internal.log
+2022-02-25 16:31:26,305 INFO    MainThread:10588 [wandb_init.py:init():404] calling init triggers
+2022-02-25 16:31:26,305 INFO    MainThread:10588 [wandb_init.py:init():409] wandb.init called with sweep_config: {}
+config: {}
+2022-02-25 16:31:26,305 INFO    MainThread:10588 [wandb_init.py:init():460] starting backend
+2022-02-25 16:31:26,305 INFO    MainThread:10588 [backend.py:_multiprocessing_setup():99] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-02-25 16:31:26,328 INFO    MainThread:10588 [backend.py:ensure_launched():216] starting backend process...
+2022-02-25 16:31:26,334 INFO    MainThread:10588 [backend.py:ensure_launched():221] started backend process with pid: 10623
+2022-02-25 16:31:26,336 INFO    MainThread:10588 [wandb_init.py:init():469] backend started and connected
+2022-02-25 16:31:26,339 INFO    MainThread:10588 [wandb_init.py:init():533] updated telemetry
+2022-02-25 16:31:26,354 INFO    MainThread:10588 [wandb_init.py:init():563] communicating current version
+2022-02-25 16:31:31,355 INFO    MainThread:10588 [wandb_init.py:init():578] communicating run to backend with 30 second timeout
+2022-02-25 16:31:32,447 INFO    MainThread:10588 [wandb_init.py:init():606] starting run threads in backend
+2022-02-25 16:31:32,489 INFO    MainThread:10588 [wandb_run.py:_console_start():1810] atexit reg
+2022-02-25 16:31:32,489 INFO    MainThread:10588 [wandb_run.py:_redirect():1684] redirect: SettingsConsole.REDIRECT
+2022-02-25 16:31:32,489 INFO    MainThread:10588 [wandb_run.py:_redirect():1689] Redirecting console.
+2022-02-25 16:31:32,491 INFO    MainThread:10588 [wandb_run.py:_redirect():1745] Redirects installed.
+2022-02-25 16:31:32,491 INFO    MainThread:10588 [wandb_init.py:init():633] run started, returning control to user process
