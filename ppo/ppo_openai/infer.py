@@ -12,7 +12,7 @@ import functools
 import os
 from gym_os2r import randomizers
 import sys
-sys.path.append("../")
+sys.path.append("../../")
 from plotting import PlotUtils
 def make_env(env_id):
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:

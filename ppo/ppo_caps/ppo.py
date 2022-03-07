@@ -319,7 +319,7 @@ if __name__ == '__main__':
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
     parser.add_argument('--max_ep_len', type=int, default=6000)
     parser.add_argument('--start_ep_len', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=200)
+    parser.add_argument('--epochs', type=int, default=150)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
@@ -327,7 +327,7 @@ if __name__ == '__main__':
     parser.add_argument('--load_model_path', type=str, default=None)
 
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=1)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-1.)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
 
     args = parser.parse_args()

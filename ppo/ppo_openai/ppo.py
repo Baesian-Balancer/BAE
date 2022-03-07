@@ -259,7 +259,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         progress_bar.update(1)
         # Save model
         if epoch %config["save_freq"] == 0:
-            PATH = config["save_dir"] + "checkpoint_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
+            PATH = config["save_dir"] + f'checkpoint_model_step_{epoch*local_steps_per_epoch + t}.pt'
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)
@@ -270,7 +270,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         if bst_eval_ret < eval_ret:
             bst_eval_ret = eval_ret
-            PATH = config["save_dir"] + "best_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
+            PATH = config["save_dir"] + f'best_model_step_{epoch*local_steps_per_epoch + t}.pt'
             torch.save({
                 'actor_state_dict': ac.state_dict(),
             }, PATH)

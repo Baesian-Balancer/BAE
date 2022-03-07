@@ -12,7 +12,7 @@ import functools
 import os
 from gym_os2r import randomizers
 import sys
-sys.path.append("../")
+sys.path.append("../../")
 from plotting import PlotUtils
 def make_env(env_id):
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
@@ -103,8 +103,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    name = "checkpoint_model_step_1509999"
-    path = "./exp/2022_03_05_07_57_55/"
+    name = "best_model_step_2259999"
+    path = "./exp/2022_03_07_08_53_29/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
@@ -163,20 +163,16 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v6')
-    # parser.add_argument('--hid', type=int, default=64)
-    parser.add_argument('--hid', type=int, default=96)
+    parser.add_argument('--env', type=str, default='Monopod-balance-v4')
+    parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--cpu', type=int, default=4)
     parser.add_argument('--steps', type=int, default=3000)
     parser.add_argument('--epochs', type=int, default=10)
-    parser.add_argument('--exp_name', type=str, default='ppo')
+    parser.add_argument('--exp_name', type=str, default='ppo caps')
     args = parser.parse_args()
-
-    # from spinup.utils.run_utils import setup_logger_kwargs
-    # logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
     ppo(lambda : make_env(args.env), actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), gamma=args.gamma,
