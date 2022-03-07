@@ -195,6 +195,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_s'] > 0:
             spatial_smoothness = torch.norm(mu - mu_bar)
             loss_pi += config['lam_s'] * spatial_smoothness
+        if config['lam_o'] > 0:
+            state_smoothness = torch.norm(obs - obs_next)
+            loss_pi += config['lam_o'] * state_smoothness
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
@@ -329,6 +332,7 @@ if __name__ == '__main__':
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=1)
     parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
+    parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-1.)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
