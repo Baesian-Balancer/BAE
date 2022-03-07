@@ -119,17 +119,16 @@ class PPOBuffer:
                     mu=self.mu_buf, mu_delta=self.mu_delta_buf, mu_bar=self.mu_bar_buf)
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
-def evaluate(ac,env,config, max_steps_per_ep, cur_step):
+def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["eval_epochs"]),desc='Evaluation Epochs')
     eval_ret = 0
     eval_ret_norm = 0
     eval_len = 0
+    ep_ret = 0
+    ep_len = 0
 
-    o, ep_ret, ep_len = env.reset(), 0, 0
     for epoch in range(config["eval_epochs"]):
-        ep_ret = 0
-        ep_len = 0
         for t in range(max_steps_per_ep):
             with torch.no_grad():
                 a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
@@ -151,7 +150,7 @@ def evaluate(ac,env,config, max_steps_per_ep, cur_step):
     eval_ret_norm /= eval_len
 
     wandb.log({"evaluation normalized reward":eval_ret_norm, "evaluation reward":eval_ret}, step=cur_step)
-    return eval_ret,eval_len
+    return o, eval_ret,eval_len
 
 def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
@@ -187,12 +186,14 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         ratio = torch.exp(logp - logp_old)
         ratio_adv = ratio * adv
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
-        temporal_smoothness = torch.norm(mu_delta)
-        spatial_smoothness = torch.norm(mu - mu_bar)
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
+
+        temporal_smoothness, spatial_smoothness = 0, 0
         if config['lam_a'] > 0:
+            temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_a'] * temporal_smoothness
         if config['lam_s'] > 0:
+            spatial_smoothness = torch.norm(mu - mu_bar)
             loss_pi += config['lam_s'] * spatial_smoothness
 
         # Useful extra info
@@ -230,8 +231,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             loss_pi.backward()
             pi_optimizer.step()
 
-        # logger.store(StopIter=i)
-
         # Value function learning
         for i in range(config["train_v_iters"]):
             vf_optimizer.zero_grad()
@@ -243,22 +242,19 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     o, ep_ret, ep_len = env.reset(), 0, 0
 
     current_max_ep_len = config["start_ep_len"]
-    update_ep_len = (config["max_ep_len"]-config["start_ep_len"])//config["epochs"]
+    update_ep_len = (config["max_ep_len"]-config["start_ep_len"]) // config["epochs"]
 
     bst_eval_ret = 0;
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(config["epochs"]),desc='Training Epoch')
     for epoch in range(config["epochs"]):
         for t in range(local_steps_per_epoch):
-            a, v, logp, mu = ac.step(torch.as_tensor(o, dtype=torch.float32))
+            a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), mu_std=config['eps_s'])
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
 
             # save and log
-            mu_bar = mu
-            if config['eps_s'] > 0:
-                mu_bar = ac.step(torch.as_tensor(np.random.normal(o, config['eps_s']), dtype=torch.float32), eval=True)
             buf.store(o, next_o, a, r, v, logp, mu, mu_bar)
 
             # Update obs (critical!)
@@ -276,7 +272,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                     wandb.log({"training episode normalized reward":ep_ret/current_max_ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
 
                 if timeout or epoch_ended:
-                    _, v, _, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
+                    _, v, _, _, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
                 else:
                     v = 0
                 buf.finish_path(v)
@@ -292,7 +288,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Perform PPO update!
         update(step=epoch*local_steps_per_epoch + t)
-        eval_ret,_ = evaluate(ac,env,config, current_max_ep_len, (epoch + 1)*local_steps_per_epoch)
+        o, eval_ret,_ = evaluate(o, ac,env,config, current_max_ep_len, (epoch + 1)*local_steps_per_epoch)
 
         if bst_eval_ret < eval_ret:
             bst_eval_ret = eval_ret
@@ -303,7 +299,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         current_max_ep_len += update_ep_len
         current_max_ep_len = min(current_max_ep_len, config["max_ep_len"])
-        wandb.log({"max ep length": current_max_ep_len}, step=epoch*local_steps_per_epoch + t)
+        wandb.log({"max ep length": current_max_ep_len}, step=epoch*local_steps_per_epoch + t + 1)
 
 if __name__ == '__main__':
     import argparse

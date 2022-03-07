@@ -129,7 +129,7 @@ class MLPActorCritic(nn.Module):
         # build value function
         self.v  = MLPCritic(obs_dim, hidden_sizes, activation)
 
-    def step(self, obs, eval=False):
+    def step(self, obs, eval=False, std_mu=-1.):
         with torch.no_grad():
             if eval:
                 a = self.pi._mean(obs)
@@ -142,7 +142,10 @@ class MLPActorCritic(nn.Module):
                 logp_a = self.pi._log_prob_from_distribution(pi, a)
                 mu = self.pi._mean(obs)
                 v = self.v(obs)
-                return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy()
+                mu_bar = mu
+                if std_mu > 0:
+                    mu_bar = torch.normal(obs, std_mu)
+                return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
 
     def act(self, obs):
         return self.step(obs)[0]
