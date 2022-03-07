@@ -304,7 +304,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v4')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
@@ -317,9 +317,9 @@ if __name__ == '__main__':
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
-    parser.add_argument('--max_ep_len', type=int, default=4000)
+    parser.add_argument('--max_ep_len', type=int, default=6000)
     parser.add_argument('--start_ep_len', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
