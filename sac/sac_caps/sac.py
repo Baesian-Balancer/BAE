@@ -283,21 +283,23 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
             wandb.log({"training episode normalized reward":ep_ret/max_ep_len, "training episode reward":ep_ret}, step=t)
             o, ep_ret, ep_len = env.reset(), 0, 0
 
-            o, eval_ret,_ = evaluate(o, ac, env, config, max_ep_len, t)
-            if bst_eval_ret < eval_ret:
-                bst_eval_ret = eval_ret
-                PATH = config["save_dir"] + f'best_model_step_{t}.pt'
+            # Update handling
+            if t >= update_after and episode % episodes_before_eval == 0:
+
+                o, eval_ret,_ = evaluate(o, ac, env, config, max_ep_len, t)
+                if bst_eval_ret < eval_ret:
+                    bst_eval_ret = eval_ret
+                    PATH = config["save_dir"] + f'best_model_step_{t}.pt'
+                    torch.save({
+                        'actor_state_dict': ac.state_dict(),
+                    }, PATH)
+
+            if t >= update_after and episode %config["save_freq"] == 0:
+                PATH = config["save_dir"] + f'checkpoint_model_step_{t}.pt'
                 torch.save({
-                    'actor_state_dict': ac.state_dict(),
+                'actor_state_dict': ac.state_dict(),
                 }, PATH)
 
-        if episode %config["save_freq"] == 0:
-            PATH = config["save_dir"] + f'checkpoint_model_step_{t}.pt'
-            torch.save({
-            'actor_state_dict': ac.state_dict(),
-            }, PATH)
-
-        # Update handling
         if t >= update_after and t % update_every == 0:
             for j in range(update_every):
                 batch = replay_buffer.sample_batch(batch_size)
@@ -319,11 +321,12 @@ if __name__ == '__main__':
     parser.add_argument('--save_freq', type=str, default=10)
     parser.add_argument('--eval_epochs', type=str, default=3)
     parser.add_argument('--load_model_path', type=str, default=None)
-    parser.add_argument('--max_ep_len', type=str, default=10_000)
+    parser.add_argument('--max_ep_len', type=str, default=5_000)
     parser.add_argument('--update_after', type=str, default=10_000)
     parser.add_argument('--start_steps', type=str, default=10_000)
     parser.add_argument('--batch_size', type=str, default=100)
     parser.add_argument('--total_train_steps', type=str, default=1_000_000)
+    parser.add_argument('--episodes_before_eval', type=str, default=10)
     parser.add_argument('--replay_size', type=str, default=1_000_000)
 
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=1)
