@@ -249,7 +249,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     progress_bar = tqdm(range(config["epochs"]),desc='Training Epoch')
     for epoch in range(config["epochs"]):
         for t in range(local_steps_per_epoch):
-            a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), mu_std=config['eps_s'])
+            a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), std_mu=config['eps_s'])
             next_o, r, d, _ = env.step(a)
             ep_ret += r
             ep_len += 1
