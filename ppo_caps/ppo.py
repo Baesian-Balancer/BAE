@@ -326,7 +326,7 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
-    parser.add_argument('--exp_name', type=str, default='ppo')
+    parser.add_argument('--exp_name', type=str, default='ppo caps')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
