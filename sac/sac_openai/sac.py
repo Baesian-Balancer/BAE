@@ -13,6 +13,7 @@ import wandb
 import gym_os2r
 from gym_os2r import randomizers
 import functools
+import os
 
 def make_env(env_id):
 
@@ -74,7 +75,7 @@ def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
         for t in range(max_steps_per_ep):
 
             with torch.no_grad():
-                a, v, logp = ac.act(torch.as_tensor(obs, dtype=torch.float32),deterministic=True)
+                a = ac.act(torch.as_tensor(o, dtype=torch.float32),deterministic=True)
             o, r, d, _ = env.step(a)
 
             ep_ret += r
@@ -93,13 +94,21 @@ def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
     eval_ret_norm /= eval_len
 
     wandb.log({"evaluation normalized reward":eval_ret_norm, "evaluation reward":eval_ret}, step=cur_step)
-    return o, eval_ret,eval_len
+    return o, eval_ret, eval_len
 
 def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
-        total_train_steps=1_000_000, epochs=100, replay_size=int(1e6), gamma=0.99,
+        total_train_steps=1_000_000, replay_size=int(1e6), gamma=0.99,
         polyak=0.995, lr=1e-3, alpha=0.2, batch_size=100, start_steps=10000,
-        update_after=1000, update_every=5, num_test_episodes=1, max_ep_len=10_000,
-        test_freq=5, save_freq=1, config=None):
+        update_after=1000, update_every=5, max_ep_len=10_000, config=None,
+        **kwargs):
+
+
+    if not os.path.isdir(config["save_dir"]):
+        os.makedirs(config["save_dir"])
+
+    if config['load_model_path'] is not None:
+        checkpoint = torch.load(config['load_model_path'])
+        ac.load_state_dict(checkpoint['actor_state_dict'])
 
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -188,9 +197,6 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         loss_q.backward()
         q_optimizer.step()
 
-        # Record things
-        # logger.store(LossQ=loss_q.item(), **q_info)
-
         # Freeze Q-networks so you don't waste computational effort
         # computing gradients for them during the policy learning step.
         for p in q_params:
@@ -206,9 +212,6 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         for p in q_params:
             p.requires_grad = True
 
-        # Record things
-        # logger.store(LossPi=loss_pi.item(), **pi_info)
-
         # Finally, update target networks by polyak averaging.
         with torch.no_grad():
             for p, p_targ in zip(ac.parameters(), ac_targ.parameters()):
@@ -222,8 +225,6 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                       deterministic)
 
     # Prepare for interaction with environment
-    # total_steps = steps_per_epoch * epochs
-    # print(f"total steps: {total_steps}\n")
     start_time = time.time()
     o, ep_ret, ep_len = env.reset(), 0, 0
     episode = 0
@@ -259,12 +260,11 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 
         # End of trajectory handling
         if d or (ep_len == max_ep_len):
-            # logger.store(EpRet=ep_ret, EpLen=ep_len)
             episode += 1
-                wandb.log({"training episode normalized reward":ep_ret/max_ep_len, "training episode reward":ep_ret}, step=t)
+            wandb.log({"training episode normalized reward":ep_ret/max_ep_len, "training episode reward":ep_ret}, step=t)
             o, ep_ret, ep_len = env.reset(), 0, 0
 
-            o, eval_ret,_ = evaluate(o, ac, env, config, max_ep_length, t)
+            o, eval_ret,_ = evaluate(o, ac, env, config, max_ep_len, t)
             if bst_eval_ret < eval_ret:
                 bst_eval_ret = eval_ret
                 PATH = config["save_dir"] + f'best_model_step_{t}.pt'
@@ -272,8 +272,8 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                     'actor_state_dict': ac.state_dict(),
                 }, PATH)
 
-        if epoch %config["save_freq"] == 0:
-            PATH = config["save_dir"] + "checkpoint_model_step_" + str(epoch*local_steps_per_epoch + t) + ".pt"
+        if episode %config["save_freq"] == 0:
+            PATH = config["save_dir"] + f'checkpoint_model_step_{t}.pt'
             torch.save({
             'actor_state_dict': ac.state_dict(),
             }, PATH)
@@ -290,22 +290,31 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str, default='Monopod-balance-v1')
     parser.add_argument('--hid', type=int, default=256)
     parser.add_argument('--l', type=int, default=2)
+    parser.add_argument('--lr', type=int, default=1e-3)
+    parser.add_argument('--alpha', type=int, default=0.2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--seed', '-s', type=int, default=0)
-    parser.add_argument('--epochs', type=int, default=50)
+    parser.add_argument('--polyak', type=float, default=0.995)
+    parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--exp_name', type=str, default='sac')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
-    parser.add_argument('--save_freq', type=str, default=5)
+    parser.add_argument('--save_freq', type=str, default=10)
+    parser.add_argument('--eval_epochs', type=str, default=3)
+    parser.add_argument('--load_model_path', type=str, default=None)
+    parser.add_argument('--max_ep_len', type=str, default=10_000)
+    parser.add_argument('--update_after', type=str, default=10_000)
+    parser.add_argument('--start_steps', type=str, default=10_000)
+    parser.add_argument('--batch_size', type=str, default=100)
+    parser.add_argument('--total_train_steps', type=str, default=1_000_000)
+    parser.add_argument('--replay_size', type=str, default=1_000_000)
     args = parser.parse_args()
-
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
 
     config = wandb.config
 
-    sac(lambda : make_env(config['env']), actor_critic=core.MLPActorCritic,
-        ac_kwargs=dict(hidden_sizes=[config['hid']]*config['l']),
-        gamma=config['gamma'], seed=config['seed'], test_freq=5, epochs=config['epochs'], config=config)
+    sac(lambda : make_env(config['env']), actor_critic=core.MLPActorCritic, config=config,
+                ac_kwargs=dict(hidden_sizes=[config['hid']]*config['l']),
+                **config)
 
     print("ALL DONE EVERYTHING")

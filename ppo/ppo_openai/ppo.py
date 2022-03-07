@@ -143,6 +143,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     if not os.path.isdir(config["save_dir"]):
         os.makedirs(config["save_dir"])
 
+    if config['load_model_path'] is not None:
+        checkpoint = torch.load(config['load_model_path'])
+        ac.load_state_dict(checkpoint['actor_state_dict'])
     # Random seed
     torch.manual_seed(config["seed"])
     np.random.seed(config["seed"])
@@ -154,10 +157,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
-
-    if config['load_model_path'] is not None:
-        checkpoint = torch.load(config['load_model_path'])
-        ac.load_state_dict(checkpoint['actor_state_dict'])
 
     # Set up experience buffer
     local_steps_per_epoch = int(config["steps_per_epoch"])
@@ -311,4 +310,4 @@ if __name__ == '__main__':
     config = wandb.config
 
     ppo(lambda : make_env(config["env"]), config, actor_critic=core.MLPActorCritic,
-        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
+        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]))
