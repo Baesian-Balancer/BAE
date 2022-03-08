@@ -103,8 +103,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    name = "best_model_step_2259999"
-    path = "./exp/2022_03_07_08_53_29/"
+    name = "best_model_step_1159999"
+    path = "./exp/2022_03_07_23_43_24/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
