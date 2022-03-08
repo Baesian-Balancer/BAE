@@ -100,7 +100,7 @@ def sac(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         total_train_steps=1_000_000, replay_size=int(1e6), gamma=0.99,
         polyak=0.995, lr=1e-3, alpha=0.2, batch_size=100, start_steps=10000,
         update_after=1000, update_every=5, max_ep_len=10_000, config=None,
-        **kwargs):
+        episodes_before_eval=10, **kwargs):
 
 
     if not os.path.isdir(config["save_dir"]):
