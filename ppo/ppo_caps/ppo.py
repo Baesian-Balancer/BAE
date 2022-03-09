@@ -166,6 +166,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
 
+    fs = env.agent_rate
+
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
@@ -188,7 +190,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
 
-        temporal_smoothness, spatial_smoothness, state_smoothness = 0, 0, 0
+        temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness = 0, 0, 0, 0
         if config['lam_a'] > 0:
             temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_a'] * temporal_smoothness
@@ -198,13 +200,26 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_o'] > 0:
             state_smoothness = torch.norm(obs - obs_next)
             loss_pi += config['lam_o'] * state_smoothness
+        if config['lam_f'] > 0:
+            # Compute the one-dimensional discrete Fourier Transform.
+            fft_hip = torch.fft.rfft(mu[:, 0])
+            fft_knee = torch.fft.rfft(mu[:, 1])
+            # Compute the Discrete Fourier Transform sample frequencies.
+            fft_freq = torch.fft.rfftfreq(n=mu.size(dim=0), d=1/fs)
+            # Compute power spectrum
+            mag_hip = fft_hip.abs()[:fft_freq.size(dim=0)]
+            mag_knee = fft_knee.abs()[:fft_freq.size(dim=0)]
+            mag = mag_hip + mag_knee
+
+            fft_smoothness = 2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq)
+            loss_pi += config['lam_f'] * fft_smoothness
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
         ent = pi.entropy().mean().item()
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
-        pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac, ts=temporal_smoothness)
+        pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac, ts=temporal_smoothness, fft=fft_smoothness, sps=spatial_smoothness, sts=state_smoothness)
 
         return loss_pi, pi_info
 
@@ -329,10 +344,11 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
-    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=.1)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=.1)
+    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-.1)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
+    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.1)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
