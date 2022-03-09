@@ -348,7 +348,7 @@ if __name__ == '__main__':
     parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
-    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.05)
+    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.075)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
