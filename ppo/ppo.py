@@ -1,4 +1,5 @@
 from ast import arg
+from distutils.command.config import config
 import wandb
 
 import numpy as np
@@ -271,7 +272,7 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default='exp/')
     
     args = parser.parse_args()
-    wandb.init(project='capstone',entity='nickioan')
+    wandb.init(project='capstone',entity='nickioan',config=args)
 
     ppo(lambda : make_env(args.env), args, actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l),)

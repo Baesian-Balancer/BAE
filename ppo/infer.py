@@ -88,6 +88,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         vf_lr=1e-3, train_pi_iters=80, train_v_iters=80, lam=0.97, max_ep_len=1000000,
         target_kl=0.01, save_freq=10):
 
+    plot = PlotUtils('_stable_smooth','plotting')
     # Random seed 
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -102,7 +103,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    checkpoint = torch.load('./exp/best_model_49.pt')
+    checkpoint = torch.load('best_model_80.pt')
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
     # Sync params across processes
@@ -129,12 +130,16 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(epochs),desc='Epoch')
+    current_action = 0
     for epoch in range(epochs):
         for t in range(local_steps_per_epoch):
             a, v, logp = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
-            plotting.add_action(a)
+            #current_action = a
+            current_action = 0.9*current_action + 0.1*a
 
-            next_o, r, d, _ = env.step(a)
+            plot.add_action(current_action)
+
+            next_o, r, d, _ = env.step(current_action)
             ep_ret += r
             ep_len += 1
 
@@ -156,16 +161,19 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
 
+        plot.plot_action_histogram()
+        plot.plot_temporal_action_change()
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v1')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--seed', '-s', type=int, default=10000)
+    parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--cpu', type=int, default=4)
-    parser.add_argument('--steps', type=int, default=1000)
+    parser.add_argument('--steps', type=int, default=5000)
     parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--exp_name', type=str, default='ppo')
     args = parser.parse_args()

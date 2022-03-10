@@ -30,6 +30,7 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
+        self.env.render()
         print(self.env.observation_space.shape[0])
         print(self.env.action_space.shape[0])
 
@@ -59,9 +60,13 @@ class Workspace(object):
             done = False
             episode_reward = 0
             step = 0
-            while not done:
+            for i in range(10000):
                 with utils.eval_mode(self.agent):
-                    action = self.agent.act(obs, sample=False)
+                    #action = self.agent.act(obs, sample=False)
+                    if i <=500:
+                        action = [0,1.0]
+                    else:
+                        action = [0,-1.0]
                 obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
                 step+=1
@@ -119,7 +124,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--env_id',
-        default = 'Monopod-balance-v1',
+        default = 'Monopod-stand-v1',
         type = str   
     )
 

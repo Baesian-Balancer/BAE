@@ -13,7 +13,7 @@ class PlotUtils:
         self.knee_temporal_change = []
 
         if not os.path.isdir(dir):
-            os.mkdir(dir)
+            os.makedirs(dir)
 
     def add_action(self,action):
         if len(self.hip_action) > 0:
