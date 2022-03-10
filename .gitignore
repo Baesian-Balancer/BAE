@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+**/*.py[cod]
 **/__pycache__
 
 .cache
@@ -25,6 +26,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+**/*.png
 
 # Installer logs
 pip-log.txt
@@ -56,3 +58,5 @@ coverage.xml
 docs/_build/
 
 .ccls-cache
+**/wandb/
+**/*.pt

@@ -43,7 +43,7 @@ class PlotUtils:
             os.mkdir(self.dir)
         plt.figure()
         plt.title("Action Temporal Difference")
-        plt.plot(range(len(self.hip_temporal_change)),self.hip_temporal_change,label='hip action change') 
+        plt.plot(range(len(self.hip_temporal_change)),self.hip_temporal_change,label='hip action change')
         plt.plot(range(len(self.knee_temporal_change)),self.knee_temporal_change,label='knee action change')
         plt.legend()
         PATH = self.dir + self.name + "action_td.png"
