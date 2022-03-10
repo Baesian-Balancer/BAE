@@ -22,8 +22,8 @@ def make_env(env_id):
 
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
-    # env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     # env.render('human')
@@ -194,6 +194,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_a'] > 0:
             temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_a'] * temporal_smoothness
+        if config['lam_aa'] > 0:
+            action_size = torch.norm(mu)
+            loss_pi += config['lam_aa'] * action_size
         if config['lam_s'] > 0:
             spatial_smoothness = torch.norm(mu - mu_bar)
             loss_pi += config['lam_s'] * spatial_smoothness
@@ -345,7 +348,8 @@ if __name__ == '__main__':
     parser.add_argument('--load_model_path', type=str, default=None)
 
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=0.01)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.1)
+    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=0.001)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.01)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.075)
