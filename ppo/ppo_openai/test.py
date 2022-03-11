@@ -23,7 +23,7 @@ def make_env(env_id):
     env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
 
     # Enable the rendering
-    env.render('human')
+    #env.render('human')
 
     # Initialize the seed
     print(env)
@@ -100,20 +100,6 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
 
-    # Create actor-critic module
-    ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
-
-    name = "best_model_90"
-    path = "/home/nickioan/capstone/cap_repos/models/"
-    checkpoint = torch.load(path + name + ".pt")
-    ac.load_state_dict(checkpoint['actor_state_dict'])
-
-    plotting = PlotUtils(name, f'{path}plots/{name}/' )
-    # Sync params across processes
-    # sync_params(ac)
-
-    # Count variables
-    var_counts = tuple(core.count_vars(module) for module in [ac.pi, ac.v])
     # logger.log('\nNumber of parameters: \t pi: %d, \t v: %d\n'%var_counts)
 
     # Set up experience buffer
@@ -133,32 +119,20 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 
     # Main loop: collect experience in env and update/log each epoch
     progress_bar = tqdm(range(epochs),desc='Epoch')
-    current_action = 0
+
     max_vel = 0
-    min_vel = 0
+    current_action = [1,1]
     for epoch in range(epochs):
         for t in range(local_steps_per_epoch):
-            #
-            # print(o[3:7])
-            if max(o[3:7]) > max_vel:
-                max_vel = max(o[3:7])
-            if min(o[3:7]) < min_vel:
-                min_vel = min(o[3:7])
-            if np.random.rand() < 0.15:
-                #o[3:7] += np.random.uniform(-0.05,0.05,np.size(o[3:7]))
-                #o[0:3] += np.random.uniform(-0.05,0.05,np.size(o[0:3]))
-                o[7:] += np.random.uniform(-0.05,0.05,np.size(o[7:]))
-            a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
-            plotting.add_action(a)
-
-            #plot.add_action(current_action)
-
-            next_o, r, d, _ = env.step(a)
+            next_o, r, d, _ = env.step(current_action)
             ep_ret += r
             ep_len += 1
 
             # Update obs (critical!)
             o = next_o
+            acts = max(np.abs(o[3:]))
+            if acts > max_vel:
+                max_vel = acts
 
             timeout = ep_len == max_ep_len
             terminal = d or timeout
@@ -169,22 +143,17 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                     print('Warning: Evaluation trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
                 # if trajectory didn't reach terminal state, bootstrap value target
                 o, ep_ret, ep_len = env.reset(), 0, 0
-
-        print("MAX VEL")
-        print(max_vel)
-        print("MIN VEL")
-        print(min_vel)
         progress_bar.update(1)
+        print("MAX VALUES")
+        print(max_vel)
 
-    #plotting.plot_temporal_action_change()
-    #plotting.plot_action_histogram()
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v6')
+    parser.add_argument('--env', type=str, default='Monopod-simple-v1')
     # parser.add_argument('--hid', type=int, default=64)
-    parser.add_argument('--hid', type=int, default=64)
+    parser.add_argument('--hid', type=int, default=96)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--seed', '-s', type=int, default=42)
