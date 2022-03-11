@@ -216,6 +216,11 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
             fft_smoothness = 2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq)
             loss_pi += config['lam_f'] * fft_smoothness
+        if config['lam_sp'] > 0:
+            dif_mu = torch.diff(torch.diff(mu, dim=0), dim=0)**2
+            int_mu = torch.trapezoid(dif_mu, dim=0)
+            loss_pi += config['lam_sp'] * torch.norm(int_mu)
+
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
@@ -347,12 +352,13 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
-    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=0.01)
-    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=0.001)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.01)
+    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)
+    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
-    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.075)
+    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
+    parser.add_argument('--lam_sp', type=float, help='Regularization coeffecient on smoothness penalty for actions (valid > 0)', default=.1)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
