@@ -31,7 +31,7 @@ class Workspace(object):
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
         self.env = utils.make_env(cfg)
-        self.env.render('human')
+        # self.env.render('human')
         print(self.env.observation_space.shape[0])
         print(self.env.action_space.shape[0])
 
@@ -43,7 +43,7 @@ class Workspace(object):
             float(self.env.action_space.high.max())
         ]
         self.agent = hydra.utils.instantiate(agent_cfg.agent)
-
+        print(self.agent)
         self.replay_buffer = ReplayBuffer(self.env.observation_space.shape,
                                           self.env.action_space.shape,
                                           int(cfg.replay_buffer_capacity),
@@ -52,28 +52,34 @@ class Workspace(object):
 
         self.best_avg_reward = 0
 
+        self.multi_step = cfg.multi_step # 1 by default
+
     def evaluate(self):
         average_episode_reward = 0
+
+        # TODO: make this not hardcoded. Need max_episode_steps parameter
+        #       from environment
+        progress_bar = tqdm(range(self.cfg.num_eval_episodes),desc='Evaluation')
         for episode in range(self.cfg.num_eval_episodes):
             obs = self.env.reset()
             self.agent.reset()
             done = False
             episode_reward = 0
             step = 0
-            progress_bar = tqdm(range(10000),desc='Evaluation')
+            # progress_bar = tqdm(range(self.env._max_episode_steps),desc='Evaluation')
             while not done:
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
                 episode_reward += reward
                 step+=1
-                progress_bar.update(1)
-
+            
+            progress_bar.update(1)
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
         
         if self.cfg.wandb_on:
-            wandb.log({"average reward":average_episode_reward})
+            wandb.log({"evaluation reward":average_episode_reward, "train_step": self.step})
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model_" + str(self.step) + ".pt"
             torch.save({
@@ -81,6 +87,15 @@ class Workspace(object):
             'critic_state_dict': self.agent.critic.state_dict(),
             }, PATH)
             self.best_avg_reward = average_episode_reward
+
+    # def generate_replay_data(self, obs, num_actions=1):
+    #     """Creates more state-transition tuples"""
+    #     # Randomly sample actions and get next obs, reward, done
+    #     actions = [self.agent.act(obs,sample=True) for i in range(num_tuples)]
+    #     next_obss = [self.state_transition.predict(obs, action) for action in actions]
+    #     rewards = [env.get_reward(obs) for obs in next_obss]
+    #     dones = [env.is_done(obs) for obs in next_obss]
+    #     return obs, actions, rewards, next_obss, dones
 
     def run(self):
         episode, episode_reward, done = 0, 0, True
@@ -90,6 +105,8 @@ class Workspace(object):
                 # evaluate agent periodically
                 if self.step > 0 and episode % self.cfg.episode_eval_frequency == 0:
                     self.evaluate()
+                if self.cfg.wandb_on:
+                    wandb.log({"training_reward": episode_reward, "train_step": self.step})
 
                 obs = self.env.reset()
                 self.agent.reset()
@@ -99,14 +116,19 @@ class Workspace(object):
                 episode += 1
 
             # sample action for data collection
-            if self.step < self.cfg.exploration_steps:
-                action = self.env.action_space.sample()
+            if self.step < self.cfg.exploration_steps / 10:
+                if self.step % self.multi_step == 0:
+                    action = self.env.action_space.sample()
             else:
                 with utils.eval_mode(self.agent):
-                    action = self.agent.act(obs, sample=True)
+                    if self.step < self.cfg.exploration_steps:
+                        if self.step % self.multi_step == 0:
+                            action = self.agent.act(obs, sample=True)
+                    else:
+                        action = self.agent.act(obs, sample=True)
 
             # run training update
-            if self.step >= self.cfg.exploration_steps:
+            if self.step >= self.cfg.exploration_steps / 10:
                 self.agent.update(self.replay_buffer, self.step)
             next_obs, reward, done, _ = self.env.step(action)
             # allow infinite bootstrap
@@ -116,6 +138,8 @@ class Workspace(object):
             episode_reward += reward
             self.replay_buffer.add(obs, action, reward, next_obs, done,
                                    done_no_max)
+            # Generate data for replay buffer
+            # state_transitions = self.generate_replay_data(obs, num_actions=1)
             obs = next_obs
             episode_step += 1
             self.step += 1
@@ -146,21 +170,27 @@ if __name__ == '__main__':
         default = 'capstone',
         type = str    
     )
+
+    parser.add_argument(
+        '--entity',
+        default = 'open_sim2real',
+        type = str
+    )
     parser.add_argument(
         '--wandb_user',
-        default = 'nickioan',
+        default = 'KeithG33',
         type = str    
     )
 
     parser.add_argument(
         '--device',
-        default = 'cuda',
+        default = 'cpu',
         type = str    
     )
 
     parser.add_argument(
         '--seed',
-        default = 42,
+        default = 42069,
         type = int    
     )
 
@@ -202,7 +232,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--num_eval_episodes',
-        default= 10,
+        default = 5,
         type = int  
     )
 
@@ -230,6 +260,11 @@ if __name__ == '__main__':
         type = int
     )
 
+    parser.add_argument(
+        '--multi_step',
+        default = 1,
+        type = int
+    )
     args = parser.parse_args()
 
     main(args)

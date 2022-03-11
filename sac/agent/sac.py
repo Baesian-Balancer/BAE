@@ -68,17 +68,24 @@ class SACAgent(Agent, nn.Module):
         self.target_entropy = -action_dim
 
         # optimizers
-        self.actor_optimizer = torch.optim.Adam(self.actor.parameters(),
+        self.actor_optimizer = torch.optim.AdamW(self.actor.parameters(),
                                                 lr=actor_lr,
                                                 betas=actor_betas)
 
-        self.critic_optimizer = torch.optim.Adam(self.critic.parameters(),
+        self.critic_optimizer = torch.optim.AdamW(self.critic.parameters(),
                                                  lr=critic_lr,
                                                  betas=critic_betas)
 
-        self.log_alpha_optimizer = torch.optim.Adam([self.log_alpha],
+        self.log_alpha_optimizer = torch.optim.AdamW([self.log_alpha],
                                                     lr=alpha_lr,
                                                     betas=alpha_betas)
+
+        # max_lr = 0.01
+        # self.actor_scheduler = torch.optim.lr_scheduler.OneCycleLR(self.actor_optimizer, max_lr, total_steps=6000000)
+
+        # self.critic_scheduler = torch.optim.lr_scheduler.OneCycleLR(self.critic_optimizer, max_lr, total_steps=6000000)
+
+        # self.log_alpha_scheduler = torch.optim.lr_scheduler.OneCycleLR(self.log_alpha_optimizer, max_lr, total_steps=6000000)
 
         self.train()
         self.critic_target.train()
@@ -155,3 +162,7 @@ class SACAgent(Agent, nn.Module):
         if step % self.critic_target_update_frequency == 0:
             utils.soft_update_params(self.critic, self.critic_target,
                                      self.critic_tau)
+
+        # self.actor_scheduler.step()
+        # self.critic_scheduler.step()
+        # self.log_alpha_scheduler.step()
