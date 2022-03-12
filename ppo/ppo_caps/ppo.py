@@ -192,7 +192,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness = 0, 0, 0, 0
         if config['lam_a'] > 0:
-            temporal_smoothness = torch.norm(mu_delta)
+            temporal_smoothness = torch.norm(mu_delta,p='nuc')
             loss_pi += config['lam_a'] * temporal_smoothness
         if config['lam_aa'] > 0:
             action_size = torch.norm(mu)
@@ -361,7 +361,7 @@ if __name__ == '__main__':
     parser.add_argument('--lam_sp', type=float, help='Regularization coeffecient on smoothness penalty for actions (valid > 0)', default=.1)
 
     args = parser.parse_args()
-    wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
+    wandb.init(project="capstone", entity="nickioan", config=args)
 
     config = wandb.config
 
