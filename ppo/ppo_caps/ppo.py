@@ -14,6 +14,7 @@ import functools
 
 import datetime
 import os
+from gym_ignition.utils import logger
 
 def make_env(env_id):
 
@@ -27,6 +28,10 @@ def make_env(env_id):
 
     # Enable the rendering
     # env.render('human')
+
+    # set verbosity
+    logger.set_level(gym.logger.ERROR)
+    # logger.set_level(gym.logger.DEBUG)
 
     # Initialize the seed
     print(env)
@@ -330,7 +335,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v2')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v1')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
