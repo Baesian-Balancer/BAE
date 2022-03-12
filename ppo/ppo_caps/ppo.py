@@ -352,13 +352,13 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
-    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)
-    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.1)
+    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=0.1)
+    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=0.001)
+    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.01)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
-    parser.add_argument('--lam_sp', type=float, help='Regularization coeffecient on smoothness penalty for actions (valid > 0)', default=.001)
+    parser.add_argument('--lam_sp', type=float, help='Regularization coeffecient on smoothness penalty for actions (valid > 0)', default=-.001)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
