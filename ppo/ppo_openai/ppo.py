@@ -28,6 +28,8 @@ def make_env(env_id):
     # Enable the rendering
     # env.render('human')
 
+    # Set verbosity
+
     # Initialize the seed
     print(env)
     return env
