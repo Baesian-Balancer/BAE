@@ -244,8 +244,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         if config['lam_rp'] > 0:
             dif_mu = torch.diff(torch.diff(mu, dim=0), dim=0)**2
-            roughness_penalty = torch.trapezoid(dif_mu, dim=0)
-            loss_pi += config['lam_rp'] * torch.norm(roughness_penalty)
+            roughness_penalty = torch.norm(torch.trapezoid(dif_mu, dim=0))
+            loss_pi += config['lam_rp'] * roughness_penalty
             pi_info['rp'] = roughness_penalty
 
         return loss_pi, pi_info
