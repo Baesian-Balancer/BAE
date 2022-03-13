@@ -79,7 +79,7 @@ class Workspace(object):
         average_episode_reward /= self.cfg.num_eval_episodes
         
         if self.cfg.wandb_on:
-            wandb.log({"evaluation reward":average_episode_reward, "train_step": self.step})
+            wandb.log({"evaluation reward":average_episode_reward}, step=self.step)
         if average_episode_reward >= self.best_avg_reward and self.cfg.save_cp:
             PATH = self.cfg.cp_dir + "best_model_" + str(self.step) + ".pt"
             torch.save({
@@ -106,7 +106,7 @@ class Workspace(object):
                 if self.step > 0 and episode % self.cfg.episode_eval_frequency == 0:
                     self.evaluate()
                 if self.cfg.wandb_on:
-                    wandb.log({"training_reward": episode_reward, "train_step": self.step})
+                    wandb.log({"training_reward": episode_reward}, step=self.step)
 
                 obs = self.env.reset()
                 self.agent.reset()

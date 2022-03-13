@@ -13,8 +13,8 @@ from omegaconf import OmegaConf
 from agent import Agent
 from agent.actor import DiagGaussianActor
 from agent.critic import DoubleQCritic
-
-
+from agent.rnd import RandomNetworkDistillation
+import wandb
 class SACAgent(Agent, nn.Module):
     """SAC algorithm."""
     def __init__(self, obs_dim, action_dim, action_range, device, critic_cfg: Dict[str, Any],
@@ -40,25 +40,38 @@ class SACAgent(Agent, nn.Module):
 
         self.actor = hydra.utils.instantiate(actor_cfg).to(self.device)
 
-
-        # DoubleQCritic takes parameters: obs_dim, action_dim, hidden_dim,
-        # hidden_depth
-        # hidden_dim = critic_cfg['hidden_dim']
-        # hidden_depth = critic_cfg['hidden_depth']
+        self.rnd = RandomNetworkDistillation(obs_dim, action_dim)
         
-        # self.critic = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
-        # self.critic_target = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
-        # self.critic_target.load_state_dict(self.critic.state_dict())
+        # TODO: ADD TO CONFIG IF WORKS
+        self.rnd_update_frequency = 5
+        def get_train_params(model):
+            trainable_parameters = []
+            for name, p in model.named_parameters():
+                if "pred_trunk" in name:
+                    trainable_parameters.append(p)
+            return trainable_parameters
+        
+        rnd_training_params = get_train_params(self.rnd)
 
-        # DiagGaussianActor takes parameters: obs_dim, action_dim, hidden_dim,
-        # hidden_depth, log_std_bounds
-        # self.actor = DiagGaussianActor(obs_dim, action_dim, hidden_dim,
-        #                 hidden_depth, actor_cfg["params"]['log_std_bounds']).to(self.device)
 
-        # self.critic = critic_cfg["critic"]
-        # self.actor = critic_cfg["actor"]
-        # self.critic_target = copy.deepcopy(critic_cfg["critic"])
-        # self.critic_target.load_state_dict(self.critic.state_dict())
+        # # DoubleQCritic takes parameters: obs_dim, action_dim, hidden_dim,
+        # # hidden_depth
+        # # hidden_dim = critic_cfg['hidden_dim']
+        # # hidden_depth = critic_cfg['hidden_depth']
+        
+        # # self.critic = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
+        # # self.critic_target = DoubleQCritic(obs_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
+        # # self.critic_target.load_state_dict(self.critic.state_dict())
+
+        # # DiagGaussianActor takes parameters: obs_dim, action_dim, hidden_dim,
+        # # hidden_depth, log_std_bounds
+        # # self.actor = DiagGaussianActor(obs_dim, action_dim, hidden_dim,
+        # #                 hidden_depth, actor_cfg["params"]['log_std_bounds']).to(self.device)
+
+        # # self.critic = critic_cfg["critic"]
+        # # self.actor = critic_cfg["actor"]
+        # # self.critic_target = copy.deepcopy(critic_cfg["critic"])
+        # # self.critic_target.load_state_dict(self.critic.state_dict())
 
 
 
@@ -73,6 +86,10 @@ class SACAgent(Agent, nn.Module):
                                                 betas=actor_betas)
 
         self.critic_optimizer = torch.optim.AdamW(self.critic.parameters(),
+                                                 lr=critic_lr,
+                                                 betas=critic_betas)
+
+        self.rnd_optimizer = torch.optim.AdamW(rnd_training_params,
                                                  lr=critic_lr,
                                                  betas=critic_betas)
 
@@ -142,13 +159,27 @@ class SACAgent(Agent, nn.Module):
         self.actor_optimizer.zero_grad()
         actor_loss.backward()
         self.actor_optimizer.step()
-
+        
         if self.learnable_temperature:
             self.log_alpha_optimizer.zero_grad()
+            curiosity = self.rnd.get_curiosity(obs, action)
+            self.rnd.update_stats(curiosity)
+            curiosity = self.rnd.normalize(curiosity)
             alpha_loss = (self.alpha *
-                          (-log_prob - self.target_entropy).detach()).mean()
+                          (-log_prob - self.target_entropy - curiosity).detach()).mean()
             alpha_loss.backward()
             self.log_alpha_optimizer.step()
+
+    def update_rnd(self, obs, action, step):
+        self.rnd_optimizer.zero_grad()
+        rnd_loss = self.rnd(obs, action)
+        rnd_loss.backward()
+        wandb.log({"rnd_loss": rnd_loss}, step=step)
+        self.rnd_optimizer.step()
+
+        # if self.rnd.stats.n > 10_000:
+        #     self.rnd.stats.clear()
+
 
     def update(self, replay_buffer, step):
         obs, action, reward, next_obs, not_done, not_done_no_max = replay_buffer.sample(
@@ -158,6 +189,9 @@ class SACAgent(Agent, nn.Module):
 
         if step % self.actor_update_frequency == 0:
             self.update_actor_and_alpha(obs, step)
+            
+        if step % self.rnd_update_frequency == 0:
+            self.update_rnd(obs, action, step)
 
         if step % self.critic_target_update_frequency == 0:
             utils.soft_update_params(self.critic, self.critic_target,
