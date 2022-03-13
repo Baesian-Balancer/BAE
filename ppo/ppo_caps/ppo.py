@@ -195,20 +195,23 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
 
-        temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness, roughness_penalty = 0, 0, 0, 0, 0
-        if config['lam_a'] > 0:
+        temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness, roughness_penalty, max_delta_mu = 0, 0, 0, 0, 0, 0
+        if config['lam_ts'] > 0:
             temporal_smoothness = torch.norm(mu_delta)
-            loss_pi += config['lam_a'] * temporal_smoothness
-        if config['lam_aa'] > 0:
+            loss_pi += config['lam_ts'] * temporal_smoothness
+        if config['lam_mdmu'] > 0:
+            max_delta_mu = torch.norm(mu_delta, float('inf'))
+            loss_pi += config['lam_mdmu'] * max_delta_mu
+        if config['lam_a'] > 0:
             action_size = torch.norm(mu)
-            loss_pi += config['lam_aa'] * action_size
-        if config['lam_s'] > 0:
+            loss_pi += config['lam_a'] * action_size
+        if config['lam_sps'] > 0:
             spatial_smoothness = torch.norm(mu - mu_bar)
-            loss_pi += config['lam_s'] * spatial_smoothness
-        if config['lam_o'] > 0:
+            loss_pi += config['lam_sps'] * spatial_smoothness
+        if config['lam_sts'] > 0:
             state_smoothness = torch.norm(obs - obs_next)
-            loss_pi += config['lam_o'] * state_smoothness
-        if config['lam_f'] > 0:
+            loss_pi += config['lam_sts'] * state_smoothness
+        if config['lam_fft'] > 0:
             # Compute the one-dimensional discrete Fourier Transform.
             fft_hip = torch.fft.rfft(mu[:, 0])
             fft_knee = torch.fft.rfft(mu[:, 1])
@@ -220,7 +223,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             mag = mag_hip + mag_knee
 
             fft_smoothness = 2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq)
-            loss_pi += config['lam_f'] * fft_smoothness
+            loss_pi += config['lam_fft'] * fft_smoothness
         if config['lam_rp'] > 0:
             dif_mu = torch.diff(torch.diff(mu, dim=0), dim=0)**2
             roughness_penalty = torch.trapezoid(dif_mu, dim=0)
@@ -232,7 +235,16 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         ent = pi.entropy().mean().item()
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
-        pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac, ts=temporal_smoothness, fft=fft_smoothness, sps=spatial_smoothness, sts=state_smoothness, rp=roughness_penalty)
+        pi_info = dict(kl=approx_kl,
+                       ent=ent,
+                       cf=clipfrac,
+                       ts=temporal_smoothness,
+                       fft=fft_smoothness,
+                       sps=spatial_smoothness,
+                       sts=state_smoothness,
+                       rp=roughness_penalty,
+                       mdmu=max_delta_mu
+                       )
 
         return loss_pi, pi_info
 
@@ -357,12 +369,13 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
-    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.1)
-    parser.add_argument('--lam_aa', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
-    parser.add_argument('--lam_s', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.01)
+    parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.1)
+    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-0.1)
+    parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
+    parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
-    parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
-    parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
+    parser.add_argument('--lam_sts', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
+    parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=0.1)
 
     args = parser.parse_args()
