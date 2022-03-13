@@ -195,7 +195,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
 
-        temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness = 0, 0, 0, 0
+        temporal_smoothness, spatial_smoothness, state_smoothness, fft_smoothness, roughness_penalty = 0, 0, 0, 0, 0
         if config['lam_a'] > 0:
             temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_a'] * temporal_smoothness
@@ -221,10 +221,10 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
             fft_smoothness = 2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq)
             loss_pi += config['lam_f'] * fft_smoothness
-        if config['lam_sp'] > 0:
+        if config['lam_rp'] > 0:
             dif_mu = torch.diff(torch.diff(mu, dim=0), dim=0)**2
-            int_mu = torch.trapezoid(dif_mu, dim=0)
-            loss_pi += config['lam_sp'] * torch.norm(int_mu)
+            roughness_penalty = torch.trapezoid(dif_mu, dim=0)
+            loss_pi += config['lam_rp'] * torch.norm(roughness_penalty)
 
 
         # Useful extra info
@@ -232,7 +232,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         ent = pi.entropy().mean().item()
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
-        pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac, ts=temporal_smoothness, fft=fft_smoothness, sps=spatial_smoothness, sts=state_smoothness)
+        pi_info = dict(kl=approx_kl, ent=ent, cf=clipfrac, ts=temporal_smoothness, fft=fft_smoothness, sps=spatial_smoothness, sts=state_smoothness, rp=roughness_penalty)
 
         return loss_pi, pi_info
 
@@ -363,7 +363,7 @@ if __name__ == '__main__':
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_o', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--lam_f', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
-    parser.add_argument('--lam_sp', type=float, help='Regularization coeffecient on smoothness penalty for actions (valid > 0)', default=0.1)
+    parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=0.1)
 
     args = parser.parse_args()
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
