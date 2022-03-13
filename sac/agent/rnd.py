@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import numpy as np
 import math
 import utils 
-
+import copy 
 class RandomNetworkDistillation(nn.Module):
     """
     Two neural networks predict next state. The error in the prediction

@@ -16,7 +16,7 @@ from replay_buffer import ReplayBuffer
 import utils
 from argparse import ArgumentParser
 from omegaconf import OmegaConf
-
+from plotting import PlotUtils
 import hydra
 
 class Workspace(object):
@@ -26,6 +26,9 @@ class Workspace(object):
             raise FileExistsError("Model checkpoint path does not exist")
 
         self.cfg = cfg
+
+        dir = os.getcwd()
+        self.plotting = PlotUtils("tester", dir)
 
         utils.set_seed_everywhere(cfg.seed)
         self.device = torch.device(cfg.device)
@@ -63,16 +66,19 @@ class Workspace(object):
             episode_reward = 0
             step = 0
             # while not done:
-            for i in range(5_000):
+            for i in range(2500):
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
                 obs, reward, done, _ = self.env.step(action)
+                self.plotting.add_action(action)
                 # print(obs)
                 episode_reward += reward
                 step+=1
             average_episode_reward += episode_reward
         average_episode_reward /= self.cfg.num_eval_episodes
         print(average_episode_reward)
+        self.plotting.plot_temporal_action_change()
+        self.plotting.plot_action_histogram()    
 
     def run(self):
         self.evaluate()

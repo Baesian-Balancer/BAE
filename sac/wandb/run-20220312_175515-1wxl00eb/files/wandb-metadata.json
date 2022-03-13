@@ -1,0 +1,35 @@
+{
+    "os": "Linux-5.15.15-76051515-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2022-03-13T01:55:17.170715",
+    "startedAt": "2022-03-13T01:55:15.980506",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1050",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--device",
+        "cpu",
+        "--episode_eval_frequency",
+        "3",
+        "--num_train_steps",
+        "5000000",
+        "--exploration_steps",
+        "100000",
+        "--wandb_on",
+        "--save_cp"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "sac/train.py",
+    "git": {
+        "remote": "git@github.com:OpenSim2Real/rl-algorithm-exploration.git",
+        "commit": "a54764e9a4a07a24ab0f92031b3001d1af9bba20"
+    },
+    "email": "keith.gordon9@gmail.com",
+    "root": "/home/capstone/capstone/rl-algorithm-exploration",
+    "host": "pop-os",
+    "username": "capstone",
+    "executable": "/usr/bin/python3"
+}

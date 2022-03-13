@@ -4,6 +4,6 @@ python3 train.py \
 --episode_eval_frequency 3 \
 --num_train_steps 5000000 \
 --exploration_steps 100000 \
---wandb_on \
 --save_cp 
+# --wandb_on \
 # --multi_step 3 \

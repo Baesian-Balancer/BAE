@@ -161,10 +161,10 @@ class SACAgent(Agent, nn.Module):
         self.actor_optimizer.step()
         
         if self.learnable_temperature:
+            rnd_loss = self.rnd(obs, action)
+            curiosity = self.rnd.normalize(rnd_loss)
+            
             self.log_alpha_optimizer.zero_grad()
-            curiosity = self.rnd.get_curiosity(obs, action)
-            self.rnd.update_stats(curiosity)
-            curiosity = self.rnd.normalize(curiosity)
             alpha_loss = (self.alpha *
                           (-log_prob - self.target_entropy - curiosity).detach()).mean()
             alpha_loss.backward()
@@ -173,12 +173,11 @@ class SACAgent(Agent, nn.Module):
     def update_rnd(self, obs, action, step):
         self.rnd_optimizer.zero_grad()
         rnd_loss = self.rnd(obs, action)
+        self.rnd.update_stats(rnd_loss.item())
         rnd_loss.backward()
-        wandb.log({"rnd_loss": rnd_loss}, step=step)
         self.rnd_optimizer.step()
 
-        # if self.rnd.stats.n > 10_000:
-        #     self.rnd.stats.clear()
+        # wandb.log({"rnd_loss": rnd_loss}, step=step)
 
 
     def update(self, replay_buffer, step):
@@ -187,11 +186,12 @@ class SACAgent(Agent, nn.Module):
 
         self.update_critic(obs, action, reward, next_obs, not_done_no_max, step)
 
+        if step % self.rnd_update_frequency == 0:
+            self.update_rnd(obs, action, step)
+
         if step % self.actor_update_frequency == 0:
             self.update_actor_and_alpha(obs, step)
             
-        if step % self.rnd_update_frequency == 0:
-            self.update_rnd(obs, action, step)
 
         if step % self.critic_target_update_frequency == 0:
             utils.soft_update_params(self.critic, self.critic_target,
