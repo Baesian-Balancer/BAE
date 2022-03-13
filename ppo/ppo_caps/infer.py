@@ -103,7 +103,7 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    name = "checkpoint_model_step_4919999"
+    name = "checkpoint_model_step_1819999"
     path = "/home/nickioan/capstone/cap_repos/models/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
@@ -135,6 +135,10 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     progress_bar = tqdm(range(epochs),desc='Epoch')
     for epoch in range(epochs):
         for t in range(local_steps_per_epoch):
+
+            if np.random.rand() < 0.30:
+                o += np.random.uniform(-0.05,0.05,np.size(o))
+                
             a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
             plotting.add_action(a)
             a = np.clip(a, -1, 1)
@@ -157,8 +161,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
                 o, ep_ret, ep_len = env.reset(), 0, 0
         progress_bar.update(1)
 
-    #plotting.plot_temporal_action_change()
-    #plotting.plot_action_histogram()
+    plotting.plot_temporal_action_change()
+    plotting.plot_action_histogram()
 
 if __name__ == '__main__':
     import argparse
@@ -170,7 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--cpu', type=int, default=4)
     parser.add_argument('--steps', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=10)
+    parser.add_argument('--epochs', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     args = parser.parse_args()
 

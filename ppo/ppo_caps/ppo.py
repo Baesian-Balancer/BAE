@@ -16,6 +16,23 @@ import datetime
 import os
 from gym_ignition.utils import logger
 
+
+# https://stackoverflow.com/questions/1174984/how-to-efficiently-calculate-a-running-standard-deviation
+class RunningStats:
+    """ Welford's algorithm for running mean/std """
+    def __init__(self,obs_dim):
+        self.n = 1
+        self.welford_state_mean = np.zeros(obs_dim)
+        self.welford_state_mean_diff = np.ones(obs_dim)
+    
+    def update(self, x,update=True):
+        if update:
+            state_old = self.welford_state_mean
+            self.welford_state_mean += (x-state_old)/self.n
+            self.welford_state_mean_diff += (x-state_old)*(x-state_old)
+            self.n += 1
+        return (x- self.welford_state_mean) / np.sqrt(self.welford_state_mean_diff / self.n)
+
 def make_env(env_id):
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
@@ -23,8 +40,8 @@ def make_env(env_id):
 
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
-    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    #env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     # env.render('human')
@@ -171,6 +188,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
 
+    #normalizer = RunningStats(obs_dim)
+
     fs = env.agent_rate
 
     # Create actor-critic module
@@ -283,6 +302,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
+    #o = normalizer.update(o)
 
     current_max_ep_len = config["start_ep_len"]
     update_ep_len = (config["max_ep_len"]-config["start_ep_len"]) // config["epochs"]
@@ -294,6 +314,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         for t in range(local_steps_per_epoch):
             a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), std_mu=config['eps_s'])
             next_o, r, d, _ = env.step(a)
+            #next_o = normalizer.update(next_o)
             ep_ret += r
             ep_len += 1
 
