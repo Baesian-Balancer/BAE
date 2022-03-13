@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.15.15-76051515-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2022-02-26T00:16:30.727223",
+    "startedAt": "2022-02-26T00:16:29.515108",
+    "docker": null,
+    "gpu": "NVIDIA GeForce GTX 1050",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/capstone/capstone/rl-algorithm-exploration/openai_sac/sac.py",
+    "codePath": "openai_sac/sac.py",
+    "git": {
+        "remote": "git@github.com:OpenSim2Real/rl-algorithm-exploration.git",
+        "commit": "b61e990d108695dd495f5de19da0d1f2bd215248"
+    },
+    "email": "keith.gordon9@gmail.com",
+    "root": "/home/capstone/capstone/rl-algorithm-exploration",
+    "host": "pop-os",
+    "username": "capstone",
+    "executable": "/bin/python3"
+}

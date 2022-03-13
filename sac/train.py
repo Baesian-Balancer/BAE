@@ -109,6 +109,7 @@ class Workspace(object):
                     wandb.log({"training_reward": episode_reward}, step=self.step)
 
                 obs = self.env.reset()
+                # print(obs)
                 self.agent.reset()
                 done = False
                 episode_reward = 0
@@ -165,6 +166,7 @@ if __name__ == '__main__':
         default = False,
         action = 'store_true'  
     )
+
     parser.add_argument(
         '--wandb_project',
         default = 'capstone',
@@ -176,6 +178,7 @@ if __name__ == '__main__':
         default = 'open_sim2real',
         type = str
     )
+    
     parser.add_argument(
         '--wandb_user',
         default = 'KeithG33',
@@ -250,7 +253,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--exploration_steps',
-        default = 5000,
+        default = 10000,
         type = int
     )
 

@@ -1,0 +1,851 @@
+2022-02-25 16:31:27,134 INFO    MainThread:10623 [internal.py:wandb_internal():87] W&B internal server running at pid: 10623, started at: 2022-02-25 16:31:27.134056
+2022-02-25 16:31:27,135 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: check_version
+2022-02-25 16:31:27,136 INFO    WriterThread:10623 [datastore.py:open_for_write():77] open: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/run-2jlppd4u.wandb
+2022-02-25 16:31:27,137 DEBUG   SenderThread:10623 [sender.py:send():234] send: header
+2022-02-25 16:31:27,137 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: check_version
+2022-02-25 16:31:32,139 DEBUG   SenderThread:10623 [sender.py:send():234] send: run
+2022-02-25 16:31:32,445 INFO    SenderThread:10623 [dir_watcher.py:__init__():169] watching files in: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files
+2022-02-25 16:31:32,445 INFO    SenderThread:10623 [sender.py:_start_run_threads():804] run started: 2jlppd4u with start time 1645835486
+2022-02-25 16:31:32,446 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:31:32,446 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:31:32,447 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: run_start
+2022-02-25 16:31:32,455 DEBUG   HandlerThread:10623 [meta.py:__init__():40] meta init
+2022-02-25 16:31:32,455 DEBUG   HandlerThread:10623 [meta.py:__init__():54] meta init done
+2022-02-25 16:31:32,455 DEBUG   HandlerThread:10623 [meta.py:probe():214] probe
+2022-02-25 16:31:32,462 DEBUG   HandlerThread:10623 [meta.py:_setup_git():204] setup git
+2022-02-25 16:31:32,478 DEBUG   HandlerThread:10623 [meta.py:_setup_git():211] setup git done
+2022-02-25 16:31:32,478 DEBUG   HandlerThread:10623 [meta.py:_save_pip():58] save pip
+2022-02-25 16:31:32,479 DEBUG   HandlerThread:10623 [meta.py:_save_pip():72] save pip done
+2022-02-25 16:31:32,479 DEBUG   HandlerThread:10623 [meta.py:probe():252] probe done
+2022-02-25 16:31:32,484 DEBUG   SenderThread:10623 [sender.py:send():234] send: files
+2022-02-25 16:31:32,484 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-02-25 16:31:32,491 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:31:32,491 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:31:33,049 INFO    Thread-11 :10623 [upload_job.py:push():137] Uploaded file /tmp/tmpmu0vwqfowandb/1gu1pq94-wandb-metadata.json
+2022-02-25 16:31:33,451 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_created():217] file/dir created: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:33,452 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_created():217] file/dir created: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/requirements.txt
+2022-02-25 16:31:33,452 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_created():217] file/dir created: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-metadata.json
+2022-02-25 16:31:33,452 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_created():217] file/dir created: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:31:38,449 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:40,450 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:42,450 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:44,451 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:46,452 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:48,452 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:50,453 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:50,733 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:31:50,733 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:31:52,453 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:54,454 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:56,455 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:31:58,455 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:00,456 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:00,738 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:32:02,456 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:04,457 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:06,458 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:06,600 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:32:06,601 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:32:08,458 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:10,459 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:12,460 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:14,460 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:16,461 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:18,462 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:20,462 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:22,289 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:32:22,289 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:32:22,463 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:24,463 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:26,464 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:28,465 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:30,465 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:30,977 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:32:32,466 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:34,467 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:36,467 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:37,387 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:32:37,387 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:32:38,468 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:40,468 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:42,469 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:44,470 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:46,470 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:48,471 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:50,472 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:52,472 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:52,479 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:32:52,479 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:32:54,473 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:56,474 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:32:58,474 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:00,475 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:01,200 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:33:02,475 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:04,476 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:06,477 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:07,609 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:33:07,609 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:33:08,477 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:10,478 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:12,479 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:14,479 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:16,480 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:18,481 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:20,481 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:22,482 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:22,825 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:33:22,825 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:33:24,483 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:26,483 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:28,484 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:30,485 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:31,444 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:33:32,486 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:34,486 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:36,487 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:37,960 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:33:37,960 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:33:38,487 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:40,488 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:42,489 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:44,489 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:45,416 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:33:45,417 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:33:45,417 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:33:45,490 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:33:46,490 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:48,491 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:50,491 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:52,492 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:53,087 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:33:53,087 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:33:54,493 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:56,493 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:33:58,494 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:00,494 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:01,674 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:34:02,495 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:04,496 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:06,496 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:08,187 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:34:08,187 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:34:08,497 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:10,497 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:12,498 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:14,499 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:16,499 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:18,500 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:20,500 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:22,501 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:23,286 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:34:23,287 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:34:24,502 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:26,502 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:28,503 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:30,504 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:31,916 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:34:32,504 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:34,505 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:36,505 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:38,465 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:34:38,466 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:34:38,511 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:40,512 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:42,512 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:44,513 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:46,514 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:48,514 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:50,515 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:52,515 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:53,619 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:34:53,620 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:34:54,516 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:56,517 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:34:58,517 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:00,518 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:02,161 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:35:02,519 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:04,519 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:06,520 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:08,520 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:08,811 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:35:08,811 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:35:10,521 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:12,522 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:14,522 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:16,523 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:18,523 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:20,524 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:22,525 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:24,101 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:35:24,101 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:35:24,525 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:26,526 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:28,526 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:30,527 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:32,391 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:35:32,528 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:35,529 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:37,529 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:39,294 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:35:39,294 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:35:39,530 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:41,531 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:43,531 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:45,532 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:47,533 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:49,533 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:51,534 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:53,535 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:54,462 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:35:54,462 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:35:55,535 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:57,536 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:35:59,537 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:01,537 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:02,625 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:36:03,538 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:05,538 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:06,299 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:36:06,300 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:36:06,302 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:36:06,539 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:36:07,539 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:09,540 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:09,781 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:36:09,781 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:36:11,540 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:13,541 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:15,541 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:17,542 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:19,543 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:21,543 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:23,544 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:25,359 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:36:25,359 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:36:25,544 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:27,545 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:29,546 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:31,546 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:32,868 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:36:33,547 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:35,547 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:37,548 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:39,548 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:40,460 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:36:40,460 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:36:41,549 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:43,550 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:45,550 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:47,551 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:49,551 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:51,552 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:53,553 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:55,553 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:55,575 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:36:55,575 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:36:57,554 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:36:59,554 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:01,555 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:03,108 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:37:03,556 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:05,556 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:07,559 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:09,561 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:10,671 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:37:10,671 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:37:11,560 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:13,561 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:15,562 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:17,562 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:19,563 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:21,563 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:23,564 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:25,565 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:25,808 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:37:25,808 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:37:27,565 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:29,566 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:31,567 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:33,360 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:37:33,567 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:35,568 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:37,569 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:39,569 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:40,907 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:37:40,907 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:37:41,570 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:43,571 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:45,571 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:47,572 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:49,573 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:51,573 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:53,574 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:55,574 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:56,185 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:37:56,185 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:37:57,575 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:37:59,576 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:01,576 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:03,577 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:03,600 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:38:05,577 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:07,578 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:09,579 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:11,301 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:38:11,302 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:38:11,579 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:13,580 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:15,581 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:17,581 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:19,582 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:21,582 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:23,583 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:25,584 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:26,505 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:38:26,505 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:38:27,584 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:29,585 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:30,562 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:38:30,562 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:38:30,562 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:38:30,585 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:38:31,585 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:33,586 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:33,843 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:38:35,587 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:37,587 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:39,588 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:41,588 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:41,609 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:38:41,610 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:38:43,589 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:45,589 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:47,590 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:49,591 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:51,592 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:53,592 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:55,593 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:56,726 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:38:56,727 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:38:57,594 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:38:59,594 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:01,595 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:03,596 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:04,083 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:39:05,596 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:07,597 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:09,597 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:11,598 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:11,847 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:39:11,848 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:39:13,599 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:15,599 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:17,600 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:19,600 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:21,601 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:23,602 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:25,602 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:26,959 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:39:26,960 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:39:27,603 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:29,604 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:31,604 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:33,605 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:34,305 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:39:35,605 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:37,607 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:39,607 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:41,607 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:42,090 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:39:42,090 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:39:43,608 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:45,609 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:47,609 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:49,610 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:51,611 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:53,611 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:55,612 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:57,613 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:39:57,688 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:39:57,689 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:39:59,613 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:01,614 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:03,615 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:04,576 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:40:05,615 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:07,616 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:09,617 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:11,617 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:12,929 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:40:12,930 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:40:13,618 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:15,619 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:17,619 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:19,620 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:21,621 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:23,621 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:25,622 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:27,623 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:28,486 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:40:28,487 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:40:29,623 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:31,624 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:33,625 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:34,808 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:40:35,625 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:37,626 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:39,626 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:41,627 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:43,604 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:40:43,604 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:40:43,628 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:45,628 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:47,629 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:49,630 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:50,402 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:40:50,402 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:40:50,402 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:40:50,630 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:40:51,630 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:53,631 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:55,632 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:57,632 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:40:58,714 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:40:58,715 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:40:59,633 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:01,633 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:03,634 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:05,054 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:41:05,635 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:07,636 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:09,636 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:11,637 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:13,637 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:13,822 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:41:13,823 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:41:15,638 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:17,639 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:19,639 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:21,640 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:23,640 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:25,641 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:27,642 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:28,938 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:41:28,938 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:41:29,642 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:31,643 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:33,644 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:35,284 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:41:35,644 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:37,645 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:39,646 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:41,646 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:43,647 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:44,043 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:41:44,043 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:41:45,648 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:47,648 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:49,649 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:51,650 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:53,650 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:55,651 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:57,652 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:41:59,162 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:41:59,163 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:41:59,652 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:01,653 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:03,654 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:05,508 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:42:05,654 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:07,655 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:09,656 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:11,656 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:13,657 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:14,263 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:42:14,264 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:42:15,658 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:17,658 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:19,659 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:21,660 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:23,660 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:25,661 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:27,661 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:29,662 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:31,006 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:42:31,006 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:42:31,663 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:33,663 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:35,664 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:35,763 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:42:37,664 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:39,665 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:41,666 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:43,666 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:45,667 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:46,207 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:42:46,207 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:42:47,667 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:49,668 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:51,669 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:53,669 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:55,670 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:57,671 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:42:59,671 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:01,306 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:43:01,306 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:43:01,672 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:03,673 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:05,673 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:06,004 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:43:07,674 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:09,675 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:11,675 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:13,676 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:15,677 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:16,410 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:43:16,410 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:43:17,677 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:19,210 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:43:19,210 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:43:19,210 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:43:19,678 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:19,678 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:43:21,679 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:23,679 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:25,680 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:27,681 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:29,681 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:31,504 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:43:31,505 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:43:31,682 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:33,683 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:35,683 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:36,279 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:43:37,684 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:39,685 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:41,685 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:43,686 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:45,687 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:46,606 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:43:46,607 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:43:47,687 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:49,688 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:51,689 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:53,689 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:55,690 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:57,691 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:43:59,691 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:01,692 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:01,715 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:44:01,715 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:44:03,693 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:05,693 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:06,535 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:44:07,694 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:09,695 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:11,695 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:13,696 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:15,697 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:16,872 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:44:16,872 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:44:17,697 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:19,698 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:21,699 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:23,699 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:25,700 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:27,700 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:29,701 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:31,702 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:32,036 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:44:32,037 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:44:33,702 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:35,703 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:36,761 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:44:37,703 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:39,704 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:41,705 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:43,705 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:45,706 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:47,153 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:44:47,154 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:44:47,707 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:49,707 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:51,708 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:53,708 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:55,709 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:57,710 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:44:59,710 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:01,711 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:02,298 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:45:02,298 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:45:03,712 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:05,712 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:07,396 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:45:07,713 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:09,713 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:11,714 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:13,715 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:15,715 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:17,716 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:19,716 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:21,719 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:22,298 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:45:22,298 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:45:23,727 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:25,721 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:27,721 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:29,722 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:31,723 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:33,727 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:35,724 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:37,313 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:45:37,441 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:45:37,441 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:45:37,724 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:39,726 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:41,727 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:43,727 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:45,728 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:47,729 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:49,731 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:51,730 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:52,550 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:45:52,551 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:45:53,730 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:55,731 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:57,732 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:45:59,732 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:00,305 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:46:00,306 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:46:00,306 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:46:00,732 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:46:01,733 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:03,733 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:05,734 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:07,556 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:46:07,651 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:46:07,651 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:46:07,735 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:09,735 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:11,736 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:13,736 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:15,737 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:17,738 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:19,738 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:21,739 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:22,795 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:46:22,796 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:46:23,739 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:25,740 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:27,741 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:29,741 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:31,742 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:33,742 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:35,743 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:37,744 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:37,791 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:46:37,964 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:46:37,964 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:46:39,744 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:41,745 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:43,746 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:45,746 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:47,747 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:49,751 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:51,752 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:53,069 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:46:53,070 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:46:53,755 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:55,755 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:57,756 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:46:59,757 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:01,757 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:03,758 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:05,758 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:07,759 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:08,044 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:47:08,247 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:47:08,247 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:47:09,760 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:11,760 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:13,761 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:15,762 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:17,762 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:19,763 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:21,764 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:23,375 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:47:23,376 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:47:24,766 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:26,766 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:28,767 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:30,767 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:32,768 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:34,769 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:36,769 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:38,328 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:47:38,476 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:47:38,476 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:47:38,770 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:40,771 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:42,771 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:44,772 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:46,772 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:48,773 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:50,774 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:52,774 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:53,573 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:47:53,574 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:47:54,775 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:56,775 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:47:58,776 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:00,777 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:02,777 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:04,778 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:06,779 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:08,566 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:48:08,677 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:48:08,677 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:48:08,779 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:10,780 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:12,781 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:14,783 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:16,784 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:18,784 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:20,785 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:22,785 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:23,805 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:48:23,805 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:48:24,786 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:26,786 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:28,787 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:30,788 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:32,788 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:34,789 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:36,790 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:38,790 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:38,803 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:48:40,791 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:41,375 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:48:41,375 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:48:42,792 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:44,792 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:46,793 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:48,793 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:50,794 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:52,795 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:54,796 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:56,562 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:48:56,562 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:48:56,796 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:48:58,797 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:00,798 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:02,798 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:04,799 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:05,039 DEBUG   SenderThread:10623 [sender.py:send():234] send: history
+2022-02-25 16:49:05,040 DEBUG   SenderThread:10623 [sender.py:send():234] send: summary
+2022-02-25 16:49:05,040 INFO    SenderThread:10623 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-02-25 16:49:05,803 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:49:06,802 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:08,803 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:09,051 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:49:10,804 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:11,663 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:49:11,663 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:49:12,804 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:14,805 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:16,806 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:18,806 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:20,807 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:22,807 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:24,808 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:26,787 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:49:26,787 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:49:26,809 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:28,809 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:30,810 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:32,811 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:34,817 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:36,818 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:38,818 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:39,297 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:49:40,819 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:41,915 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:49:41,915 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:49:42,819 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:44,820 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:46,821 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:48,822 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:50,823 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:52,824 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:54,824 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:56,825 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:49:57,046 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:49:57,046 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:49:58,825 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:00,827 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:02,828 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:04,828 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:06,829 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:08,830 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:09,564 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:50:10,830 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:12,150 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:50:12,152 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:50:12,831 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:14,832 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:16,832 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:18,833 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:20,833 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:22,834 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:24,835 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:26,835 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:28,836 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:30,837 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:32,152 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:50:32,153 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:50:32,837 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:34,838 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:36,839 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:38,839 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:39,805 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:50:40,840 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:42,840 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:44,841 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:46,842 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:47,474 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:50:47,474 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:50:48,842 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:50,843 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:52,844 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:54,845 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:56,846 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:50:58,846 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:00,847 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:02,583 DEBUG   HandlerThread:10623 [handler.py:handle_request():130] handle_request: stop_status
+2022-02-25 16:51:02,583 DEBUG   SenderThread:10623 [sender.py:send_request():248] send_request: stop_status
+2022-02-25 16:51:02,847 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:04,848 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:06,849 INFO    Thread-8  :10623 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:07,721 WARNING MainThread:10623 [internal.py:wandb_internal():146] Internal process interrupt: 1
+2022-02-25 16:51:10,072 DEBUG   SenderThread:10623 [sender.py:send():234] send: stats
+2022-02-25 16:51:13,730 WARNING MainThread:10623 [internal.py:is_dead():366] Internal process exiting, parent pid 10588 disappeared
+2022-02-25 16:51:13,730 ERROR   MainThread:10623 [internal.py:wandb_internal():142] Internal process shutdown.
+2022-02-25 16:51:14,073 INFO    WriterThread:10623 [datastore.py:close():281] close: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/run-2jlppd4u.wandb
+2022-02-25 16:51:14,074 INFO    SenderThread:10623 [sender.py:finish():1070] shutting down sender
+2022-02-25 16:51:14,074 INFO    SenderThread:10623 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-02-25 16:51:14,077 INFO    HandlerThread:10623 [handler.py:finish():731] shutting down handler
+2022-02-25 16:51:14,852 INFO    SenderThread:10623 [dir_watcher.py:finish():313] scan: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files
+2022-02-25 16:51:14,853 INFO    SenderThread:10623 [dir_watcher.py:finish():327] scan save: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log output.log
+2022-02-25 16:51:14,853 INFO    SenderThread:10623 [dir_watcher.py:finish():327] scan save: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/requirements.txt requirements.txt
+2022-02-25 16:51:14,854 INFO    SenderThread:10623 [dir_watcher.py:finish():327] scan save: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/config.yaml config.yaml
+2022-02-25 16:51:14,857 INFO    SenderThread:10623 [dir_watcher.py:finish():327] scan save: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-metadata.json wandb-metadata.json
+2022-02-25 16:51:14,857 INFO    SenderThread:10623 [dir_watcher.py:finish():327] scan save: /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json wandb-summary.json
+2022-02-25 16:51:14,858 INFO    SenderThread:10623 [file_pusher.py:finish():177] shutting down file pusher
+2022-02-25 16:51:14,858 INFO    SenderThread:10623 [file_pusher.py:join():182] waiting for file pusher
+2022-02-25 16:51:15,331 INFO    Thread-14 :10623 [upload_job.py:push():137] Uploaded file /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/config.yaml
+2022-02-25 16:51:15,333 INFO    Thread-13 :10623 [upload_job.py:push():137] Uploaded file /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/requirements.txt
+2022-02-25 16:51:15,336 INFO    Thread-12 :10623 [upload_job.py:push():137] Uploaded file /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/output.log
+2022-02-25 16:51:15,342 INFO    Thread-15 :10623 [upload_job.py:push():137] Uploaded file /home/capstone/capstone/rl-algorithm-exploration/openai_sac/wandb/run-20220225_163126-2jlppd4u/files/wandb-summary.json
+2022-02-25 16:51:16,289 INFO    MainThread:10623 [internal.py:handle_exit():77] Internal process exited
