@@ -106,6 +106,10 @@ class PPOBuffer:
         mu_next = np.vstack([np.zeros(mu.shape[1]), mu])
         self.mu_delta_buf[path_slice] = mu_next[:-1] - mu
 
+        # print("mu: ", np.min(mu), np.max(mu), np.argmin(mu), np.argmax(mu))
+        # print("mu next: ", np.min(mu_next), np.max(mu_next))
+        # print("mu delta: ", np.min(self.mu_delta_buf[path_slice]), np.max(self.mu_delta_buf[path_slice]))
+
         self.path_start_idx = self.ptr
 
     def get(self):
@@ -206,23 +210,23 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                        loss_pi_unreg = loss_pi.item())
 
         if config['lam_ts'] > 0:
-            temporal_smoothness = torch.norm(mu_delta)
+            temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
         if config['lam_mdmu'] > 0:
-            max_delta_mu = torch.norm(mu_delta, float('inf'))
+            max_delta_mu = torch.norm(mu_delta, float('inf')).item()
             loss_pi += config['lam_mdmu'] * max_delta_mu
             pi_info['mdmu'] = max_delta_mu
         if config['lam_a'] > 0:
-            action_mag = torch.norm(mu)
+            action_mag = torch.norm(mu).item()
             loss_pi += config['lam_a'] * action_mag
             pi_info['a'] = action_mag
         if config['lam_sps'] > 0:
-            spatial_smoothness = torch.norm(mu - mu_bar)
+            spatial_smoothness = torch.norm(mu - mu_bar).item()
             loss_pi += config['lam_sps'] * spatial_smoothness
             pi_info['sps'] = spatial_smoothness
         if config['lam_sts'] > 0:
-            state_smoothness = torch.norm(obs - obs_next)
+            state_smoothness = torch.norm(obs - obs_next).item()
             loss_pi += config['lam_sts'] * state_smoothness
             pi_info['sts'] = state_smoothness
         if config['lam_fft'] > 0:
@@ -236,7 +240,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             mag_knee = fft_knee.abs()[:fft_freq.size(dim=0)]
             mag = mag_hip + mag_knee
 
-            fft_smoothness = 2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq)
+            fft_smoothness = (2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq))
+            fft_smoothness = fft_smoothness.item()
             loss_pi += config['lam_fft'] * fft_smoothness
             pi_info['fft'] = fft_smoothness
 
@@ -370,7 +375,7 @@ if __name__ == '__main__':
     parser.add_argument('--load_model_path', type=str, default=None)
 
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.1)
-    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=10)
+    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=0.1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
     parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
