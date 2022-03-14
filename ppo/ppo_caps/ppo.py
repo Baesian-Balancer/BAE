@@ -23,8 +23,8 @@ def make_env(env_id):
 
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
-    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    # env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     # env.render('human')
@@ -105,10 +105,6 @@ class PPOBuffer:
         mu = self.mu_buf[path_slice] # A
         mu_next = np.vstack([np.zeros(mu.shape[1]), mu])
         self.mu_delta_buf[path_slice] = mu_next[:-1] - mu
-
-        # print("mu: ", np.min(mu), np.max(mu), np.argmin(mu), np.argmax(mu))
-        # print("mu next: ", np.min(mu_next), np.max(mu_next))
-        # print("mu delta: ", np.min(self.mu_delta_buf[path_slice]), np.max(self.mu_delta_buf[path_slice]))
 
         self.path_start_idx = self.ptr
 
@@ -374,13 +370,13 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
 
-    parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.1)
-    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=0.1)
+    parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=0.1)
+    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
-    parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.01)
+    parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.1)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)
     parser.add_argument('--lam_sts', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
-    parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.075)
+    parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=.075)
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-1)
 
     args = parser.parse_args()
