@@ -122,7 +122,6 @@ class PPOBuffer:
         mu = self.mu_buf[path_slice] # A
         mu_next = np.vstack([np.zeros(mu.shape[1]), mu])
         self.mu_delta_buf[path_slice] = mu_next[:-1] - mu
-
         self.path_start_idx = self.ptr
 
     def get(self):
@@ -188,7 +187,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
 
-    #normalizer = RunningStats(obs_dim)
+    normalizer = RunningStats(obs_dim)
 
     fs = env.agent_rate
 
@@ -302,7 +301,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
-    #o = normalizer.update(o)
+    o = normalizer.update(o)
 
     current_max_ep_len = config["start_ep_len"]
     update_ep_len = (config["max_ep_len"]-config["start_ep_len"]) // config["epochs"]
@@ -314,7 +313,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         for t in range(local_steps_per_epoch):
             a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), std_mu=config['eps_s'])
             next_o, r, d, _ = env.step(a)
-            #next_o = normalizer.update(next_o)
+            next_o = normalizer.update(next_o)
             ep_ret += r
             ep_len += 1
 
@@ -380,9 +379,9 @@ if __name__ == '__main__':
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
-    parser.add_argument('--steps_per_epoch', type=int, default=20000)
+    parser.add_argument('--steps_per_epoch', type=int, default=20)
     parser.add_argument('--max_ep_len', type=int, default=8000)
-    parser.add_argument('--start_ep_len', type=int, default=3000)
+    parser.add_argument('--start_ep_len', type=int, default=10)
     parser.add_argument('--epochs', type=int, default=250)
     parser.add_argument('--eval_epochs', type=int, default=3)
     parser.add_argument('--save_freq', type=int, default=5)
@@ -391,7 +390,7 @@ if __name__ == '__main__':
     parser.add_argument('--load_model_path', type=str, default=None)
 
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.1)
-    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-0.1)
+    parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=0.1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
     parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.05)

@@ -29,13 +29,13 @@ class PlotUtils:
         plt.figure()
         plt.hist(self.hip_action)
         plt.title("Hip action across episode")
-        PATH = self.dir + self.name +"_noise_all_"+ "_hip_action_histogram.png"
+        PATH = self.dir + self.name +"_noise_all_randomizer_"+ "_hip_action_histogram.png"
         plt.savefig(PATH)
 
         plt.figure()
         plt.hist(self.knee_action)
         plt.title("Knee action across episode")
-        PATH = self.dir + self.name +"_noise_all_"+ "_knee_action_histogram.png"
+        PATH = self.dir + self.name +"_noise_all_randomizer_"+ "_knee_action_histogram.png"
         plt.savefig(PATH)
 
     def plot_temporal_action_change(self):
@@ -46,5 +46,5 @@ class PlotUtils:
         plt.plot(range(len(self.hip_temporal_change)),self.hip_temporal_change,label='hip action change')
         plt.plot(range(len(self.knee_temporal_change)),self.knee_temporal_change,label='knee action change')
         plt.legend()
-        PATH = self.dir + self.name +"_noise_all_"+ "_action_td.png"
+        PATH = self.dir + self.name +"_noise_all_randomizer_"+ "_action_td.png"
         plt.savefig(PATH)
