@@ -16,7 +16,7 @@ import datetime
 import os
 from gym_ignition.utils import logger
 
-def make_env(env_id):
+def make_env(env_id, seed):
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         return gym.make(env_id, **kwargs)
@@ -25,7 +25,7 @@ def make_env(env_id):
     create_env = functools.partial(make_env_from_id, env_id=env_id)
     # env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
     env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
-
+    env.seed(seed)
     # Enable the rendering
     # env.render('human')
 
@@ -384,5 +384,5 @@ if __name__ == '__main__':
 
     config = wandb.config
 
-    ppo(lambda : make_env(config["env"]), config, actor_critic=core.MLPActorCritic,
+    ppo(lambda : make_env(config["env"], config['seed']), config, actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
