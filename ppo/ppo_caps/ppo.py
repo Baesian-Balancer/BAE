@@ -294,7 +294,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     for epoch in range(config["epochs"]):
         for t in range(local_steps_per_epoch):
             a, v, logp, mu, mu_bar = ac.step(torch.as_tensor(o, dtype=torch.float32), std_mu=config['eps_s'])
-            next_o, r, d, _ = env.step(a)
+            next_o, r, d, info = env.step(a)
             ep_ret += r
             ep_len += 1
 
@@ -313,7 +313,10 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                     print('Warning: trajectory cut off by epoch at %d steps.'%ep_len, flush=True)
                 # if trajectory didn't reach terminal state, bootstrap value target
                 else:
-                    wandb.log({"training episode normalized reward":ep_ret/current_max_ep_len, "training episode reward":ep_ret}, step=epoch*local_steps_per_epoch + t)
+                    wandb.log({"training episode normalized reward":ep_ret/current_max_ep_len,
+                               "training episode reward":ep_ret,
+                               "reset orientation": info['reset_orientation']},
+                               step=epoch*local_steps_per_epoch + t)
 
                 if timeout or epoch_ended:
                     _, v, _, _, _ = ac.step(torch.as_tensor(o, dtype=torch.float32))
