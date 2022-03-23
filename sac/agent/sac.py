@@ -127,7 +127,7 @@ class SACAgent(Agent, nn.Module):
         assert action.ndim == 2 and action.shape[0] == 1
         return utils.to_np(action[0])
 
-    def update_critic(self, obs, action, reward, next_obs, not_done, step):
+    def update_critic(self, obs, action, reward, next_obs, not_done):
         dist = self.actor(next_obs)
         next_action = dist.rsample()
         log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
@@ -146,7 +146,7 @@ class SACAgent(Agent, nn.Module):
         critic_loss.backward()
         self.critic_optimizer.step()
 
-    def update_actor_and_alpha(self, obs, step):
+    def update_actor_and_alpha(self, obs):
         dist = self.actor(obs)
         action = dist.rsample()
         log_prob = dist.log_prob(action).sum(-1, keepdim=True)
@@ -170,27 +170,25 @@ class SACAgent(Agent, nn.Module):
             alpha_loss.backward()
             self.log_alpha_optimizer.step()
 
-    def update_rnd(self, obs, action, step):
+    def update_rnd(self, obs, action):
         self.rnd_optimizer.zero_grad()
         rnd_loss = self.rnd(obs, action)
         self.rnd.update_stats(rnd_loss.item())
         rnd_loss.backward()
         self.rnd_optimizer.step()
-
-        # wandb.log({"rnd_loss": rnd_loss}, step=step)
-
+        return rnd_loss # for logging
 
     def update(self, replay_buffer, step):
         obs, action, reward, next_obs, not_done, not_done_no_max = replay_buffer.sample(
             self.batch_size)
 
-        self.update_critic(obs, action, reward, next_obs, not_done_no_max, step)
+        self.update_critic(obs, action, reward, next_obs, not_done_no_max)
 
         if step % self.rnd_update_frequency == 0:
-            self.update_rnd(obs, action, step)
-
+            rnd_loss = self.update_rnd(obs, action, step)
+            wandb.log({"rnd_loss": rnd_loss}, step=step)
         if step % self.actor_update_frequency == 0:
-            self.update_actor_and_alpha(obs, step)
+            self.update_actor_and_alpha(obs)
             
 
         if step % self.critic_target_update_frequency == 0:

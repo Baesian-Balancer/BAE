@@ -85,6 +85,7 @@ class Workspace(object):
             torch.save({
             'actor_state_dict': self.agent.actor.state_dict(),
             'critic_state_dict': self.agent.critic.state_dict(),
+            'rnd_state_dict': self.agent.critic.state_dict()
             }, PATH)
             self.best_avg_reward = average_episode_reward
 

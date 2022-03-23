@@ -26,8 +26,8 @@ def make_env(cfg):
 
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
-    # env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     # env.render('human')
