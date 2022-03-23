@@ -51,3 +51,13 @@ class ReplayBuffer(object):
                                            device=self.device)
 
         return obses, actions, rewards, next_obses, not_dones, not_dones_no_max
+
+    def return_trajectory(self):
+        """ 
+        NOTE: For returning data after doing inference in real. The replay buffer
+            should be filled with one trajectory
+        """
+        obses = torch.as_tensor(self.obses, device=self.device).float()
+        actions = torch.as_tensor(self.actions, device=self.device)
+        rewards = torch.as_tensor(self.rewards, device=self.device)
+        return obses, actions, rewards
