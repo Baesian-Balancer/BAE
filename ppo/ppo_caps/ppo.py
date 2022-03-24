@@ -23,8 +23,8 @@ def make_env(env_id, seed):
 
     # Create a partial function passing the environment id
     create_env = functools.partial(make_env_from_id, env_id=env_id)
-    # env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
     env.seed(seed)
     # Enable the rendering
     # env.render('human')
@@ -266,8 +266,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         pi_l_old = pi_l_old.item()
         v_l_old = compute_loss_v(data).item()
 
-        wandb.log(pi_info_old, step=step)
-
         # Train policy with multiple steps of gradient descent
         for i in range(config["train_pi_iters"]):
             pi_optimizer.zero_grad()
@@ -281,6 +279,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             loss_v = compute_loss_v(data)
             loss_v.backward()
             vf_optimizer.step()
+
+        pi_info_old['loss_v'] = loss_v.item()
+        wandb.log(pi_info_old, step=step)
 
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
@@ -351,9 +352,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v2')
-    # parser.add_argument('--hid', type=int, default=64)
-    parser.add_argument('--hid', type=int, default=128)
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
+    parser.add_argument('--hid', type=int, default=64)
+    # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--lam', type=float, default=0.97)
