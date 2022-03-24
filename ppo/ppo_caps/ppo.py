@@ -364,7 +364,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
+    parser.add_argument('--env', type=str, default='Monopod-nonorm-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
