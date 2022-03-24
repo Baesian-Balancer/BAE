@@ -204,7 +204,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                        ent=ent,
                        cf=clipfrac,
                        loss_pi_unreg = loss_pi.item())
-
+        print(loss_pi)
         if config['lam_ts'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
@@ -377,7 +377,7 @@ if __name__ == '__main__':
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.001)
     parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
-    parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=0.001)
+    parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.001)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.001)
     parser.add_argument('--lam_sts', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.05)
