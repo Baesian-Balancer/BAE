@@ -16,15 +16,19 @@ import datetime
 import os
 from gym_ignition.utils import logger
 
-def make_env(env_id, seed):
+def make_env(env_id:str, randomize: bool, seed, **kwargs):
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         return gym.make(env_id, **kwargs)
 
     # Create a partial function passing the environment id
-    create_env = functools.partial(make_env_from_id, env_id=env_id)
-    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
-    # env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    create_env = functools.partial(make_env_from_id, env_id=env_id, **kwargs)
+
+    if randomize:
+        env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
+    else:
+        env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+
     env.seed(seed)
     # Enable the rendering
     # env.render('human')
@@ -191,6 +195,12 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         # Policy loss
         pi, logp = ac.pi(obs, act)
         ratio = torch.exp(logp - logp_old)
+
+        # p_new / p_old" you can do "ratio = (2 * (1 + p_new) / (1 + p_old)) - 1
+        # p_new = torch.exp(logp)
+        # p_old = torch.exp(logp_old)
+        # ratio = (2 * (1 + p_new) / (1 + p_old)) - 1
+
         ratio_adv = ratio * adv
         clip_adv = torch.clamp(ratio, 1-config["clip_ratio"], 1+config["clip_ratio"]) * adv
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
@@ -205,7 +215,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                        cf=clipfrac,
                        loss_pi_unreg = loss_pi.item())
         # print(loss_pi)
-        if config['lam_ts'] > 0:
+        if config['lam_ent'] > 0:
+            loss_pi -= config['lam_ent'] * ent
+        if config['lam_ent'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
@@ -352,7 +364,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
+    parser.add_argument('--env', type=str, default='Monopod-nonorm-balance-v2')
     parser.add_argument('--hid', type=int, default=64)
     # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
@@ -374,7 +386,9 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
+    parser.add_argument('--randomizer_on', type=bool, default=False)
 
+    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.1)
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.001)
     parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
@@ -385,9 +399,12 @@ if __name__ == '__main__':
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-0.01)
 
     args = parser.parse_args()
+    env_kwargs = {'task_mode': 'fixed_hip'}
+    parser.add_argument('--env_info', type=str, help='Extra env info ', default=str(env_kwargs))
+
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
 
     config = wandb.config
 
-    ppo(lambda : make_env(config["env"], config['seed']), config, actor_critic=core.MLPActorCritic,
+    ppo(lambda : make_env(config["env"], config['randomizer_on'], config['seed'], **env_kwargs), config, actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)

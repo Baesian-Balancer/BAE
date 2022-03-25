@@ -85,7 +85,8 @@ class MLPGaussianActor(Actor):
         super().__init__()
         log_std = -0.5 * np.ones(act_dim, dtype=np.float32)
         self.log_std = torch.nn.Parameter(torch.as_tensor(log_std))
-        self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=activation)
+        # self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=activation)
+        self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation)
 
     def _distribution(self, obs):
         if torch.sum(torch.isnan(obs)):
