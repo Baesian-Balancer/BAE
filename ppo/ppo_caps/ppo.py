@@ -216,7 +216,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
                        loss_pi_unreg = loss_pi.item())
         # print(loss_pi)
         if config['lam_ent'] > 0:
-            loss_pi += config['lam_ent'] * ent
+            loss_pi -= config['lam_ent'] * ent
         if config['lam_ent'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
