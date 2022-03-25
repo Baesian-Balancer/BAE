@@ -16,13 +16,13 @@ import datetime
 import os
 from gym_ignition.utils import logger
 
-def make_env(env_id:str, randomize: bool, seed):
+def make_env(env_id:str, randomize: bool, seed, **kwargs):
 
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         return gym.make(env_id, **kwargs)
 
     # Create a partial function passing the environment id
-    create_env = functools.partial(make_env_from_id, env_id=env_id)
+    create_env = functools.partial(make_env_from_id, env_id=env_id, **kwargs)
 
     if randomize:
         env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
@@ -386,7 +386,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
-    parser.add_argument('--randomize?', type=bool, default=False)
+    parser.add_argument('--randomizer_on', type=bool, default=False)
 
     parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.1)
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.001)
@@ -399,9 +399,12 @@ if __name__ == '__main__':
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-0.01)
 
     args = parser.parse_args()
+    env_kwargs = {'task_mode': 'fixed_hip'}
+    parser.add_argument('--env_info', type=str, help='Extra env info ', default=str(env_kwargs))
+
     wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
 
     config = wandb.config
 
-    ppo(lambda : make_env(config["env"], config['randomize?'], config['seed']), config, actor_critic=core.MLPActorCritic,
+    ppo(lambda : make_env(config["env"], config['randomizer_on'], config['seed'], **env_kwargs), config, actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
