@@ -207,7 +207,11 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Useful extra info
         approx_kl = (logp_old - logp).mean().item()
-        ent = pi.entropy().mean().item()
+        if pi.entropy() is None:
+            # entropy needs to be estimated using -log_prob.mean()
+            ent = -logp.mean().item()
+        else:
+            ent = pi.entropy().mean().item()
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
         pi_info = dict(kl=approx_kl,
@@ -292,8 +296,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             loss_v.backward()
             vf_optimizer.step()
 
-        pi_info_old['loss_v'] = loss_v.item()
-        wandb.log(pi_info_old, step=step)
+        pi_info['loss_v'] = loss_v.item()
+        wandb.log(pi_info, step=step)
 
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0

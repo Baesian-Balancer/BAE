@@ -9,8 +9,6 @@ from gym import spaces
 from torch import nn
 from torch.distributions import Bernoulli, Categorical, Normal
 
-from stable_baselines3.common.preprocessing import get_action_dim
-
 
 class Distribution(ABC):
     """Abstract base class for distributions."""
@@ -222,7 +220,7 @@ class SquashedDiagGaussianDistribution(DiagGaussianDistribution):
         log_prob = super(SquashedDiagGaussianDistribution, self).log_prob(gaussian_actions)
         # Squash correction (from original SAC implementation)
         # this comes from the fact that tanh is bijective and differentiable
-        log_prob -= th.sum(th.log(1 - actions ** 2 + self.epsilon), dim=1)
+        log_prob -= th.sum(th.log(1 - actions ** 2 + self.epsilon), dim=-1)
         return log_prob
 
     def entropy(self) -> Optional[th.Tensor]:
@@ -643,36 +641,3 @@ class TanhBijector(object):
     def log_prob_correction(self, x: th.Tensor) -> th.Tensor:
         # Squash correction (from original SAC implementation)
         return th.log(1.0 - th.tanh(x) ** 2 + self.epsilon)
-
-
-def make_proba_distribution(
-    action_space: gym.spaces.Space, use_sde: bool = False, dist_kwargs: Optional[Dict[str, Any]] = None
-) -> Distribution:
-    """
-    Return an instance of Distribution for the correct type of action space
-
-    :param action_space: the input action space
-    :param use_sde: Force the use of StateDependentNoiseDistribution
-        instead of DiagGaussianDistribution
-    :param dist_kwargs: Keyword arguments to pass to the probability distribution
-    :return: the appropriate Distribution object
-    """
-    if dist_kwargs is None:
-        dist_kwargs = {}
-
-    if isinstance(action_space, spaces.Box):
-        assert len(action_space.shape) == 1, "Error: the action space must be a vector"
-        cls = StateDependentNoiseDistribution if use_sde else DiagGaussianDistribution
-        return cls(get_action_dim(action_space), **dist_kwargs)
-    elif isinstance(action_space, spaces.Discrete):
-        return CategoricalDistribution(action_space.n, **dist_kwargs)
-    elif isinstance(action_space, spaces.MultiDiscrete):
-        return MultiCategoricalDistribution(action_space.nvec, **dist_kwargs)
-    elif isinstance(action_space, spaces.MultiBinary):
-        return BernoulliDistribution(action_space.n, **dist_kwargs)
-    else:
-        raise NotImplementedError(
-            "Error: probability distribution, not implemented for action space"
-            f"of type {type(action_space)}."
-            " Must be of type Gym Spaces: Box, Discrete, MultiDiscrete or MultiBinary."
-        )
