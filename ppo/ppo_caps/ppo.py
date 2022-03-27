@@ -246,7 +246,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             state_smoothness = torch.norm(obs - obs_next).item()
             loss_pi += config['lam_sts'] * state_smoothness
             pi_info['sts'] = state_smoothness
-            
+
         if config['lam_fft'] > 0:
             # Compute the one-dimensional discrete Fourier Transform.
             fft_hip = torch.fft.rfft(mu[:, 0])
@@ -309,6 +309,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             pi_optimizer.step()
 
         pi_info['grad_norm_pi'] = total_norm
+
 
         # ================= Value function learning ===========================
         total_norm = 0.0

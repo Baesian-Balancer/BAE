@@ -49,7 +49,7 @@ class Actor(nn.Module):
     def _log_prob_from_distribution(self, pi, act):
         return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
 
-    def forward(self, obs=None, act=None):
+    def forward(self, obs, act=None):
         # Produce action distributions for given observations, and
         # optionally compute the log likelihood of given actions under
         # those distributions.
@@ -68,7 +68,7 @@ class MLPGaussianActor(Actor):
         self.distribution = None
 
     def _distribution(self, obs = None):
-        if obs is not None:
+        if obs is not None or self.distribution is None:
             mu = self.mu_net(obs)
             self.distribution = self.pi.proba_distribution(mu, self.log_std)
         return self.distribution
@@ -82,7 +82,7 @@ class MLPGaussianSquashedActor(Actor):
         self.distribution = None
 
     def _distribution(self, obs = None):
-        if obs is not None:
+        if obs is not None or self.distribution is None:
             mu = self.mu_net(obs)
             self.distribution = self.pi.proba_distribution(mu, self.log_std)
         return self.distribution
@@ -96,8 +96,9 @@ class MLPBetaActor(Actor):
         self.distribution = None
 
     def _distribution(self, obs = None):
-        if obs is not None:
+        if obs is not None or self.distribution is None:
             alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            # print(alpha, beta)
             self.distribution = self.pi.proba_distribution(alpha, beta)
         return self.distribution
 
@@ -120,9 +121,9 @@ class MLPActorCritic(nn.Module):
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        # self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        # self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
@@ -136,9 +137,11 @@ class MLPActorCritic(nn.Module):
                 return a.numpy()
             else:
                 pi = self.pi._distribution(obs)
+
                 # Get actions from distribution (saves compute)
                 a = self.pi._get_action(deterministic=False)
                 a = torch.clamp(a, min=-1, max=1)
+
                 # Get log prob with distribution
                 logp_a = self.pi._log_prob_from_distribution(pi, a)
 
