@@ -93,8 +93,8 @@ class MLPBetaActor(Actor):
         super().__init__()
         self.act_dim = act_dim
         self.pi = distributions.BetaDistribution(act_dim)
-        self.alpha_net, self.beta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
-        # self.alpheta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        # self.alpha_net, self.beta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        self.alpheta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
         self.distribution = None
 
     def _distribution(self, obs = None):
