@@ -136,6 +136,9 @@ class BetaDistribution(Distribution):
         beta = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Softplus)
         return alpha, beta
 
+        # alpheta = mlp([obs_dim] + list(hidden_sizes) + [2 * act_dim], activation, output_activation=nn.Softplus)
+        # return alpheta
+
     def proba_distribution(self, alpha: th.Tensor, beta: th.Tensor) -> "BetaDistribution":
         """
         Create the distribution given its parameters (alpha, beta),

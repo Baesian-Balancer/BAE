@@ -42,12 +42,12 @@ class Actor(nn.Module):
     def _distribution(self, obs = None):
         raise NotImplementedError
 
-    def _get_action(self, obs=None, deterministic=False):
+    def _get_action(self, obs = None, deterministic=False):
         pi = self._distribution(obs)
         return pi.get_actions(deterministic=deterministic)
 
     def _log_prob_from_distribution(self, pi, act):
-        return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
+        return pi.log_prob(act)    # Last axis sum needed for Torch Normal distribution
 
     def forward(self, obs, act=None):
         # Produce action distributions for given observations, and
@@ -91,13 +91,17 @@ class MLPBetaActor(Actor):
 
     def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
         super().__init__()
+        self.act_dim = act_dim
         self.pi = distributions.BetaDistribution(act_dim)
         self.alpha_net, self.beta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        # self.alpheta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
         self.distribution = None
 
     def _distribution(self, obs = None):
         if obs is not None or self.distribution is None:
             alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            # alpheta = self.alpheta_net(obs)
+            # alpha, beta = alpheta.split(self.act_dim, dim=-1)
             # print(alpha, beta)
             self.distribution = self.pi.proba_distribution(alpha, beta)
         return self.distribution
@@ -121,9 +125,9 @@ class MLPActorCritic(nn.Module):
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        # self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        # self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
