@@ -385,7 +385,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
         # Perform PPO update!
         update(step=epoch*local_steps_per_epoch + t)
-        o, eval_ret,_ = evaluate(o, ac,env,config, current_max_ep_len, (epoch + 1)*local_steps_per_epoch)
+        
+        with torch.no_grad():
+            o, eval_ret,_ = evaluate(o, ac,env,config, current_max_ep_len, (epoch + 1)*local_steps_per_epoch)
 
         if bst_eval_ret < eval_ret:
             bst_eval_ret = eval_ret
