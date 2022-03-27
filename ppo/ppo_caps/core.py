@@ -99,9 +99,9 @@ class MLPBetaActor(Actor):
 
     def _distribution(self, obs = None):
         if obs is not None or self.distribution is None:
-            alpha, beta = self.alpha_net(obs), self.beta_net(obs)
-            # alpheta = self.alpheta_net(obs)
-            # alpha, beta = alpheta.split(self.act_dim, dim=-1)
+            # alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            alpheta = self.alpheta_net(obs)
+            alpha, beta = alpheta.split(self.act_dim, dim=-1)
             # print(alpha, beta)
             self.distribution = self.pi.proba_distribution(alpha, beta)
         return self.distribution
