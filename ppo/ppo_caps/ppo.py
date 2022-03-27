@@ -282,21 +282,46 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         pi_l_old = pi_l_old.item()
         v_l_old = compute_loss_v(data).item()
 
+        # ================= Pi function learning ==============================
         # Train policy with multiple steps of gradient descent
+        total_norm = 0.0
+        norm_type = 2
         for i in range(config["train_pi_iters"]):
             pi_optimizer.zero_grad()
             loss_pi, pi_info = compute_loss_pi(data)
             loss_pi.backward()
+            # Log gradient norm
+            parameters = [p for p in ac.pi.parameters() if p.grad is not None and p.requires_grad]
+            if len(parameters) == 0:
+                total_norm = max(total_norm, 0.0)
+            else:
+                device = parameters[0].grad.device
+                total_norm = max(total_norm, torch.norm(torch.stack([torch.norm(p.grad.detach(), norm_type).to(device) for p in parameters]), 2.0).item())
+            # Grad clipping
+            if config["clip_grad"] > 0:
+                torch.nn.utils.clip_grad_norm_(ac.pi.parameters(), config["clip_grad"])
             pi_optimizer.step()
 
-        # Value function learning
+        pi_info['grad_norm_pi'] = total_norm
+
+        # ================= Value function learning ===========================
+        total_norm = 0.0
         for i in range(config["train_v_iters"]):
             vf_optimizer.zero_grad()
             loss_v = compute_loss_v(data)
             loss_v.backward()
+            parameters = [p for p in ac.v.parameters() if p.grad is not None and p.requires_grad]
+            if len(parameters) == 0:
+                total_norm = max(total_norm, 0.0)
+            else:
+                device = parameters[0].grad.device
+                total_norm = max(total_norm, torch.norm(torch.stack([torch.norm(p.grad.detach(), norm_type).to(device) for p in parameters]), 2.0).item())
             vf_optimizer.step()
 
+        pi_info['grad_norm_v'] = total_norm
         pi_info['loss_v'] = loss_v.item()
+
+        # Log info
         wandb.log(pi_info, step=step)
 
     # Prepare for interaction with environment
@@ -373,10 +398,11 @@ if __name__ == '__main__':
     # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--lam', type=float, default=0.97)
-    parser.add_argument('--clip_ratio', type=float, default=0.25)
+    parser.add_argument('--lam', type=float, default=0.95)
+    parser.add_argument('--clip_ratio', type=float, default=0.22)
+    parser.add_argument('--clip_grad', type=float, default=-1.)
     parser.add_argument('--target_kl', type=float, default=0.01)
-    parser.add_argument('--pi_lr', type=float, default=3e-3)
+    parser.add_argument('--pi_lr', type=float, default=1e-4)
     parser.add_argument('--vf_lr',type=float, default=1e-3)
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
