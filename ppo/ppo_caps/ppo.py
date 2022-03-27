@@ -221,26 +221,32 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         # print(loss_pi)
         if config['lam_ent'] > 0:
             loss_pi -= config['lam_ent'] * ent
+
         if config['lam_ent'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
+
         if config['lam_mdmu'] > 0:
             max_delta_mu = torch.norm(mu_delta, float('inf')).item()
             loss_pi += config['lam_mdmu'] * max_delta_mu
             pi_info['mdmu'] = max_delta_mu
+
         if config['lam_a'] > 0:
             action_mag = torch.norm(mu).item()
             loss_pi += config['lam_a'] * action_mag
             pi_info['a'] = action_mag
+
         if config['lam_sps'] > 0:
             spatial_smoothness = torch.norm(mu - mu_bar).item()
             loss_pi += config['lam_sps'] * spatial_smoothness
             pi_info['sps'] = spatial_smoothness
+
         if config['lam_sts'] > 0:
             state_smoothness = torch.norm(obs - obs_next).item()
             loss_pi += config['lam_sts'] * state_smoothness
             pi_info['sts'] = state_smoothness
+            
         if config['lam_fft'] > 0:
             # Compute the one-dimensional discrete Fourier Transform.
             fft_hip = torch.fft.rfft(mu[:, 0])
@@ -398,8 +404,8 @@ if __name__ == '__main__':
     # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--lam', type=float, default=0.93)
-    parser.add_argument('--clip_ratio', type=float, default=0.22)
+    parser.add_argument('--lam', type=float, default=0.95)
+    parser.add_argument('--clip_ratio', type=float, default=0.20)
     parser.add_argument('--clip_grad', type=float, default=-1.)
     parser.add_argument('--target_kl', type=float, default=0.01)
     parser.add_argument('--pi_lr', type=float, default=3e-4)
@@ -408,9 +414,9 @@ if __name__ == '__main__':
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
-    parser.add_argument('--max_ep_len', type=int, default=8000)
+    parser.add_argument('--max_ep_len', type=int, default=6000)
     parser.add_argument('--start_ep_len', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=400)
+    parser.add_argument('--epochs', type=int, default=150)
     parser.add_argument('--eval_epochs', type=int, default=10)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
