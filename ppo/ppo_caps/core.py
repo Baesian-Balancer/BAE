@@ -1,28 +1,18 @@
 import numpy as np
 import scipy.signal
-from gym.spaces import Box, Discrete
 
 import torch
 import torch.nn as nn
 import torch.distributions as ptd
 from torch.distributions.normal import Normal
-from torch.distributions.categorical import Categorical
 import torch.nn.functional as functional
 import distributions
-
+from distributions import mlp
 
 def combined_shape(length, shape=None):
     if shape is None:
         return (length,)
     return (length, shape) if np.isscalar(shape) else (length, *shape)
-
-
-def mlp(sizes, activation, output_activation=nn.Identity):
-    layers = []
-    for j in range(len(sizes)-1):
-        act = activation if j < len(sizes)-2 else output_activation
-        layers += [nn.Linear(sizes[j], sizes[j+1]), act()]
-    return nn.Sequential(*layers)
 
 
 def count_vars(module):
@@ -49,13 +39,17 @@ def discount_cumsum(x, discount):
 
 class Actor(nn.Module):
 
-    def _distribution(self, obs):
+    def _distribution(self, obs = None):
         raise NotImplementedError
+
+    def _get_action(self, obs=None, deterministic=False):
+        pi = self._distribution(obs)
+        return pi.get_actions(deterministic=deterministic)
 
     def _log_prob_from_distribution(self, pi, act):
-        raise NotImplementedError
+        return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
 
-    def forward(self, obs, act=None):
+    def forward(self, obs=None, act=None):
         # Produce action distributions for given observations, and
         # optionally compute the log likelihood of given actions under
         # those distributions.
@@ -69,67 +63,43 @@ class MLPGaussianActor(Actor):
 
     def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
         super().__init__()
-        log_std = -0.5 * np.ones(act_dim, dtype=np.float32)
-        self.log_std = torch.nn.Parameter(torch.as_tensor(log_std))
-        # self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=activation)
-        self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation)
+        self.pi = distributions.DiagGaussianDistribution(act_dim)
+        self.mu_net, self.log_std = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation, output_activation = activation)
+        self.distribution = None
 
-    def _distribution(self, obs):
-        if torch.sum(torch.isnan(obs)):
-            print(f'got Nan in Obs: {obs}.')
-        mu = self.mu_net(obs)
-        std = torch.exp(self.log_std)
-        return Normal(mu, std)
-
-    def _mean(self,obs):
-        mu = self.mu_net(obs)
-        return mu
-
-    def _log_prob_from_distribution(self, pi, act):
-        return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
+    def _distribution(self, obs = None):
+        if obs is not None:
+            mu = self.mu_net(obs)
+            self.distribution = self.pi.proba_distribution(mu, self.log_std)
+        return self.distribution
 
 class MLPGaussianSquashedActor(Actor):
 
     def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
         super().__init__()
-        log_std = -0.5 * np.ones(act_dim, dtype=np.float32)
-        self.log_std = torch.nn.Parameter(torch.as_tensor(log_std))
-        self.mu_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation)
         self.pi = distributions.SquashedDiagGaussianDistribution(act_dim)
+        self.mu_net, self.log_std = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation, output_activation = activation)
+        self.distribution = None
 
-    def _distribution(self, obs):
-        if torch.sum(torch.isnan(obs)):
-            print(f'got Nan in Obs: {obs}.')
-        mu = self.mu_net(obs)
-        return self.pi.proba_distribution(mu, self.log_std)
-
-    def _mean(self,obs):
-        mu = self.mu_net(obs)
-        return mu
-
-    def _log_prob_from_distribution(self, pi, act):
-        return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
+    def _distribution(self, obs = None):
+        if obs is not None:
+            mu = self.mu_net(obs)
+            self.distribution = self.pi.proba_distribution(mu, self.log_std)
+        return self.distribution
 
 class MLPBetaActor(Actor):
 
     def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
         super().__init__()
-        self.alpha_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=lambda : nn.ELU())
-        self.beta_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=lambda : nn.ELU())
-    def _distribution(self, obs):
-        if torch.sum(torch.isnan(obs)):
-            print(f'got Nan in Obs: {obs}.')
-        alpha = self.alpha_net(obs) + 2
-        beta = self.beta_net(obs) + 2
-        return torch.distributions.Beta(alpha, beta)
+        self.pi = distributions.BetaDistribution(act_dim)
+        self.alpha_net, self.beta_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        self.distribution = None
 
-    def _mean(self,obs):
-        alpha = self.alpha_net(obs) + 2
-        beta = self.beta_net(obs) + 2
-        return alpha / (alpha + beta)
-
-    def _log_prob_from_distribution(self, pi, act):
-        return pi.log_prob(act).sum(axis=-1)    # Last axis sum needed for Torch Normal distribution
+    def _distribution(self, obs = None):
+        if obs is not None:
+            alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            self.distribution = self.pi.proba_distribution(alpha, beta)
+        return self.distribution
 
 class MLPCritic(nn.Module):
 
@@ -150,9 +120,9 @@ class MLPActorCritic(nn.Module):
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        # self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        # self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
@@ -161,19 +131,26 @@ class MLPActorCritic(nn.Module):
     def step(self, obs, eval=False, std_mu=-1.):
         with torch.no_grad():
             if eval:
-                a = self.pi._mean(obs)
+                a = self.pi._get_action(obs, deterministic=True)
                 a = torch.clamp(a, min=-1, max=1)
                 return a.numpy()
             else:
                 pi = self.pi._distribution(obs)
-                a = pi.sample()
+                # Get actions from distribution (saves compute)
+                a = self.pi._get_action(deterministic=False)
                 a = torch.clamp(a, min=-1, max=1)
+                # Get log prob with distribution
                 logp_a = self.pi._log_prob_from_distribution(pi, a)
-                mu = self.pi._mean(obs)
-                v = self.v(obs)
-                mu_bar = mu
+
+                # Get deterministic action (mean)
+                mu_bar = mu = self.pi._get_action(deterministic=True)
+
+                # Create new action from random sampled obs
                 if std_mu > 0:
-                    mu_bar = self.pi._mean(torch.normal(obs, std_mu))
+                    mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
+
+                # Value function
+                v = self.v(obs)
                 return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
 
     def act(self, obs):
