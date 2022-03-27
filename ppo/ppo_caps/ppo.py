@@ -423,6 +423,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
+    parser.add_argument('--distribution_type', type=str, default='beta')
     parser.add_argument('--randomizer_on', type=bool, default=False)
 
     parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.1)
@@ -444,4 +445,4 @@ if __name__ == '__main__':
     config = wandb.config
 
     ppo(lambda : make_env(config["env"], config['randomizer_on'], config['seed'], **env_kwargs), config, actor_critic=core.MLPActorCritic,
-        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
+        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"], dist=config['distribution_type']))
