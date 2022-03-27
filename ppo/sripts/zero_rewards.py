@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 api = wandb.Api()
-run = api.run("/dawon-horvath/openSim2Real/runs/5qf499w5")
+run = api.run("/dawon-horvath/openSim2Real/runs/jpyd6bjd")
 
 tail = run.history()
 
@@ -36,5 +36,16 @@ plt.xticks(ticks, labels)
 plt.figure(3)
 plt.title('Rewards per training run for each reset poisiton')
 plt.bar(ticks,rews/runs, align='center')
+plt.xticks(ticks, labels)
+
+# indexes of each reset orientation
+rews = np.zeros(len(labels))
+for i, label in enumerate(labels):
+	mask = reset == label
+	rews[i] = np.sum(reward[mask] == 0)
+
+plt.figure(4)
+plt.title('Number zeros rews for each reset orientation')
+plt.bar(ticks,rews, align='center')
 plt.xticks(ticks, labels)
 plt.show()
