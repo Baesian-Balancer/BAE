@@ -174,7 +174,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
     obs_dim = env.observation_space.shape
     act_dim = env.action_space.shape
 
-    normalizer = RunningStats(obs_dim)
+    #normalizer = RunningStats(obs_dim)
 
     fs = env.agent_rate
 
@@ -223,7 +223,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_ent'] > 0:
             loss_pi -= config['lam_ent'] * ent
 
-        if config['lam_ent'] > 0:
+        if config['lam_ts'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
@@ -334,7 +334,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     # Prepare for interaction with environment
     o, ep_ret, ep_len = env.reset(), 0, 0
-    o = normalizer.update(o)
 
     current_max_ep_len = config["start_ep_len"]
     update_ep_len = (config["max_ep_len"]-config["start_ep_len"]) // config["epochs"]
@@ -441,7 +440,7 @@ if __name__ == '__main__':
     env_kwargs = {'task_mode': 'fixed_hip'}
     parser.add_argument('--env_info', type=str, help='Extra env info ', default=str(env_kwargs))
 
-    wandb.init(project="openSim2Real", entity="dawon-horvath", config=args)
+    wandb.init(project="capstone", entity="nickioan", config=args)
 
     config = wandb.config
 
