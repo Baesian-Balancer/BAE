@@ -125,9 +125,9 @@ class MLPActorCritic(nn.Module):
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        # self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        # self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
