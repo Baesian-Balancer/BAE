@@ -7,7 +7,7 @@ import gym
 import torch as th
 from gym import spaces
 from torch import nn
-from torch.distributions import Bernoulli, Categorical, Normal
+from torch.distributions import Beta, Normal
 
 def mlp(sizes, activation, output_activation=nn.Identity):
     layers = []
@@ -127,13 +127,13 @@ class BetaDistribution(Distribution):
         self.action_dim = action_dim
 
 
-    def proba_distribution_net(self, obs_dim, act_dim, hidden_sizes, activation, output_activation=nn.Identity) -> Tuple[nn.Module, nn.Parameter]:
+    def proba_distribution_net(self, obs_dim, act_dim, hidden_sizes, activation, output_activation=nn.Identity) -> Tuple[nn.Module, nn.Module]:
         """
         Create the layers and parameter that represent the distribution:
         """
 
-        alpha = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=lambda : nn.Softplus())
-        beta = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=lambda : nn.Softplus())
+        alpha = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Softplus)
+        beta = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Softplus)
         return alpha, beta
 
     def proba_distribution(self, alpha: th.Tensor, beta: th.Tensor) -> "BetaDistribution":
@@ -146,11 +146,7 @@ class BetaDistribution(Distribution):
         :param beta:
         :return:
         """
-
-        assert alpha >= 0, f"Alpha is < 0. Value given is {alpha}."
-        assert beta >= 0, f"Beta is < 0. Value given is {beta}."
-
-        self.distribution = torch.distributions.Beta(alpha + 1, beta + 1)
+        self.distribution = Beta(alpha + 1, beta + 1)
         return self
 
     def log_prob(self, actions: th.Tensor) -> th.Tensor:
@@ -174,7 +170,7 @@ class BetaDistribution(Distribution):
     def sample(self) -> th.Tensor:
         # Reparametrization trick to pass gradients
         # [0,1] --> [-1,1]
-        return 2*self.distribution.rsample() - 1
+        return 2*self.distribution.sample() - 1
 
     def mode(self) -> th.Tensor:
         # [0,1] --> [-1,1]
@@ -255,7 +251,7 @@ class DiagGaussianDistribution(Distribution):
 
     def sample(self) -> th.Tensor:
         # Reparametrization trick to pass gradients
-        return self.distribution.rsample()
+        return self.distribution.sample()
 
     def mode(self) -> th.Tensor:
         return self.distribution.mean
