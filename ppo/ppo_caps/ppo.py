@@ -438,8 +438,10 @@ if __name__ == '__main__':
     parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.05)
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-0.01)
 
+    parser.add_argument('--task_mode', type=str, default='fixed_hip')
+
     args = parser.parse_args()
-    env_kwargs = {'task_mode': 'fixed_hip'}
+    env_kwargs = {'task_mode': args.task_mode}
     parser.add_argument('--env_info', type=str, help='Extra env info ', default=str(env_kwargs))
 
     wandb.init(project="capstone", entity="nickioan", config=args)
