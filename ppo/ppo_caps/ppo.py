@@ -425,7 +425,7 @@ if __name__ == '__main__':
     parser.add_argument('--distribution_type', type=str, default='gaussian')
     parser.add_argument('--randomizer_on', type=bool, default=False)
 
-    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=.001)
+    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.001)
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
