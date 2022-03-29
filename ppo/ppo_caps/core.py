@@ -106,6 +106,24 @@ class MLPBetaActor(Actor):
             self.distribution = self.pi.proba_distribution(alpha, beta)
         return self.distribution
 
+class MLPBetaReparamActor(Actor):
+
+    def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
+        super().__init__()
+        self.act_dim = act_dim
+        self.pi = distributions.BetaDistributionReparam(act_dim)
+        self.mu_net, self.kappa_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        self.distribution = None
+
+    def _distribution(self, obs = None):
+        if obs is not None or self.distribution is None:
+            # alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            mu = self.mu_net(obs)
+            k = self.kappa_net(obs)
+            # print(alpha, beta)
+            self.distribution = self.pi.proba_distribution(mu, k)
+        return self.distribution
+
 class MLPCritic(nn.Module):
 
     def __init__(self, obs_dim, hidden_sizes, activation):
@@ -130,6 +148,8 @@ class MLPActorCritic(nn.Module):
         elif dist == 'squashed_gaussian':
             self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         elif dist == 'beta':
+            self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'reparam_beta':
             self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
         else:
             print(f'Distribution \'{dist}\' not supported. Defaulting to Gaussian.')
