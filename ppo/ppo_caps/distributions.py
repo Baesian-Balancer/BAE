@@ -173,7 +173,7 @@ class BetaDistribution(Distribution):
     def sample(self) -> th.Tensor:
         # Reparametrization trick to pass gradients
         # [0,1] --> [-1,1]
-        return 2*self.distribution.sample() - 1
+        return 2*self.distribution.rsample() - 1
 
     def mode(self) -> th.Tensor:
         # [0,1] --> [-1,1]
@@ -260,7 +260,7 @@ class DiagGaussianDistribution(Distribution):
 
     def sample(self) -> th.Tensor:
         # Reparametrization trick to pass gradients
-        return self.distribution.sample()
+        return self.distribution.rsample()
 
     def mode(self) -> th.Tensor:
         return self.distribution.mean
