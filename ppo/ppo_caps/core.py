@@ -119,7 +119,8 @@ class MLPBetaReparamActor(Actor):
         if obs is not None or self.distribution is None:
             # alpha, beta = self.alpha_net(obs), self.beta_net(obs)
             mu = self.mu_net(obs)
-            k = self.kappa_net(obs)
+            # k = self.kappa_net(obs)
+            k = self.kappa_net([*obs, *mu])
             # print(alpha, beta)
             self.distribution = self.pi.proba_distribution(mu, k)
         return self.distribution
