@@ -400,11 +400,11 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v2')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
-    parser.add_argument('--lam', type=float, default=0.96)
+    parser.add_argument('--lam', type=float, default=0.95)
     parser.add_argument('--clip_ratio', type=float, default=0.20)
     parser.add_argument('--clip_grad', type=float, default=5.)
     parser.add_argument('--target_kl', type=float, default=0.01)
@@ -425,7 +425,7 @@ if __name__ == '__main__':
     parser.add_argument('--distribution_type', type=str, default='gaussian')
     parser.add_argument('--randomizer_on', type=bool, default=False)
 
-    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.001)
+    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=.001)
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
