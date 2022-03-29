@@ -227,7 +227,7 @@ class DiagGaussianDistribution(Distribution):
 
         # log_std = -0.5 * np.ones(act_dim, dtype=np.float32)
         # log_std = th.nn.Parameter(th.as_tensor(log_std))
-        
+
         log_std = th.nn.Parameter(th.ones(self.action_dim) * log_std_init)
         return mean_actions, log_std
 
@@ -241,7 +241,7 @@ class DiagGaussianDistribution(Distribution):
         """
         # action_std = th.ones_like(mean_actions) * log_std.exp()
         # self.distribution = Normal(mean_actions, action_std)
-        self.distribution = Normal(mean_actions, th.exp(self.log_std))
+        self.distribution = Normal(mean_actions, th.exp(log_std))
         return self
 
     def log_prob(self, actions: th.Tensor) -> th.Tensor:
