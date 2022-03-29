@@ -222,7 +222,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_ent'] > 0:
             loss_pi -= config['lam_ent'] * ent
 
-        if config['lam_ent'] > 0:
+        if config['lam_ts'] > 0:
             temporal_smoothness = torch.norm(mu_delta).item()
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
@@ -400,14 +400,13 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-nonorm-balance-v2')
+    parser.add_argument('--env', type=str, default='Monopod-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
-    # parser.add_argument('--hid', type=int, default=128)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--lam', type=float, default=0.95)
     parser.add_argument('--clip_ratio', type=float, default=0.20)
-    parser.add_argument('--clip_grad', type=float, default=-1.)
+    parser.add_argument('--clip_grad', type=float, default=5.)
     parser.add_argument('--target_kl', type=float, default=0.01)
     parser.add_argument('--pi_lr', type=float, default=3e-4)
     parser.add_argument('--vf_lr',type=float, default=1e-3)
@@ -417,22 +416,23 @@ if __name__ == '__main__':
     parser.add_argument('--steps_per_epoch', type=int, default=20000)
     parser.add_argument('--max_ep_len', type=int, default=6000)
     parser.add_argument('--start_ep_len', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=150)
-    parser.add_argument('--eval_epochs', type=int, default=10)
+    parser.add_argument('--epochs', type=int, default=250)
+    parser.add_argument('--eval_epochs', type=int, default=2)
     parser.add_argument('--save_freq', type=int, default=5)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
-    parser.add_argument('--randomizer_on', type=bool, default=False)
+    parser.add_argument('--distribution_type', type=str, default='squashed_gaussian')
+    parser.add_argument('--randomizer_on', type=bool, default=True)
 
-    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=-.1)
-    parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.001)
+    parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=.001)
+    parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)
     parser.add_argument('--lam_mdmu', type=float, help='Regularization coeffecient on max action delta (valid > 0)', default=-1)
     parser.add_argument('--lam_a', type=float, help='Regularization coeffecient on action magnitude (valid > 0)', default=-0.001)
     parser.add_argument('--lam_sps', type=float, help='Regularization coeffecient on state mapping smoothness (valid > 0)', default=-0.001)
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.001)
     parser.add_argument('--lam_sts', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
-    parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.05)
+    parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.01)
     parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-0.01)
 
     args = parser.parse_args()
@@ -444,4 +444,4 @@ if __name__ == '__main__':
     config = wandb.config
 
     ppo(lambda : make_env(config["env"], config['randomizer_on'], config['seed'], **env_kwargs), config, actor_critic=core.MLPActorCritic,
-        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"]),)
+        ac_kwargs=dict(hidden_sizes=[config["hid"]]*config["l"], dist=config['distribution_type']))

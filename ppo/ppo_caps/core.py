@@ -119,15 +119,21 @@ class MLPCritic(nn.Module):
 class MLPActorCritic(nn.Module):
 
     def __init__(self, observation_space, action_space,
-                 hidden_sizes=(64,64), activation=nn.Tanh):
+                 hidden_sizes=(64,64), activation=nn.Tanh, dist='gaussian'):
         super().__init__()
 
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        # self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        if dist == 'gaussian':
+            self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'squashed_gaussian':
+            self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'beta':
+            self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        else:
+            print(f'Distribution \'{dist}\' not supported. Defaulting to Gaussian.')
+            self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
