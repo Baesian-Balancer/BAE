@@ -223,7 +223,9 @@ class DiagGaussianDistribution(Distribution):
 
         mean_actions = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=output_activation)
         # TODO: allow action dependent std
-        log_std = nn.Parameter(th.ones(self.action_dim) * log_std_init, requires_grad=True)
+        # log_std = nn.Parameter(th.ones(self.action_dim) * log_std_init, requires_grad=True)
+        log_std = -0.5 * np.ones(act_dim, dtype=np.float32)
+        log_std = torch.nn.Parameter(torch.as_tensor(log_std))
         return mean_actions, log_std
 
     def proba_distribution(self, mean_actions: th.Tensor, log_std: th.Tensor) -> "DiagGaussianDistribution":
@@ -234,8 +236,9 @@ class DiagGaussianDistribution(Distribution):
         :param log_std:
         :return:
         """
-        action_std = th.ones_like(mean_actions) * log_std.exp()
-        self.distribution = Normal(mean_actions, action_std)
+        # action_std = th.ones_like(mean_actions) * log_std.exp()
+        # self.distribution = Normal(mean_actions, action_std)
+        self.distribution = Normal(mean_actions, torch.exp(self.log_std))
         return self
 
     def log_prob(self, actions: th.Tensor) -> th.Tensor:
