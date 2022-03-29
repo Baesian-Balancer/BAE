@@ -409,7 +409,7 @@ if __name__ == '__main__':
     parser.add_argument('--clip_grad', type=float, default=5.)
     parser.add_argument('--target_kl', type=float, default=0.01)
     parser.add_argument('--pi_lr', type=float, default=3e-4)
-    parser.add_argument('--vf_lr',type=float, default=1e-3)
+    parser.add_argument('--vf_lr',type=float, default=1e-2)
     parser.add_argument('--train_pi_iters', type=int, default=80)
     parser.add_argument('--train_v_iters', type=int, default=80)
     parser.add_argument('--seed', '-s', type=int, default=42)
