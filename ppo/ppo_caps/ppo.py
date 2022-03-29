@@ -423,7 +423,7 @@ if __name__ == '__main__':
     parser.add_argument('--save_dir', type=str, default=f'exp/{datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}/')
     parser.add_argument('--load_model_path', type=str, default=None)
     parser.add_argument('--distribution_type', type=str, default='gaussian')
-    parser.add_argument('--randomizer_on', type=bool, default=False)
+    parser.add_argument('--randomizer_on', type=bool, default=True)
 
     parser.add_argument('--lam_ent', type=float, help='Entropy bonus (valid > 0)', default=.001)
     parser.add_argument('--lam_ts', type=float, help='Regularization coeffecient on action smoothness (valid > 0)', default=-0.01)

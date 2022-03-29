@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 api = wandb.Api()
-run = api.run("/dawon-horvath/openSim2Real/runs/jpyd6bjd")
+run = api.run("/dawon-horvath/openSim2Real/runs/1yn8gtx2")
 
-tail = run.history()
+tail = run.history()[5:]
 
 reward = tail["training episode reward"].dropna()
 reset = tail["reset orientation"].dropna()
