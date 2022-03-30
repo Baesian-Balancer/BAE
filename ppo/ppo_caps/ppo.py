@@ -215,7 +215,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             ent = pi.entropy().mean()
 
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
-        
+
         clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean()
 
         pi_info = dict(kl=approx_kl.item(),
@@ -436,7 +436,7 @@ if __name__ == '__main__':
     parser.add_argument('--eps_s', type=float, help='Variance coeffecient on state mapping smoothness (valid > 0)', default=0.001)
     parser.add_argument('--lam_sts', type=float, help='Regularization coeffecient on observation state mapping smoothness (valid > 0)', default=-.1)
     parser.add_argument('--lam_fft', type=float, help='Regularization coeffecient on FFT actions mapping smoothness (valid > 0)', default=-.01)
-    parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=-0.01)
+    parser.add_argument('--lam_rp', type=float, help='Regularization coeffecient on roughness penalty for actions (valid > 0)', default=0.01)
 
     args = parser.parse_args()
     env_kwargs = {'task_mode': 'fixed_hip'}
