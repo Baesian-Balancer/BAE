@@ -88,7 +88,7 @@ class Workspace(object):
 
 
         # Save all the data
-        filename = 'replaybuffer_data'
+        filename = 'replaybuffer_data.obj'
         with open(filename, 'wb') as fp:
             pkl.dump(self.replay_buffer, fp)
 

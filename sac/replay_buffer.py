@@ -57,6 +57,7 @@ class ReplayBuffer(object):
         NOTE: For returning data after doing inference in real. The replay buffer
             should be filled with one trajectory
         """
+        assert self.capacity < 50_000, "The trajectory is too large"
         obses = torch.as_tensor(self.obses, device=self.device).float()
         actions = torch.as_tensor(self.actions, device=self.device)
         rewards = torch.as_tensor(self.rewards, device=self.device)

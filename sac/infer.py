@@ -52,7 +52,13 @@ class Workspace(object):
         
         self.agent.critic.load_state_dict(checkpoint['critic_state_dict'])
         self.agent.actor.load_state_dict(checkpoint['actor_state_dict'])
-        
+
+        replay_buffer_capacity = self.cfg.num_eval_episodes * 10_000
+        self.replay_buffer = ReplayBuffer(self.env.observation_space.shape,
+                                          self.env.action_space.shape,
+                                          replay_buffer_capacity,
+                                          self.device)
+
         self.step = 0
 
         self.best_avg_reward = 0
@@ -66,13 +72,20 @@ class Workspace(object):
             episode_reward = 0
             step = 0
             # while not done:
-            for i in range(2500):
+            for i in range(700):
                 with utils.eval_mode(self.agent):
                     action = self.agent.act(obs, sample=False)
-                obs, reward, done, _ = self.env.step(action)
-                # obs += 0.01
-                # obs = [np.random.uniform(0.85, 1.15) * o for o in obs]
+                next_obs, reward, done, _ = self.env.step(action)
+                print(action, _)
                 self.plotting.add_action(action)
+
+                done = float(done)
+                done_no_max = 0 if step + 1 == 1000 else done
+                episode_reward += reward
+                self.replay_buffer.add(obs, action, reward, next_obs, done,
+                        done_no_max)
+                
+                obs = next_obs
                 # print(obs)
                 episode_reward += reward
                 step+=1
@@ -82,8 +95,26 @@ class Workspace(object):
         self.plotting.plot_temporal_action_change()
         self.plotting.plot_action_histogram()    
 
+        # Save all the data
+        filename = 'replaybuffer_data.obj'
+        with open(filename, 'wb') as fp:
+            pkl.dump(self.replay_buffer, fp)
+
     def run(self):
         self.evaluate()
+
+    def train(self):
+        for i in range(self.cfg.num_train_updates):
+            self.agent.update(self.replay_buffer, 0)
+        self.save()
+
+    def save(self):
+        PATH = os.path.splitext(self.cfg.cp_path)[0] + "_updated.pt"
+        torch.save({
+        'actor_state_dict': self.agent.actor.state_dict(),
+        'critic_state_dict': self.agent.critic.state_dict(),
+        'rnd_state_dict': self.agent.critic.state_dict()
+        }, PATH)
 
 def main(cfg):
 
@@ -94,7 +125,9 @@ def main(cfg):
     agent_cfg.agent.params.device = cfg.device
     agent_cfg.agent.params.batch_size = 0
     workspace = Workspace(cfg,agent_cfg)
-    workspace.run()
+    # workspace.run()
+    workspace.train()
+    workspace.save()
 
 
 if __name__ == '__main__':
@@ -148,6 +181,11 @@ if __name__ == '__main__':
         type = int  
     )
 
+    parser.add_argument(
+        '--num_train_updates',
+        default= 10,
+        type = int
+    )
     args = parser.parse_args()
 
     main(args)

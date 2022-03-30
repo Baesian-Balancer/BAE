@@ -1,8 +1,6 @@
-from argparse import ArgumentParser
-from click import Argument
-import numpy as np
 import torch
 import pickle as pkl
+import numpy as np
 import gym
 import hydra
 import os 
@@ -39,16 +37,17 @@ class Workspace:
         self.agent.actor.load_state_dict(checkpoint['actor_state_dict'])
         self.agent.rnd.load_state_dict(checkpoint['actor_state_dict'])
         
+        print("Replay Buffer loaded")
         # Load replay buffer data
-        with open('replay_buffer.obj', 'rb') as fp:
-            replay_buffer = pkl.load(fp)
+        with open('replaybuffer_data.obj', 'rb') as fp:
+            self.replay_buffer = pkl.load(fp)
 
     def train(self):
         for i in range(self.cfg.num_train_updates):
-            self.agent.update()
+            self.agent.update(self.replay_buffer, 0)
         self.save_model()
 
-    def save_model(self):
+    def save(self):
         PATH = os.path.splitext(self.cfg.cp_path)[0] + "_updated.pt"
         torch.save({
         'actor_state_dict': self.agent.actor.state_dict(),
@@ -63,7 +62,8 @@ def main(cfg):
     agent_cfg.agent.params.device = cfg.device
     agent_cfg.agent.params.batch_size = 0
     workspace = Workspace(cfg,agent_cfg)
-    workspace.run()
+    workspace.train()
+    workspace.save()
 
 if __name__ == '__main__':
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--device',
-        default = 'cuda',
+        default = 'cpu',
         type = str
     )
 
@@ -83,13 +83,13 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--env_id',
-        default = 'Monopod-stand-v1',
+        default = 'Monopod-balance-v1',
         type = str
     )
 
     parser.add_argument(
         '--cp_path',
-        default = 'exp/best_model.pt',
+        default = 'best_model_724352.pt',
         type = str
     )
 
@@ -98,3 +98,7 @@ if __name__ == '__main__':
         default= 10,
         type = int
     )
+
+    args = parser.parse_args()
+
+    main(args)

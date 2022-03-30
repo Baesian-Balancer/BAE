@@ -185,8 +185,8 @@ class SACAgent(Agent, nn.Module):
         self.update_critic(obs, action, reward, next_obs, not_done_no_max)
 
         if step % self.rnd_update_frequency == 0:
-            rnd_loss = self.update_rnd(obs, action, step)
-            wandb.log({"rnd_loss": rnd_loss}, step=step)
+            rnd_loss = self.update_rnd(obs, action)
+            # wandb.log({"rnd_loss": rnd_loss}, step=step)
         if step % self.actor_update_frequency == 0:
             self.update_actor_and_alpha(obs)
             

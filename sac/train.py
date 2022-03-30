@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--num_eval_episodes',
-        default = 5,
+        default = 10,
         type = int  
     )
 
