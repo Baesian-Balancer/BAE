@@ -223,27 +223,27 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             loss_pi -= config['lam_ent'] * ent
 
         if config['lam_ts'] > 0:
-            temporal_smoothness = torch.norm(mu_delta).item()
+            temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness
 
         if config['lam_mdmu'] > 0:
-            max_delta_mu = torch.norm(mu_delta, float('inf')).item()
+            max_delta_mu = torch.norm(mu_delta, float('inf'))
             loss_pi += config['lam_mdmu'] * max_delta_mu
             pi_info['mdmu'] = max_delta_mu
 
         if config['lam_a'] > 0:
-            action_mag = torch.norm(mu).item()
+            action_mag = torch.norm(mu)
             loss_pi += config['lam_a'] * action_mag
             pi_info['a'] = action_mag
 
         if config['lam_sps'] > 0:
-            spatial_smoothness = torch.norm(mu - mu_bar).item()
+            spatial_smoothness = torch.norm(mu - mu_bar)
             loss_pi += config['lam_sps'] * spatial_smoothness
             pi_info['sps'] = spatial_smoothness
 
         if config['lam_sts'] > 0:
-            state_smoothness = torch.norm(obs - obs_next).item()
+            state_smoothness = torch.norm(obs - obs_next)
             loss_pi += config['lam_sts'] * state_smoothness
             pi_info['sts'] = state_smoothness
 
@@ -259,7 +259,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             mag = mag_hip + mag_knee
 
             fft_smoothness = (2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq))
-            fft_smoothness = fft_smoothness.item()
             loss_pi += config['lam_fft'] * fft_smoothness
             pi_info['fft'] = fft_smoothness
 
