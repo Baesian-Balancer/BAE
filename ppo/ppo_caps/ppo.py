@@ -226,8 +226,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_ts'] > 0:
             #temporal_smoothness = torch.norm(mu_delta)
             temporal_smoothness_loss = torch.nn.MSELoss()
-            _,_,_,mu_ts,_ = ac.step(obs)
-            _,_,_,mu_ts_next,_  = ac.step(obs_next)
+            _,_,_,mu_ts,_ = ac.step(obs,use_reg=True)
+            _,_,_,mu_ts_next,_  = ac.step(obs_next,use_reg=True)
             temporal_smoothness = temporal_smoothness_loss(torch.Tensor(mu_ts),torch.Tensor(mu_ts_next))
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness.item()

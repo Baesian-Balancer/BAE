@@ -133,32 +133,53 @@ class MLPActorCritic(nn.Module):
         # build value function
         self.v  = MLPCritic(obs_dim, hidden_sizes, activation)
 
-    def step(self, obs, eval=False, std_mu=-1.):
-        with torch.no_grad():
-            if eval:
-                a = self.pi._get_action(obs, deterministic=True)
-                a = torch.clamp(a, min=-1, max=1)
-                return a.numpy()
-            else:
-                pi = self.pi._distribution(obs)
+    def step(self, obs, eval=False, use_reg=False,std_mu=-1.):
+        if use_reg:
+            pi = self.pi._distribution(obs)
 
-                # Get actions from distribution (saves compute)
-                a = self.pi._get_action(deterministic=False)
-                a = torch.clamp(a, min=-1, max=1)
+            # Get actions from distribution (saves compute)
+            a = self.pi._get_action(deterministic=False)
+            a = torch.clamp(a, min=-1, max=1)
 
-                # Get log prob with distribution
-                logp_a = self.pi._log_prob_from_distribution(pi, a)
+                    # Get log prob with distribution
+            logp_a = self.pi._log_prob_from_distribution(pi, a)
 
-                # Get deterministic action (mean)
-                mu_bar = mu = self.pi._get_action(deterministic=True)
+                    # Get deterministic action (mean)
+            mu_bar = mu = self.pi._get_action(deterministic=True)
 
-                # Create new action from random sampled obs
-                if std_mu > 0:
-                    mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
+                    # Create new action from random sampled obs
+            if std_mu > 0:
+                mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
 
-                # Value function
-                v = self.v(obs)
-                return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
+            # Value function
+            v = self.v(obs)
+            return a, v, logp_a, mu, mu_bar
+        else:
+            with torch.no_grad():
+                if eval:
+                    a = self.pi._get_action(obs, deterministic=True)
+                    a = torch.clamp(a, min=-1, max=1)
+                    return a.numpy()
+                else:
+                    pi = self.pi._distribution(obs)
+
+                    # Get actions from distribution (saves compute)
+                    a = self.pi._get_action(deterministic=False)
+                    a = torch.clamp(a, min=-1, max=1)
+
+                    # Get log prob with distribution
+                    logp_a = self.pi._log_prob_from_distribution(pi, a)
+
+                    # Get deterministic action (mean)
+                    mu_bar = mu = self.pi._get_action(deterministic=True)
+
+                    # Create new action from random sampled obs
+                    if std_mu > 0:
+                        mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
+
+                    # Value function
+                    v = self.v(obs)
+                    return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
 
     def act(self, obs):
         return self.step(obs)[0]
