@@ -206,17 +206,21 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
 
         # Useful extra info
-        approx_kl = (logp_old - logp).mean().item()
+        approx_kl = (logp_old - logp).mean()
+
         if pi.entropy() is None:
             # entropy needs to be estimated using -log_prob.mean()
-            ent = -logp.mean().item()
+            ent = -logp.mean()
         else:
-            ent = pi.entropy().mean().item()
+            ent = pi.entropy().mean()
+
         clipped = ratio.gt(1+config["clip_ratio"]) | ratio.lt(1-config["clip_ratio"])
-        clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean().item()
-        pi_info = dict(kl=approx_kl,
-                       ent=ent,
-                       cf=clipfrac,
+        
+        clipfrac = torch.as_tensor(clipped, dtype=torch.float32).mean()
+
+        pi_info = dict(kl=approx_kl.item(),
+                       ent=ent.item(),
+                       cf=clipfrac.item(),
                        loss_pi_unreg = loss_pi.item())
         # print(loss_pi)
         if config['lam_ent'] > 0:
@@ -225,27 +229,27 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_ts'] > 0:
             temporal_smoothness = torch.norm(mu_delta)
             loss_pi += config['lam_ts'] * temporal_smoothness
-            pi_info['ts'] = temporal_smoothness
+            pi_info['ts'] = temporal_smoothness.item()
 
         if config['lam_mdmu'] > 0:
             max_delta_mu = torch.norm(mu_delta, float('inf'))
             loss_pi += config['lam_mdmu'] * max_delta_mu
-            pi_info['mdmu'] = max_delta_mu
+            pi_info['mdmu'] = max_delta_mu.item()
 
         if config['lam_a'] > 0:
             action_mag = torch.norm(mu)
             loss_pi += config['lam_a'] * action_mag
-            pi_info['a'] = action_mag
+            pi_info['a'] = action_mag.item()
 
         if config['lam_sps'] > 0:
             spatial_smoothness = torch.norm(mu - mu_bar)
             loss_pi += config['lam_sps'] * spatial_smoothness
-            pi_info['sps'] = spatial_smoothness
+            pi_info['sps'] = spatial_smoothness.item()
 
         if config['lam_sts'] > 0:
             state_smoothness = torch.norm(obs - obs_next)
             loss_pi += config['lam_sts'] * state_smoothness
-            pi_info['sts'] = state_smoothness
+            pi_info['sts'] = state_smoothness.item()
 
         if config['lam_fft'] > 0:
             # Compute the one-dimensional discrete Fourier Transform.
@@ -260,13 +264,13 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
             fft_smoothness = (2 / (fft_freq.size(dim=0) * fs) * torch.sum(mag * fft_freq))
             loss_pi += config['lam_fft'] * fft_smoothness
-            pi_info['fft'] = fft_smoothness
+            pi_info['fft'] = fft_smoothness.item()
 
         if config['lam_rp'] > 0:
             dif_mu = torch.diff(torch.diff(mu, dim=0), dim=0)**2
             roughness_penalty = torch.norm(torch.trapezoid(dif_mu, dim=0))
             loss_pi += config['lam_rp'] * roughness_penalty
-            pi_info['rp'] = roughness_penalty
+            pi_info['rp'] = roughness_penalty.item()
 
         return loss_pi, pi_info
 
