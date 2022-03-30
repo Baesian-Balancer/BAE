@@ -217,8 +217,8 @@ class BetaDistributionReparam(Distribution):
         """
 
         u = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Sigmoid)
-        k = mlp([obs_dim + act_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
-        # k = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
+        # k = mlp([obs_dim + act_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
+        k = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
         return u, k
 
     def proba_distribution(self, u: th.Tensor, k: th.Tensor) -> "BetaDistribution":
