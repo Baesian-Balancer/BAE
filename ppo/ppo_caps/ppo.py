@@ -207,7 +207,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         loss_pi = -(torch.min(ratio_adv, clip_adv)).mean()
 
         # Useful extra info
-        approx_kl = (logp_old - logp).mean().item()
+        approx_kl = (logp_old - logp).mean()
         if pi.entropy() is None:
             # entropy needs to be estimated using -log_prob.mean()
             ent = -logp.mean()
