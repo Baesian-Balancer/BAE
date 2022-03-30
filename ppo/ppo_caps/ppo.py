@@ -125,7 +125,7 @@ class PPOBuffer:
         data = dict(obs=self.obs_buf, obs_next=self.obs_next_buf, act=self.act_buf,
                     ret=self.ret_buf, adv=self.adv_buf, logp=self.logp_buf,
                     mu=self.mu_buf, mu_delta=self.mu_delta_buf, mu_bar=self.mu_bar_buf)
-        return {k: torch.as_tensor(v, dtype=torch.float32,requires_grad=True) for k,v in data.items()}
+        return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
 
 def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
     # Main loop: collect experience in env and update/log each epoch
@@ -226,7 +226,9 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         if config['lam_ts'] > 0:
             #temporal_smoothness = torch.norm(mu_delta)
             temporal_smoothness_loss = torch.nn.MSELoss()
-            temporal_smoothness = temporal_smoothness_loss(mu[:-1],mu[1:])
+            mu_ts,_,_ = ac.step(obs)
+            mu_ts_next,_,_ = ac.step(obs_next)
+            temporal_smoothness = temporal_smoothness_loss(mu_ts,mu_ts_next)
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness.item()
 
