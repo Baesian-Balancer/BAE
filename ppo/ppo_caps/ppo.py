@@ -125,7 +125,7 @@ class PPOBuffer:
         data = dict(obs=self.obs_buf, obs_next=self.obs_next_buf, act=self.act_buf,
                     ret=self.ret_buf, adv=self.adv_buf, logp=self.logp_buf,
                     mu=self.mu_buf, mu_delta=self.mu_delta_buf, mu_bar=self.mu_bar_buf)
-        return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in data.items()}
+        return {k: torch.as_tensor(v, dtype=torch.float32,requires_grad=True) for k,v in data.items()}
 
 def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
     # Main loop: collect experience in env and update/log each epoch
