@@ -49,7 +49,7 @@ class Actor(nn.Module):
     def _log_prob_from_distribution(self, pi, act):
         return pi.log_prob(act)    # Last axis sum needed for Torch Normal distribution
 
-    def forward(self, obs, act=None):
+    def forward(self, obs, act=None, std_mu=-1.):
         # Produce action distributions for given observations, and
         # optionally compute the log likelihood of given actions under
         # those distributions.
@@ -57,7 +57,21 @@ class Actor(nn.Module):
         logp_a = None
         if act is not None:
             logp_a = self._log_prob_from_distribution(pi, act)
-        return pi, logp_a
+
+        mu_bar = mu = self._get_action(deterministic=True)
+
+        if std_mu > 0:
+            obs_sample = torch.normal(obs, std_mu)
+            mu_bar = self._get_action(obs_sample, deterministic=True)
+
+        # Mu delta
+        mu_next = torch.nn.functional.pad(mu, (0, 0, 1, 0))
+        mu_delta = mu_next[:-1] - mu
+
+        # Mu bar delta
+        mu_bar_delta = mu - mu_bar
+
+        return pi, logp_a, mu, mu_delta, mu_bar_delta
 
 class MLPGaussianActor(Actor):
 
@@ -176,16 +190,9 @@ class MLPActorCritic(nn.Module):
                 # Get log prob with distribution
                 logp_a = self.pi._log_prob_from_distribution(pi, a)
 
-                # Get deterministic action (mean)
-                mu_bar = mu = self.pi._get_action(deterministic=True)
-
-                # Create new action from random sampled obs
-                if std_mu > 0:
-                    mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
-
                 # Value function
                 v = self.v(obs)
-                return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
+                return a.numpy(), v.numpy(), logp_a.numpy()
 
     def act(self, obs):
         return self.step(obs)[0]
