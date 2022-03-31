@@ -243,7 +243,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             pi_info['a'] = action_mag.item()
 
         if config['lam_sps'] > 0:
-            spatial_smoothness = torch.norm(mu - mu_bar)
+            #spatial_smoothness = torch.norm(mu - mu_bar)
+            _,_,_,mu_sp_bar,_ = ac.step(obs,use_reg=True)
             loss_pi += config['lam_sps'] * spatial_smoothness
             pi_info['sps'] = spatial_smoothness.item()
 
@@ -287,11 +288,6 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
 
     def update(step):
         data = buf.get()
-
-        # pi_l_old, pi_info_old = compute_loss_pi(data)
-        # pi_l_old = pi_l_old.item()
-        # v_l_old = compute_loss_v(data).item()
-
         # ================= Pi function learning ==============================
         # Train policy with multiple steps of gradient descent
         total_norm = 0.0
