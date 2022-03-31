@@ -231,7 +231,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             pi_info['a'] = action_mag.item()
 
         if config['lam_sps'] > 0:
-            spatial_smoothness = torch.norm(mu - mu_bar)
+            spatial_smoothness = torch.norm(mu_bar_delta)
             loss_pi += torch.tensor(config['lam_sps']) * spatial_smoothness
             pi_info['sps'] = spatial_smoothness.item()
 
