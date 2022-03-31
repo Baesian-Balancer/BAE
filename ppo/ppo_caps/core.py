@@ -174,9 +174,9 @@ class MLPActorCritic(nn.Module):
         # build value function
         self.v  = MLPCritic(obs_dim, hidden_sizes, activation)
 
-    def step(self, obs, eval=False, std_mu=-1.):
+    def step(self, obs, deterministic=False):
         with torch.no_grad():
-            if eval:
+            if deterministic:
                 a = self.pi._get_action(obs, deterministic=True)
                 a = torch.clamp(a, min=-1, max=1)
                 return a.numpy()

@@ -127,7 +127,7 @@ def evaluate(o, ac,env,config, max_steps_per_ep, cur_step):
     for epoch in range(config["eval_epochs"]):
         for t in range(max_steps_per_ep):
             with torch.no_grad():
-                a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
+                a = ac.step(torch.as_tensor(o, dtype=torch.float32),deterministic=True)
             o, r, d, _ = env.step(a)
 
             ep_ret += r
