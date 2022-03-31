@@ -49,7 +49,7 @@ class Actor(nn.Module):
     def _log_prob_from_distribution(self, pi, act):
         return pi.log_prob(act)    # Last axis sum needed for Torch Normal distribution
 
-    def forward(self, obs, act=None):
+    def forward(self, obs, act=None, std_mu=-1.):
         # Produce action distributions for given observations, and
         # optionally compute the log likelihood of given actions under
         # those distributions.
@@ -57,7 +57,21 @@ class Actor(nn.Module):
         logp_a = None
         if act is not None:
             logp_a = self._log_prob_from_distribution(pi, act)
-        return pi, logp_a
+
+        mu_bar = mu = self._get_action(deterministic=True)
+
+        if std_mu > 0:
+            obs_sample = torch.normal(obs, std_mu)
+            mu_bar = self._get_action(obs_sample, deterministic=True)
+
+        # Mu delta
+        mu_next = torch.nn.functional.pad(mu, (0, 0, 1, 0))
+        mu_delta = mu_next[:-1] - mu
+
+        # Mu bar delta
+        mu_bar_delta = mu - mu_bar
+
+        return pi, logp_a, mu, mu_delta, mu_bar_delta
 
 class MLPGaussianActor(Actor):
 
@@ -106,6 +120,25 @@ class MLPBetaActor(Actor):
             self.distribution = self.pi.proba_distribution(alpha, beta)
         return self.distribution
 
+class MLPBetaReparamActor(Actor):
+
+    def __init__(self, obs_dim, act_dim, hidden_sizes, activation):
+        super().__init__()
+        self.act_dim = act_dim
+        self.pi = distributions.BetaDistributionReparam(act_dim)
+        self.mu_net, self.kappa_net = self.pi.proba_distribution_net(obs_dim, act_dim, hidden_sizes, activation)
+        self.distribution = None
+
+    def _distribution(self, obs = None):
+        if obs is not None or self.distribution is None:
+            # alpha, beta = self.alpha_net(obs), self.beta_net(obs)
+            mu = self.mu_net(obs)
+            k = self.kappa_net(obs)
+            # k = self.kappa_net([*obs, *mu])
+            # print(alpha, beta)
+            self.distribution = self.pi.proba_distribution(mu, k)
+        return self.distribution
+
 class MLPCritic(nn.Module):
 
     def __init__(self, obs_dim, hidden_sizes, activation):
@@ -119,67 +152,47 @@ class MLPCritic(nn.Module):
 class MLPActorCritic(nn.Module):
 
     def __init__(self, observation_space, action_space,
-                 hidden_sizes=(64,64), activation=nn.Tanh):
+                 hidden_sizes=(64,64), activation=nn.Tanh, dist='gaussian'):
         super().__init__()
 
         obs_dim = observation_space.shape[0]
 
         # policy builder depends on action space
-        self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        # self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
-        #self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        if dist == 'gaussian':
+            self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'squashed_gaussian':
+            self.pi = MLPGaussianSquashedActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'beta':
+            self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        elif dist == 'reparam_beta':
+            self.pi = MLPBetaActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
+        else:
+            print(f'Distribution \'{dist}\' not supported. Defaulting to Gaussian.')
+            self.pi = MLPGaussianActor(obs_dim, action_space.shape[0], hidden_sizes, activation)
 
 
         # build value function
         self.v  = MLPCritic(obs_dim, hidden_sizes, activation)
 
-    def step(self, obs, eval=False, use_reg=False,std_mu=-1.):
-        if use_reg:
-            pi = self.pi._distribution(obs)
+    def step(self, obs, deterministic=False):
+        with torch.no_grad():
+            if deterministic:
+                a = self.pi._get_action(obs, deterministic=True)
+                a = torch.clamp(a, min=-1, max=1)
+                return a.numpy()
+            else:
+                pi = self.pi._distribution(obs)
 
-            # Get actions from distribution (saves compute)
-            a = self.pi._get_action(deterministic=False)
-            a = torch.clamp(a, min=-1, max=1)
+                # Get actions from distribution (saves compute)
+                a = self.pi._get_action(deterministic=False)
+                a = torch.clamp(a, min=-1, max=1)
 
-                    # Get log prob with distribution
-            logp_a = self.pi._log_prob_from_distribution(pi, a)
+                # Get log prob with distribution
+                logp_a = self.pi._log_prob_from_distribution(pi, a)
 
-                    # Get deterministic action (mean)
-            mu_bar = mu = self.pi._get_action(deterministic=True)
-
-                    # Create new action from random sampled obs
-            if std_mu > 0:
-                mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
-
-            # Value function
-            v = self.v(obs)
-            return a, v, logp_a, mu, mu_bar
-        else:
-            with torch.no_grad():
-                if eval:
-                    a = self.pi._get_action(obs, deterministic=True)
-                    a = torch.clamp(a, min=-1, max=1)
-                    return a.numpy()
-                else:
-                    pi = self.pi._distribution(obs)
-
-                    # Get actions from distribution (saves compute)
-                    a = self.pi._get_action(deterministic=False)
-                    a = torch.clamp(a, min=-1, max=1)
-
-                    # Get log prob with distribution
-                    logp_a = self.pi._log_prob_from_distribution(pi, a)
-
-                    # Get deterministic action (mean)
-                    mu_bar = mu = self.pi._get_action(deterministic=True)
-
-                    # Create new action from random sampled obs
-                    if std_mu > 0:
-                        mu_bar = self.pi._get_action(torch.normal(obs, std_mu), deterministic=True)
-
-                    # Value function
-                    v = self.v(obs)
-                    return a.numpy(), v.numpy(), logp_a.numpy(), mu.numpy(), mu_bar.numpy()
+                # Value function
+                v = self.v(obs)
+                return a.numpy(), v.numpy(), logp_a.numpy()
 
     def act(self, obs):
         return self.step(obs)[0]
