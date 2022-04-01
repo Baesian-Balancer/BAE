@@ -3,12 +3,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 api = wandb.Api()
-run = api.run("/dawon-horvath/openSim2Real/runs/1yn8gtx2")
+run = api.run("/dawon-horvath/openSim2Real/runs/3s9qnkah")
+tail = run.scan_history(keys=["training episode reward", "reset orientation"], page_size=10)
 
-tail = run.history()[5:]
+reward = [row["training episode reward"] for row in tail if not np.isnan(row["training episode reward"]) ]
+reward = [row["reset orientation"] for row in tail if not np.isnan(row["training episode reward"]) ]
 
-reward = tail["training episode reward"].dropna()
-reset = tail["reset orientation"].dropna()
+# tail = run.history()
+# reward = tail["training episode reward"].dropna()
+# reset = tail["reset orientation"].dropna()
 
 labels, runs = np.unique(reset, return_counts=True)
 
