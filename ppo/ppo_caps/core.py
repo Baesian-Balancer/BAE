@@ -66,12 +66,8 @@ class Actor(nn.Module):
 
         # Mu delta
         mu_next = torch.nn.functional.pad(mu, (0, 0, 1, 0))
-        mu_delta = mu_next[:-1] - mu
 
-        # Mu bar delta
-        mu_bar_delta = mu - mu_bar
-
-        return pi, logp_a, mu, mu_delta, mu_bar_delta
+        return pi, logp_a, mu, mu_next, mu_bar
 
 class MLPGaussianActor(Actor):
 

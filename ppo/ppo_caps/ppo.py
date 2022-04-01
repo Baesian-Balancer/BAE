@@ -182,7 +182,7 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
         obs, act, adv, logp_old = data['obs'], data['act'], data['adv'], data['logp']
 
         # Policy loss
-        pi, logp, mu, mu_delta, mu_bar_delta = ac.pi(obs, act=act, std_mu=config['eps_s'])
+        pi, logp, mu, mu_next, mu_bar = ac.pi(obs, act=act, std_mu=config['eps_s'])
 
         ratio = torch.exp(logp - logp_old)
 
@@ -217,12 +217,15 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             loss_pi -= config['lam_ent'] * ent
 
         if config['lam_ts'] > 0:
-            temporal_smoothness = torch.linalg.matrix_norm(mu_delta)
+            loss_ts = torch.nn.MSELoss()
+            temporal_smoothness = loss_ts(mu_next[:-1],mu)#torch.linalg.matrix_norm(mu_delta)
             loss_pi += config['lam_ts'] * temporal_smoothness
             pi_info['ts'] = temporal_smoothness.item()
 
         if config['lam_mdmu'] > 0:
-            max_delta_mu = torch.linalg.matrix_norm(mu_delta, float('inf'))
+            loss_mdmu = torch.nn.L1Loss()
+            max_delta_mu = loss_mdmu(mu_next[:-1],mu,reduction='none')#torch.linalg.matrix_norm(mu_delta, float('inf'))
+            max_delta_mu = torch.linalg.matrix_norm(max_delta_mu, float('inf'))
             loss_pi += config['lam_mdmu'] * max_delta_mu
             pi_info['mdmu'] = max_delta_mu.item()
 
@@ -232,7 +235,8 @@ def ppo(env_fn, config ,actor_critic=core.MLPActorCritic, ac_kwargs=dict()):
             pi_info['a'] = action_mag.item()
 
         if config['lam_sps'] > 0:
-            spatial_smoothness = torch.norm(mu_bar_delta)
+            loss_sps = torch.nn.MSELoss()
+            spatial_smoothness =  loss_sps(mu,mu_bar)#torch.norm(mu_bar_delta)
             loss_pi += torch.tensor(config['lam_sps']) * spatial_smoothness
             pi_info['sps'] = spatial_smoothness.item()
 
