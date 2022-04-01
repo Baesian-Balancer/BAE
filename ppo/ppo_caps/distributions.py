@@ -216,7 +216,8 @@ class BetaDistributionReparam(Distribution):
         Create the layers and parameter that represent the distribution:
         """
 
-        u = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.tanh)
+        u = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Sigmoid)
+        # k = mlp([obs_dim + act_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
         k = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
         return u, k
 
@@ -265,9 +266,7 @@ class BetaDistributionReparam(Distribution):
 
     def actions_from_params(self, u: th.Tensor, k: th.Tensor, deterministic: bool = False) -> th.Tensor:
         # Update the proba distribution
-        alpha = u * (k - 1)
-        beta = (1 - u) * (k - 1)
-        self.proba_distribution(alpha, beta)
+        self.proba_distribution(u, k)
         return self.get_actions(deterministic=deterministic)
 
     def log_prob_from_params(self, u: th.Tensor, k: th.Tensor) -> Tuple[th.Tensor, th.Tensor]:
@@ -279,9 +278,93 @@ class BetaDistributionReparam(Distribution):
         :param log_std:
         :return:
         """
-        alpha = u*(k-1)
-        beta = (1-u)*(k-1)
-        actions = self.actions_from_params(alpha, beta)
+        actions = self.actions_from_params(u, k)
+        log_prob = self.log_prob(actions)
+        return actions, log_prob
+
+class BetaDistributionReparam2(Distribution):
+    """
+    Beta Distribution.
+
+    :param action_dim:  Dimension of the action space.
+    """
+
+    def __init__(self, action_dim: int):
+        super(BetaDistribution, self).__init__()
+        self.distribution = None
+        self.action_dim = action_dim
+
+
+    def proba_distribution_net(self, obs_dim, act_dim, hidden_sizes, activation, output_activation=nn.Identity) -> Tuple[nn.Module, nn.Module]:
+        """
+        Create the layers and parameter that represent the distribution:
+        """
+
+        u = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Sigmoid)
+        # k = mlp([obs_dim + act_dim] + list(hidden_sizes) + [act_dim], activation=nn.Softplus, output_activation=nn.Softplus)
+        s = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation, output_activation=nn.Sigmoid)
+        return u, s
+
+    def proba_distribution(self, u: th.Tensor, s: th.Tensor) -> "BetaDistribution2":
+        """
+        Create the distribution given its parameters (alpha, beta),
+        Note params must be alpha, beta > 0 .Which will be shifted to be
+        alpha, beta > 1.
+
+        :param u - mean:
+        :param k - std:
+        :return:
+        """
+        var = (s*0.15)**2
+
+        alpha = m**2*(1-m) / var
+        beta = m*(1-m)**2 / var
+
+        self.distribution = Beta(alpha + 1, beta + 1)
+        return self
+
+    def log_prob(self, actions: th.Tensor) -> th.Tensor:
+        """
+        Get the log probabilities of actions according to the distribution.
+        Note that you must first call the ``proba_distribution()`` method.
+
+        :param actions:
+        :return:
+        """
+        #  [-1, 1] --> [0, 1]
+        #  [-1, 1] +1 --> [0, 2] / 2 --> [0, 1]
+        act = (actions + 1) / 2
+
+        log_prob = self.distribution.log_prob(act)
+        return sum_independent_dims(log_prob)
+
+    def entropy(self) -> th.Tensor:
+        return sum_independent_dims(self.distribution.entropy())
+
+    def sample(self) -> th.Tensor:
+        # Reparametrization trick to pass gradients
+        # [0,1] --> [-1,1]
+        return 2*self.distribution.rsample() - 1
+
+    def mode(self) -> th.Tensor:
+        # [0,1] --> [-1,1]
+        return 2*self.distribution.mean - 1
+
+    def actions_from_params(self, u: th.Tensor, s: th.Tensor, deterministic: bool = False) -> th.Tensor:
+        # Update the proba distribution
+        self.proba_distribution(u, s)
+        return self.get_actions(deterministic=deterministic)
+
+    def log_prob_from_params(self, u: th.Tensor, k: th.Tensor) -> Tuple[th.Tensor, th.Tensor]:
+        """
+        Compute the log probability of taking an action
+        given the distribution parameters.
+
+        :param mean_actions:
+        :param log_std:
+        :return:
+        """
+        actions = self.actions_from_params(u, k)
         log_prob = self.log_prob(actions)
         return actions, log_prob
 
