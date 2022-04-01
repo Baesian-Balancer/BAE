@@ -1,0 +1,345 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Workspace	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^class Workspace(object):$/;"	class	line:22
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^    def __init__(self, cfg,agent_cfg):$/;"	member	line:23	class:Workspace
+evaluate	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^    def evaluate(self):$/;"	member	line:54	class:Workspace
+run	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^    def run(self):$/;"	member	line:72	class:Workspace
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^def main(cfg):$/;"	function	line:75
+parser	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^    parser = ArgumentParser(add_help=False)$/;"	variable	line:89
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = False,$/;"	variable	line:93
+action	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        action = 'store_true'  $/;"	variable	line:94
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 'capstone',$/;"	variable	line:99
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = str    $/;"	variable	line:100
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 'nickioan',$/;"	variable	line:104
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = str    $/;"	variable	line:105
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 'cuda',$/;"	variable	line:110
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = str    $/;"	variable	line:111
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 42,$/;"	variable	line:116
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = int    $/;"	variable	line:117
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 'Monopod-balance-v1',$/;"	variable	line:122
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = str   $/;"	variable	line:123
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default = 'exp\/best_model.pt',$/;"	variable	line:128
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = str    $/;"	variable	line:129
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        default= 10,$/;"	variable	line:134
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^        type = int  $/;"	variable	line:135
+args	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/infer.py	/^    args = parser.parse_args()$/;"	variable	line:138
+name	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/conda_env.yml	/^name: pytorch_sac$/;"	function	line:1
+channels	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/conda_env.yml	/^channels:$/;"	function	line:2
+dependencies	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/conda_env.yml	/^dependencies:$/;"	function	line:4
+TanhTransform	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^class TanhTransform(pyd.transforms.Transform):$/;"	class	line:11
+domain	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    domain = pyd.constraints.real$/;"	variable	line:12	class:TanhTransform
+codomain	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    codomain = pyd.constraints.interval(-1.0, 1.0)$/;"	variable	line:13	class:TanhTransform
+bijective	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    bijective = True$/;"	variable	line:14	class:TanhTransform
+sign	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    sign = +1$/;"	variable	line:15	class:TanhTransform
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def __init__(self, cache_size=1):$/;"	member	line:17	class:TanhTransform
+atanh	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def atanh(x):$/;"	member	line:21	class:TanhTransform
+__eq__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def __eq__(self, other):$/;"	member	line:24	class:TanhTransform	file:
+_call	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def _call(self, x):$/;"	member	line:27	class:TanhTransform
+_inverse	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def _inverse(self, y):$/;"	member	line:30	class:TanhTransform
+log_abs_det_jacobian	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def log_abs_det_jacobian(self, x, y):$/;"	member	line:35	class:TanhTransform
+SquashedNormal	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^class SquashedNormal(pyd.transformed_distribution.TransformedDistribution):$/;"	class	line:41
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def __init__(self, loc, scale):$/;"	member	line:42	class:SquashedNormal
+mean	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def mean(self):$/;"	member	line:51	class:SquashedNormal
+DiagGaussianActor	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^class DiagGaussianActor(nn.Module):$/;"	class	line:58
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def __init__(self, obs_dim, action_dim, hidden_dim, hidden_depth,$/;"	member	line:60	class:DiagGaussianActor
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/actor.py	/^    def forward(self, obs):$/;"	member	line:71	class:DiagGaussianActor
+SACAgent	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^class SACAgent(Agent):$/;"	class	line:13
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def __init__(self, obs_dim, action_dim, action_range, device, critic_cfg,$/;"	member	line:15	class:SACAgent
+train	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def train(self, training=True):$/;"	member	line:59	class:SACAgent
+alpha	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def alpha(self):$/;"	member	line:65	class:SACAgent
+act	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def act(self, obs, sample=False):$/;"	member	line:68	class:SACAgent
+update_critic	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def update_critic(self, obs, action, reward, next_obs, not_done, step):$/;"	member	line:77	class:SACAgent
+update_actor_and_alpha	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def update_actor_and_alpha(self, obs, step):$/;"	member	line:96	class:SACAgent
+update	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/sac.py	/^    def update(self, replay_buffer, step):$/;"	member	line:117	class:SACAgent
+Agent	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/__init__.py	/^class Agent(object):$/;"	class	line:4
+reset	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/__init__.py	/^    def reset(self):$/;"	member	line:5	class:Agent
+train	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/__init__.py	/^    def train(self, training=True):$/;"	member	line:10	class:Agent
+update	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/__init__.py	/^    def update(self, replay_buffer, logger, step):$/;"	member	line:14	class:Agent
+act	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/__init__.py	/^    def act(self, obs, sample=False):$/;"	member	line:18	class:Agent
+DoubleQCritic	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/critic.py	/^class DoubleQCritic(nn.Module):$/;"	class	line:9
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/critic.py	/^    def __init__(self, obs_dim, action_dim, hidden_dim, hidden_depth):$/;"	member	line:11	class:DoubleQCritic
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/agent/critic.py	/^    def forward(self, obs, action):$/;"	member	line:20	class:DoubleQCritic
+COMMON_TRAIN_FORMAT	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^COMMON_TRAIN_FORMAT = [$/;"	variable	line:11
+COMMON_EVAL_FORMAT	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^COMMON_EVAL_FORMAT = [$/;"	variable	line:18
+AGENT_TRAIN_FORMAT	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^AGENT_TRAIN_FORMAT = {$/;"	variable	line:25
+AverageMeter	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^class AverageMeter(object):$/;"	class	line:37
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def __init__(self):$/;"	member	line:38	class:AverageMeter
+update	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def update(self, value, n=1):$/;"	member	line:42	class:AverageMeter
+value	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def value(self):$/;"	member	line:46	class:AverageMeter
+MetersGroup	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^class MetersGroup(object):$/;"	class	line:50
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def __init__(self, file_name, formating):$/;"	member	line:51	class:MetersGroup
+_prepare_file	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _prepare_file(self, prefix, suffix):$/;"	member	line:58	class:MetersGroup
+log	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def log(self, key, value, n=1):$/;"	member	line:64	class:MetersGroup
+_prime_meters	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _prime_meters(self):$/;"	member	line:67	class:MetersGroup
+_dump_to_csv	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _dump_to_csv(self, data):$/;"	member	line:78	class:MetersGroup
+_format	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _format(self, key, value, ty):$/;"	member	line:87	class:MetersGroup
+_dump_to_console	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _dump_to_console(self, data, prefix):$/;"	member	line:98	class:MetersGroup
+dump	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def dump(self, step, prefix, save=True):$/;"	member	line:106	class:MetersGroup
+Logger	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^class Logger(object):$/;"	class	line:117
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def __init__(self,$/;"	member	line:118	class:Logger
+_should_log	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _should_log(self, step, log_frequency):$/;"	member	line:144	class:Logger
+_try_sw_log	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _try_sw_log(self, key, value, step):$/;"	member	line:148	class:Logger
+_try_sw_log_video	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _try_sw_log_video(self, key, frames, step):$/;"	member	line:152	class:Logger
+_try_sw_log_histogram	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def _try_sw_log_histogram(self, key, histogram, step):$/;"	member	line:158	class:Logger
+log	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def log(self, key, value, step, n=1, log_frequency=1):$/;"	member	line:162	class:Logger
+log_param	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def log_param(self, key, param, step, log_frequency=None):$/;"	member	line:172	class:Logger
+log_video	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def log_video(self, key, frames, step, log_frequency=None):$/;"	member	line:183	class:Logger
+log_histogram	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def log_histogram(self, key, histogram, step, log_frequency=None):$/;"	member	line:189	class:Logger
+dump	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/logger.py	/^    def dump(self, step, save=True, ty=None):$/;"	member	line:195	class:Logger
+agent	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^agent:$/;"	function	line:1
+name	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  name: sac$/;"	function	line:2
+class	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  class: agent.sac.SACAgent$/;"	function	line:3
+params	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  params:$/;"	function	line:4
+obs_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    obs_dim: ??? # to be specified later$/;"	function	line:5
+action_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    action_dim: ??? # to be specified later$/;"	function	line:6
+action_range	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    action_range: ??? # to be specified later$/;"	function	line:7
+device	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    device: ???$/;"	function	line:8
+critic_cfg	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    critic_cfg: ${double_q_critic}$/;"	function	line:9
+actor_cfg	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    actor_cfg: ${diag_gaussian_actor}$/;"	function	line:10
+discount	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    discount: 0.99$/;"	function	line:11
+init_temperature	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    init_temperature: 0.1$/;"	function	line:12
+alpha_lr	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    alpha_lr: 3e-4$/;"	function	line:13
+alpha_betas	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    alpha_betas: [0.9, 0.999]$/;"	function	line:14
+actor_lr	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    actor_lr: 3e-4$/;"	function	line:15
+actor_betas	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    actor_betas: [0.9, 0.999]$/;"	function	line:16
+actor_update_frequency	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    actor_update_frequency: 1$/;"	function	line:17
+critic_lr	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    critic_lr: 3e-4$/;"	function	line:18
+critic_betas	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    critic_betas: [0.9, 0.999]$/;"	function	line:19
+critic_tau	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    critic_tau: 0.005$/;"	function	line:20
+critic_target_update_frequency	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    critic_target_update_frequency: 2$/;"	function	line:21
+batch_size	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    batch_size: ???$/;"	function	line:22
+learnable_temperature	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    learnable_temperature: true$/;"	function	line:23
+double_q_critic	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^double_q_critic:$/;"	function	line:25
+class	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  class: agent.critic.DoubleQCritic$/;"	function	line:26
+params	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  params:$/;"	function	line:27
+obs_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    obs_dim: ${agent.params.obs_dim}$/;"	function	line:28
+action_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    action_dim: ${agent.params.action_dim}$/;"	function	line:29
+hidden_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    hidden_dim: 256$/;"	function	line:30
+hidden_depth	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    hidden_depth: 2$/;"	function	line:31
+diag_gaussian_actor	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^diag_gaussian_actor:$/;"	function	line:33
+class	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  class: agent.actor.DiagGaussianActor$/;"	function	line:34
+params	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^  params:$/;"	function	line:35
+obs_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    obs_dim: ${agent.params.obs_dim}$/;"	function	line:36
+action_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    action_dim: ${agent.params.action_dim}$/;"	function	line:37
+hidden_depth	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    hidden_depth: 2$/;"	function	line:38
+hidden_dim	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    hidden_dim: 256$/;"	function	line:39
+log_std_bounds	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/config/agent/sac.yaml	/^    log_std_bounds: [-5, 2]/;"	function	line:40
+Workspace	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^class Workspace(object):$/;"	class	line:23
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^    def __init__(self, cfg,agent_cfg):$/;"	member	line:24	class:Workspace
+evaluate	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^    def evaluate(self):$/;"	member	line:51	class:Workspace
+run	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^    def run(self):$/;"	member	line:81	class:Workspace
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^def main(cfg):$/;"	function	line:131
+parser	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^    parser = ArgumentParser(add_help=False)$/;"	variable	line:144
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = False,$/;"	variable	line:148
+action	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        action = 'store_true'  $/;"	variable	line:149
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'capstone',$/;"	variable	line:153
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str    $/;"	variable	line:154
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'nickioan',$/;"	variable	line:158
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str    $/;"	variable	line:159
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'cuda',$/;"	variable	line:164
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str    $/;"	variable	line:165
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 42,$/;"	variable	line:170
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int    $/;"	variable	line:171
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'Monopod-balance-v1',$/;"	variable	line:176
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str   $/;"	variable	line:177
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = False,$/;"	variable	line:182
+action	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        action = 'store_true'   $/;"	variable	line:183
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'exp\/',$/;"	variable	line:188
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str    $/;"	variable	line:189
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 10,$/;"	variable	line:194
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int  $/;"	variable	line:195
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 5000,$/;"	variable	line:200
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int  $/;"	variable	line:201
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 5,$/;"	variable	line:206
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int  $/;"	variable	line:207
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default= 10,$/;"	variable	line:212
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int  $/;"	variable	line:213
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 1e6,$/;"	variable	line:218
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int$/;"	variable	line:219
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 'uniform',$/;"	variable	line:224
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = str  $/;"	variable	line:225
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 256,$/;"	variable	line:230
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int$/;"	variable	line:231
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 5000,$/;"	variable	line:236
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int$/;"	variable	line:237
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        default = 1e6,$/;"	variable	line:242
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^        type = int$/;"	variable	line:243
+args	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/train.py	/^    args = parser.parse_args()$/;"	variable	line:246
+make_env	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def make_env(cfg):$/;"	function	line:18
+make_env_from_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def make_env_from_id(env_id: str, **kwargs) -> gym.Env:$/;"	function	line:21	function:make_env
+eval_mode	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^class eval_mode(object):$/;"	class	line:38
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __init__(self, *models):$/;"	member	line:39	class:eval_mode
+__enter__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __enter__(self):$/;"	member	line:42	class:eval_mode	file:
+__exit__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __exit__(self, *args):$/;"	member	line:48	class:eval_mode	file:
+train_mode	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^class train_mode(object):$/;"	class	line:54
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __init__(self, *models):$/;"	member	line:55	class:train_mode
+__enter__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __enter__(self):$/;"	member	line:58	class:train_mode	file:
+__exit__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __exit__(self, *args):$/;"	member	line:64	class:train_mode	file:
+soft_update_params	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def soft_update_params(net, target_net, tau):$/;"	function	line:70
+set_seed_everywhere	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def set_seed_everywhere(seed):$/;"	function	line:75
+make_dir	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def make_dir(*path_parts):$/;"	function	line:83
+weight_init	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def weight_init(m):$/;"	function	line:91
+MLP	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^class MLP(nn.Module):$/;"	class	line:99
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def __init__(self,$/;"	member	line:100	class:MLP
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^    def forward(self, x):$/;"	member	line:111	class:MLP
+mlp	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def mlp(input_dim, hidden_dim, output_dim, hidden_depth, output_mod=None):$/;"	function	line:115
+to_np	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/utils.py	/^def to_np(t):$/;"	function	line:128
+Workspace	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^class Workspace(object):$/;"	class	line:26
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^    def __init__(self, cfg,agent_cfg):$/;"	member	line:27	class:Workspace
+evaluate	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^    def evaluate(self):$/;"	member	line:57	class:Workspace
+run	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^    def run(self):$/;"	member	line:76	class:Workspace
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^def main(cfg):$/;"	function	line:79
+parser	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^    parser = ArgumentParser(add_help=False)$/;"	variable	line:93
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = False,$/;"	variable	line:97
+action	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        action = 'store_true'  $/;"	variable	line:98
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 'capstone',$/;"	variable	line:103
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = str    $/;"	variable	line:104
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 'nickioan',$/;"	variable	line:108
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = str    $/;"	variable	line:109
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 'cuda',$/;"	variable	line:114
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = str    $/;"	variable	line:115
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 42,$/;"	variable	line:120
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = int    $/;"	variable	line:121
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 'Monopod-stand-v1',$/;"	variable	line:126
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = str   $/;"	variable	line:127
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default = 'exp\/best_model.pt',$/;"	variable	line:132
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = str    $/;"	variable	line:133
+default	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        default= 10,$/;"	variable	line:138
+type	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^        type = int  $/;"	variable	line:139
+args	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/real_infer.py	/^    args = parser.parse_args()$/;"	variable	line:142
+VideoRecorder	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/video.py	/^class VideoRecorder(object):$/;"	class	line:8
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/video.py	/^    def __init__(self, root_dir, height=256, width=256, camera_id=0, fps=30):$/;"	member	line:9	class:VideoRecorder
+init	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/video.py	/^    def init(self, enabled=True):$/;"	member	line:17	class:VideoRecorder
+record	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/video.py	/^    def record(self, env):$/;"	member	line:21	class:VideoRecorder
+save	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/video.py	/^    def save(self, file_name):$/;"	member	line:29	class:VideoRecorder
+ReplayBuffer	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/replay_buffer.py	/^class ReplayBuffer(object):$/;"	class	line:5
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/replay_buffer.py	/^    def __init__(self, obs_shape, action_shape, size, device):$/;"	member	line:7	class:ReplayBuffer
+__len__	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/replay_buffer.py	/^    def __len__(self):$/;"	member	line:25	class:ReplayBuffer	file:
+add	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/replay_buffer.py	/^    def add(self, obs, action, reward, next_obs, done, done_no_max):$/;"	member	line:28	class:ReplayBuffer
+sample	/home/dawson/Documents/Repos/rl-algorithm-exploration/sac/replay_buffer.py	/^    def sample(self, batch_size):$/;"	member	line:39	class:ReplayBuffer
+env_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^env_id = "Monopod-Gazebo-v2"$/;"	variable	line:17
+make_env_from_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^def make_env_from_id(env_id: str, **kwargs) -> gym.Env:$/;"	function	line:19
+make_env	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^make_env = functools.partial(make_env_from_id, env_id=env_id)$/;"	variable	line:25
+env	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)$/;"	variable	line:29
+HIDDEN_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^HIDDEN_SIZE = 2048$/;"	variable	line:37
+OBS_SHAPE	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^OBS_SHAPE = env.observation_space.shape$/;"	variable	line:38
+OBS_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^OBS_SIZE = OBS_SHAPE[0]$/;"	variable	line:39
+ACTION_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^ACTION_SIZE = 2$/;"	variable	line:40
+LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^LR = 1e-4$/;"	variable	line:41
+GAMMA	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^GAMMA = 0.9$/;"	variable	line:42
+policy_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^policy_net = PolicyNetwork(OBS_SIZE, HIDDEN_SIZE, ACTION_SIZE, LR, GAMMA, torch.device("cpu"))$/;"	variable	line:43
+NUM_EPISODES	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^NUM_EPISODES = 200$/;"	variable	line:46
+MAX_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^MAX_STEPS = 3000$/;"	variable	line:47
+LOG_EVERY	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^LOG_EVERY = 20$/;"	variable	line:49
+normalize_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^def normalize_inputs(observations):$/;"	function	line:51
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/cont_REINFORCE.py	/^def main():$/;"	function	line:64
+PolicyNetwork	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/PolicyNet.py	/^class PolicyNetwork(nn.Module):$/;"	class	line:13
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/PolicyNet.py	/^    def __init__(self, num_inputs, hidden_size, num_outputs, learning_rate, gamma):$/;"	member	line:14	class:PolicyNetwork
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/PolicyNet.py	/^    def forward(self, state):$/;"	member	line:25	class:PolicyNetwork
+get_action	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/PolicyNet.py	/^    def get_action(self,state):$/;"	member	line:31	class:PolicyNetwork
+update_policy	/home/dawson/Documents/Repos/rl-algorithm-exploration/REINFORCE/PolicyNet.py	/^    def update_policy(self, policy_network, rewards, log_probs):$/;"	member	line:54	class:PolicyNetwork
+normalize_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/MBRL_utils.py	/^def normalize_inputs(env, observations, OBS_SIZE):$/;"	function	line:4
+generate_rollouts	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/MBRL_utils.py	/^def generate_rollouts(env, policy_net, transition_net, steps, episodes, MAX_STEPS):$/;"	function	line:16
+look_ahead	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/MBRL_utils.py	/^def look_ahead(env, obs, policy_net, transition_net, num_actions, steps):$/;"	function	line:65
+device	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^device = torch.device("cpu")$/;"	variable	line:19
+env_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^env_id = "Monopod-Gazebo-v1"$/;"	variable	line:21
+make_env_from_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^def make_env_from_id(env_id: str, **kwargs) -> gym.Env:$/;"	function	line:24
+make_env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^make_env = functools.partial(make_env_from_id, env_id=env_id)$/;"	variable	line:31
+env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)$/;"	variable	line:36
+HIDDEN_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^HIDDEN_SIZE = 256$/;"	variable	line:50
+OBS_SHAPE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^OBS_SHAPE = env.observation_space.shape[0]$/;"	variable	line:51
+ACTION_SHAPE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^ACTION_SHAPE = env.action_space.shape[0]$/;"	variable	line:52
+LEARNING_RATE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^LEARNING_RATE = 1e-3$/;"	variable	line:53
+INPUT_SHAPE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^INPUT_SHAPE = OBS_SHAPE + ACTION_SHAPE$/;"	variable	line:56
+state_transition_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^state_transition_net = StateTransitionNet(INPUT_SHAPE, HIDDEN_SIZE, OBS_SHAPE, LEARNING_RATE, device)$/;"	variable	line:58
+NUM_EPISODES	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^NUM_EPISODES = 500$/;"	variable	line:61
+MAX_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^MAX_STEPS = 1000$/;"	variable	line:62
+MEMORY_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^MEMORY_SIZE = 1000 # Remember previous MEMORY_SIZE steps$/;"	variable	line:63
+memory_list	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^memory_list = []$/;"	variable	line:66
+normalize_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^def normalize_inputs(observations):$/;"	function	line:69
+calculate_loss	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^def calculate_loss(pred_state, new_state):$/;"	function	line:82
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/transition_test.py	/^def main():$/;"	function	line:90
+device	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")$/;"	variable	line:21
+env_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^env_id = "Monopod-Gazebo-v2"$/;"	variable	line:25
+make_env_from_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^def make_env_from_id(env_id: str, **kwargs) -> gym.Env:$/;"	function	line:27
+make_env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^make_env = functools.partial(make_env_from_id, env_id=env_id)$/;"	variable	line:33
+env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)$/;"	variable	line:37
+PN_HIDDENSIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^PN_HIDDENSIZE = 2048$/;"	variable	line:44
+ST_HIDDENSIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^ST_HIDDENSIZE = 256$/;"	variable	line:45
+OBS_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^OBS_SIZE = env.observation_space.shape[0]$/;"	variable	line:46
+ACTION_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^ACTION_SIZE = env.action_space.shape[0]$/;"	variable	line:47
+STATE_INPUT_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^STATE_INPUT_SIZE = OBS_SIZE + ACTION_SIZE$/;"	variable	line:48
+PN_LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^PN_LR = 1e-4$/;"	variable	line:49
+ST_LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^ST_LR = 1e-3$/;"	variable	line:50
+GAMMA	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^GAMMA = 0.95$/;"	variable	line:51
+policy_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^policy_net = PolicyNetwork(OBS_SIZE, PN_HIDDENSIZE, ACTION_SIZE, PN_LR, GAMMA, device)$/;"	variable	line:54
+transition_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^    transition_net = StateTransitionNet(STATE_INPUT_SIZE, ST_HIDDENSIZE, OBS_SIZE, ST_LR, device)$/;"	variable	line:59
+NUM_EPISODES	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^NUM_EPISODES = 100$/;"	variable	line:65
+MAX_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^MAX_STEPS = 3000$/;"	variable	line:66
+ROLLOUT_EVERY	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^ROLLOUT_EVERY = 10$/;"	variable	line:67
+UPDATE_EVERY	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^UPDATE_EVERY = 100$/;"	variable	line:68
+LOG_EVERY	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^LOG_EVERY = 20$/;"	variable	line:71
+LOOKAHEAD_NUMACTIONS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^LOOKAHEAD_NUMACTIONS = 4$/;"	variable	line:74
+LOOKAHEAD_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^LOOKAHEAD_STEPS = 3$/;"	variable	line:75
+normalize_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^def normalize_inputs(observations):$/;"	function	line:77
+calculate_loss	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^def calculate_loss(pred_state, new_state):$/;"	function	line:90
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_attempt.py	/^def main():$/;"	function	line:103
+env_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^env_id = "Monopod-Gazebo-v2"$/;"	variable	line:20
+make_env_from_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^def make_env_from_id(env_id: str, **kwargs) -> gym.Env:$/;"	function	line:22
+make_env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^make_env = functools.partial(make_env_from_id, env_id=env_id)$/;"	variable	line:28
+env	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^env = randomizers.monopod_no_rand.MonopodEnvNoRandomizations(env=make_env)$/;"	variable	line:32
+device	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")$/;"	variable	line:38
+PN_HIDDENSIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^PN_HIDDENSIZE = 2048$/;"	variable	line:43
+OBS_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^OBS_SIZE = env.observation_space.shape[0]$/;"	variable	line:44
+ACTION_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^ACTION_SIZE = env.action_space.shape[0]$/;"	variable	line:45
+STATE_INPUT_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^STATE_INPUT_SIZE = OBS_SIZE + ACTION_SIZE$/;"	variable	line:46
+PN_LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^PN_LR = 1e-4$/;"	variable	line:47
+ST_LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^ST_LR = 1e-3$/;"	variable	line:48
+ST_HIDDENSIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^ST_HIDDENSIZE = 256$/;"	variable	line:49
+GAMMA	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^GAMMA = 0.95$/;"	variable	line:50
+policy_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^policy_net = PolicyNetwork(OBS_SIZE, PN_HIDDENSIZE, ACTION_SIZE, PN_LR, GAMMA, device)$/;"	variable	line:51
+transition_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^    transition_net = StateTransitionNet(STATE_INPUT_SIZE, ST_HIDDENSIZE, OBS_SIZE, ST_LR, device)$/;"	variable	line:56
+MAX_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^MAX_STEPS = 2000$/;"	variable	line:60
+TOP_PERCENTILE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^TOP_PERCENTILE = 0.8$/;"	variable	line:61
+NUM_EPOCHS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^NUM_EPOCHS = 100$/;"	variable	line:62
+NUM_TRIALS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^NUM_TRIALS = 20$/;"	variable	line:63
+LA_actions	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^LA_actions = 3$/;"	variable	line:66
+LA_steps	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^LA_steps = 3$/;"	variable	line:67
+normalize_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^def normalize_inputs(observations):$/;"	function	line:69
+generate_trials	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^def generate_trials(env, policy_net, num_trials, max_steps):$/;"	function	line:82
+top_episodes	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^def top_episodes(ep_rewards, ep_log_probs, ep_r_total, percentile):$/;"	function	line:119
+main	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/mbrl_cem_style.py	/^def main():$/;"	function	line:136
+normalize_envs_inputs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^def normalize_envs_inputs(envs, observation_arr):$/;"	function	line:20
+main_loop	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^def main_loop(envs):$/;"	function	line:34
+device	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")$/;"	variable	line:119
+env_id	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	env_id = "Monopod-Gazebo-fh-fby-v1"$/;"	variable	line:122
+NUM_ENVS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	NUM_ENVS = multiprocessing.cpu_count()$/;"	variable	line:123
+NUM_ENVS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	NUM_ENVS = 2$/;"	variable	line:124
+NUMBER_TIME_STEPS	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	NUMBER_TIME_STEPS = 50_000$/;"	variable	line:125
+seed	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	seed = 69$/;"	variable	line:126
+fenvs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	fenvs = make_mp_envs(env_id, NUM_ENVS, seed,$/;"	variable	line:128
+envs	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	envs = VecMonitorPlot($/;"	variable	line:134
+PN_HIDDENSIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	PN_HIDDENSIZE = 2048$/;"	variable	line:138
+OBS_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	OBS_SIZE = envs.observation_space.shape[0]$/;"	variable	line:139
+ACTION_SIZE	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	ACTION_SIZE = envs.action_space.shape[0]$/;"	variable	line:140
+PN_LR	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	PN_LR = 1e-5$/;"	variable	line:141
+GAMMA	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	GAMMA = 0.95$/;"	variable	line:142
+policy_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	policy_net = PolicyNetwork(OBS_SIZE, PN_HIDDENSIZE, ACTION_SIZE, PN_LR, GAMMA, device)$/;"	variable	line:143
+start	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/REINFORCE_mp.py	/^	start = time.time()  $/;"	variable	line:146
+StateTransitionNet	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/StateTransitionNet.py	/^class StateTransitionNet(nn.Module):$/;"	class	line:12
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/StateTransitionNet.py	/^    def __init__(self, num_inputs, hidden_size, num_outputs, learning_rate, device):$/;"	member	line:13	class:StateTransitionNet
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/StateTransitionNet.py	/^    def forward(self, state_action):$/;"	member	line:24	class:StateTransitionNet
+get_state	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/StateTransitionNet.py	/^    def get_state(self, state_actions):$/;"	member	line:29	class:StateTransitionNet
+update_net	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/StateTransitionNet.py	/^    def update_net(self, network, pred_states, new_states):$/;"	member	line:35	class:StateTransitionNet
+calculate_discounted_reward	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^def calculate_discounted_reward(rewards, gamma):$/;"	function	line:13
+convert_to_numba_list	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^def convert_to_numba_list(rewards):$/;"	function	line:36
+PolicyNetwork	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^class PolicyNetwork(nn.Module):$/;"	class	line:41
+__init__	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^    def __init__(self, num_inputs, hidden_size, num_outputs, learning_rate, gamma, device):$/;"	member	line:43	class:PolicyNetwork
+forward	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^    def forward(self, state):$/;"	member	line:60	class:PolicyNetwork
+get_action	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^    def get_action(self, state):$/;"	member	line:64	class:PolicyNetwork
+update_policy	/home/dawson/Documents/Repos/rl-algorithm-exploration/keith_scratch_mbrl/PolicyNet.py	/^    def update_policy(self, policy_network, rewards, log_probs):$/;"	member	line:84	class:PolicyNetwork
+OpenSim2Real rl models for testing platform.	/home/dawson/Documents/Repos/rl-algorithm-exploration/README.md	/^# OpenSim2Real rl models for testing platform.$/;"	function	line:1
