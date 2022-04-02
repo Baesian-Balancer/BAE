@@ -3,8 +3,9 @@ python3 ppo.py \
 --load_model_path=exp/2022_04_01_08_17_08/ \
 --distribution_type='gaussian' \
 --lam_ent=-1e-3 \
---lam_ts=1e-4 \
---lam_sps=5e-4 \
+--lam_ts=2e-5 \
+--lam_sps=1e-4 \
+--hid=96 \
 --lam_mdmu=-.1 \
 --lam_a=-1e-3 \
 --eps_s=0.001 \
