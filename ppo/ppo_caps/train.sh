@@ -11,4 +11,5 @@ python3 ppo.py \
 --lam_fft=-1e-2 \
 --lam_rp=-1e-2 \
 # --load_model_path="exp/2022_04_01_08_17_08/best_model_step_3279999.pt" \
+--load_model_path="exp/2022_04_02_05_37_14/best_model_step_3259999.pt" \
 --distribution_type="gaussian"
