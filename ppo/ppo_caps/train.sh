@@ -1,3 +1,4 @@
+#!/bin/bash
 python3 ppo.py \
 --epochs=200 \
 --load_model_path=exp/2022_04_01_08_17_08/ \
