@@ -4,7 +4,7 @@ python3 ppo.py \
 --lam_ent=-1e-3 \
 --lam_ts=5e-6 \
 --lam_sps=25e-6 \
---hid=128 \
+--hid=64 \
 --lam_mdmu=-.1 \
 --lam_a=-1e-3 \
 --eps_s=0.001 \
