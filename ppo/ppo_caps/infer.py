@@ -14,13 +14,14 @@ from gym_os2r import randomizers
 import sys
 sys.path.append("../../")
 from plotting import PlotUtils
-def make_env(env_id):
+def make_env(env_id,**kwargs):
     def make_env_from_id(env_id: str, **kwargs) -> gym.Env:
         return gym.make(env_id, **kwargs)
 
     # Create a partial function passing the environment id
-    create_env = functools.partial(make_env_from_id, env_id=env_id)
-    env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    create_env = functools.partial(make_env_from_id, env_id=env_id,**kwargs)
+    #env = randomizers.monopod_no_rand.MonopodEnvNoRandomizer(env=create_env)
+    env = randomizers.monopod.MonopodEnvRandomizer(env=create_env)
 
     # Enable the rendering
     env.render('human')
@@ -49,8 +50,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    name = "best_model_step_1299999"
-    path = "./exp/2022_03_13_20_43_09/"
+    name = "best_model_step_3551999"
+    path = "/home/nickioan/capstone/cap_repos/models/2022_04_03_18_46_54/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
@@ -85,9 +86,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
             if np.random.rand() < 0.30:
                 o += np.random.uniform(-0.05,0.05,np.size(o))
                 
-            a = ac.step(torch.as_tensor(o, dtype=torch.float32),eval=True)
+            a = ac.step(torch.as_tensor(o, dtype=torch.float32),deterministic=True)
             plotting.add_action(a)
-            a = np.clip(a, -1, 1)
 
             next_o, r, d, _ = env.step(a)
             ep_ret += r
@@ -115,17 +115,19 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str, default='Monopod-balance-v2')
+    parser.add_argument('--env', type=str, default='Monopod-nonorm-balance-v3')
     parser.add_argument('--hid', type=int, default=64)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--seed', '-s', type=int, default=10000)
     parser.add_argument('--cpu', type=int, default=4)
     parser.add_argument('--steps', type=int, default=3000)
-    parser.add_argument('--epochs', type=int, default=5)
+    parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--exp_name', type=str, default='ppo caps')
     args = parser.parse_args()
 
-    ppo(lambda : make_env(args.env), actor_critic=core.MLPActorCritic,
+    env_kwargs = {'task_mode': 'fixed_hip'}
+
+    ppo(lambda : make_env(args.env,**env_kwargs), actor_critic=core.MLPActorCritic,
         ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), gamma=args.gamma,
         seed=args.seed, steps_per_epoch=args.steps, epochs=args.epochs, max_ep_len=args.steps)
