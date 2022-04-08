@@ -50,8 +50,8 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     # Create actor-critic module
     ac = actor_critic(env.observation_space, env.action_space, **ac_kwargs)
 
-    name = "best_model_step_3551999"
-    path = "/home/nickioan/capstone/cap_repos/models/2022_04_03_18_46_54/"
+    name = "best_model_step_503999"
+    path = "/home/nickioan/capstone/cap_repos/models/2022_04_01_03_03_00/"
     checkpoint = torch.load(path + name + ".pt")
     ac.load_state_dict(checkpoint['actor_state_dict'])
 
@@ -83,9 +83,9 @@ def ppo(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
     for epoch in range(epochs):
         for t in range(local_steps_per_epoch):
 
-            if np.random.rand() < 0.30:
-                o += np.random.uniform(-0.05,0.05,np.size(o))
-                
+            # if np.random.rand() < 0.30:
+            #     o += np.random.uniform(-0.05,0.05,np.size(o))
+            o[4] = o[4]*0.5
             a = ac.step(torch.as_tensor(o, dtype=torch.float32),deterministic=True)
             plotting.add_action(a)
 
